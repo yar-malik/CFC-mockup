@@ -1,0 +1,844 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cash Fore Clubs — Instant Quote Flow</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=DM+Serif+Display&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --orange: #E8491D;
+    --orange-dark: #c73d17;
+    --green: #2D5A27;
+    --dark: #111827;
+    --mid: #4B5563;
+    --muted: #9CA3AF;
+    --border: #E5E7EB;
+    --surface: #F9FAFB;
+    --white: #FFFFFF;
+    --blue: #2271b1;
+    --radius: 12px;
+    --radius-sm: 8px;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: #F3F4F6;
+    color: var(--dark);
+    min-height: 100vh;
+  }
+
+  /* ── TOP BAR ── */
+  .topbar {
+    background: var(--green);
+    padding: 14px 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+  .topbar-logo {
+    font-family: 'DM Serif Display', serif;
+    color: #fff;
+    font-size: 20px;
+    letter-spacing: 0.3px;
+  }
+  .topbar-logo span { color: #fbbf24; }
+  .topbar-note {
+    font-size: 12px;
+    color: rgba(255,255,255,0.65);
+    background: rgba(255,255,255,0.1);
+    padding: 5px 12px;
+    border-radius: 20px;
+    letter-spacing: 0.3px;
+  }
+
+  /* ── SCREEN NAV ── */
+  .screen-nav {
+    background: var(--white);
+    border-bottom: 1px solid var(--border);
+    padding: 0 24px;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+  }
+  .screen-nav::-webkit-scrollbar { display: none; }
+  .snav-btn {
+    flex-shrink: 0;
+    padding: 14px 16px;
+    border: none;
+    background: none;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--muted);
+    cursor: pointer;
+    border-bottom: 2.5px solid transparent;
+    transition: all .15s;
+    white-space: nowrap;
+  }
+  .snav-btn:hover { color: var(--mid); }
+  .snav-btn.active { color: var(--orange); border-bottom-color: var(--orange); }
+
+  /* ── MAIN LAYOUT ── */
+  .main {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 40px 24px;
+    display: grid;
+    grid-template-columns: 1fr 360px;
+    gap: 32px;
+    align-items: start;
+  }
+
+  /* ── DEVICE FRAME ── */
+  .device-frame {
+    background: var(--white);
+    border-radius: 20px;
+    box-shadow: 0 4px 6px -1px rgba(0,0,0,.07), 0 2px 4px -1px rgba(0,0,0,.04), 0 0 0 1px rgba(0,0,0,.06);
+    overflow: hidden;
+    min-height: 500px;
+  }
+
+  /* ── SCREENS ── */
+  .screen { display: none; }
+  .screen.active { display: block; }
+
+  /* Common card inside device */
+  .form-inner { padding: 28px 24px; }
+  .page-title {
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--dark);
+    margin-bottom: 16px;
+  }
+
+  /* Trust bar */
+  .trust-bar {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+    padding-bottom: 16px;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 20px;
+  }
+  .trust-item {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 12px;
+    color: var(--mid);
+    font-weight: 500;
+  }
+  .trust-item svg { color: var(--muted); }
+
+  /* Drop zone */
+  .drop-zone {
+    border: 2px dashed var(--orange);
+    border-radius: var(--radius);
+    padding: 28px 20px;
+    text-align: center;
+    cursor: pointer;
+    margin-bottom: 14px;
+    transition: background .15s;
+    background: #fff9f7;
+  }
+  .drop-zone:hover { background: #fff0eb; }
+  .dz-icon-wrap {
+    width: 48px;
+    height: 48px;
+    background: #fff0eb;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 12px;
+  }
+  .dz-title { font-size: 15px; font-weight: 700; color: var(--dark); margin-bottom: 3px; }
+  .dz-sub   { font-size: 13px; color: var(--mid); margin-bottom: 2px; }
+  .dz-hint  { font-size: 11px; color: var(--muted); margin-bottom: 12px; }
+  .dz-meta  { font-size: 11px; color: var(--muted); margin-bottom: 14px; }
+
+  .photo-lib-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 9px 18px;
+    border: 1.5px solid var(--orange);
+    border-radius: var(--radius-sm);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--orange);
+    background: none;
+    cursor: pointer;
+    transition: all .15s;
+  }
+  .photo-lib-btn:hover { background: var(--orange); color: #fff; }
+
+  /* Photo thumbs */
+  .photos-row { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 6px; }
+  .photo-thumb {
+    width: 72px; height: 58px;
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--border);
+    background: #dde4ec;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .photo-thumb:nth-child(1) { background: #c4d1de; }
+  .photo-thumb:nth-child(2) { background: #b4c1ce; }
+  .photo-thumb:nth-child(3) { background: #a4b1be; }
+  .photo-thumb:nth-child(4) { background: #94a1ae; }
+  .photos-count { font-size: 12px; font-weight: 700; color: var(--green); margin-bottom: 14px; }
+
+  /* Tips */
+  .tips-row {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 13px;
+    color: var(--muted);
+    cursor: pointer;
+    margin-bottom: 14px;
+  }
+  .tips-row:hover { color: var(--mid); }
+
+  /* Desc field */
+  .desc-label { font-size: 13px; font-weight: 700; color: var(--dark); margin-bottom: 6px; }
+  .desc-box {
+    width: 100%;
+    border: 1.5px solid var(--border);
+    border-radius: var(--radius-sm);
+    padding: 10px 12px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 13px;
+    color: var(--dark);
+    background: var(--surface);
+    resize: none;
+    height: 64px;
+    transition: border-color .15s;
+    outline: none;
+  }
+  .desc-box:focus { border-color: var(--orange); }
+  .char-count { text-align: right; font-size: 11px; color: var(--muted); margin-bottom: 18px; }
+
+  /* CTA buttons */
+  .cta-btn {
+    width: 100%;
+    padding: 15px;
+    background: var(--orange);
+    color: #fff;
+    border: none;
+    border-radius: var(--radius-sm);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: .5px;
+    cursor: pointer;
+    margin-bottom: 8px;
+    transition: background .15s, transform .1s;
+  }
+  .cta-btn:hover { background: var(--orange-dark); transform: translateY(-1px); }
+  .cta-btn:active { transform: translateY(0); }
+  .cta-btn.disabled { background: #D1D5DB; cursor: not-allowed; transform: none; }
+  .cta-btn.outline {
+    background: none;
+    border: 1.5px solid var(--orange);
+    color: var(--orange);
+  }
+  .cta-btn.outline:hover { background: #fff0eb; }
+  .cta-note { text-align: center; font-size: 11px; color: var(--muted); }
+
+  /* Loading screen */
+  .loading-wrap { padding: 48px 28px; text-align: center; }
+  .spinner-ring {
+    width: 52px; height: 52px;
+    border: 3.5px solid var(--border);
+    border-top-color: var(--orange);
+    border-radius: 50%;
+    animation: spin .75s linear infinite;
+    margin: 0 auto 24px;
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
+  .load-title { font-size: 18px; font-weight: 700; color: var(--dark); margin-bottom: 6px; }
+  .load-sub   { font-size: 13px; color: var(--mid); line-height: 1.6; margin-bottom: 24px; }
+  .load-steps { text-align: left; display: inline-block; }
+  .load-step  { display: flex; align-items: center; gap: 10px; font-size: 13px; color: var(--muted); margin-bottom: 8px; }
+  .ldot { width: 8px; height: 8px; border-radius: 50%; background: var(--border); flex-shrink: 0; }
+  .ldot.done   { background: var(--green); }
+  .ldot.active { background: var(--orange); }
+  .load-step.done-step   { color: var(--mid); }
+  .load-step.active-step { color: var(--dark); font-weight: 500; }
+
+  /* Offer screen */
+  .offer-wrap { padding: 40px 28px 28px; text-align: center; }
+  .offer-price-big {
+    font-size: 72px;
+    font-weight: 700;
+    color: var(--dark);
+    line-height: 1;
+    margin-bottom: 10px;
+  }
+  .offer-club-line {
+    font-size: 14px;
+    color: var(--mid);
+    margin-bottom: 18px;
+    padding-bottom: 18px;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    flex-wrap: wrap;
+  }
+  .offer-club-line strong { color: var(--dark); font-weight: 700; }
+  .club-dot { color: var(--border); font-size: 16px; }
+  .expiry-row {
+    display: flex; align-items: center; justify-content: center; gap: 6px;
+    font-size: 13px; color: var(--mid); margin-bottom: 24px;
+  }
+  .expiry-bold { font-weight: 700; color: var(--dark); }
+  .decline-link {
+    display: block; text-align: center; font-size: 13px; color: var(--muted);
+    cursor: pointer; text-decoration: underline; text-underline-offset: 2px;
+    margin-bottom: 10px;
+  }
+  .decline-link:hover { color: var(--mid); }
+  .no-commit { font-size: 11px; color: var(--muted); text-align: center; }
+
+  /* Details form */
+  .form-section { padding: 24px; }
+  .back-link {
+    display: flex; align-items: center; gap: 5px; font-size: 13px;
+    color: var(--muted); cursor: pointer; margin-bottom: 16px;
+    text-decoration: none; transition: color .12s;
+  }
+  .back-link:hover { color: var(--mid); }
+  .form-section-title { font-size: 18px; font-weight: 700; color: var(--dark); margin-bottom: 4px; }
+  .form-section-sub   { font-size: 13px; color: var(--mid); margin-bottom: 20px; }
+  .fl { font-size: 11px; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: .5px; margin-bottom: 5px; }
+  .fi {
+    width: 100%; padding: 10px 12px; border: 1.5px solid var(--border);
+    border-radius: var(--radius-sm); font-family: 'DM Sans', sans-serif;
+    font-size: 14px; color: var(--dark); background: var(--white);
+    margin-bottom: 14px; outline: none; transition: border-color .15s;
+  }
+  .fi:focus { border-color: var(--orange); }
+
+  /* Confirmed */
+  .conf-wrap { padding: 36px 24px; text-align: center; }
+  .conf-circle {
+    width: 60px; height: 60px; border-radius: 50%;
+    border: 2.5px solid var(--green);
+    display: flex; align-items: center; justify-content: center;
+    margin: 0 auto 16px;
+    animation: popIn .4s ease;
+  }
+  @keyframes popIn { from { transform: scale(.5); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+  .conf-title { font-size: 20px; font-weight: 700; color: var(--dark); margin-bottom: 8px; }
+  .conf-sub   { font-size: 13px; color: var(--mid); line-height: 1.6; margin-bottom: 24px; }
+  .next-steps-row { display: flex; gap: 10px; margin-bottom: 24px; text-align: left; }
+  .ns { flex: 1; }
+  .ns-num {
+    width: 26px; height: 26px; border-radius: 50%; background: var(--orange);
+    color: #fff; font-size: 12px; font-weight: 700;
+    display: flex; align-items: center; justify-content: center; margin-bottom: 8px;
+  }
+  .ns-title { font-size: 12px; font-weight: 700; color: var(--dark); margin-bottom: 3px; }
+  .ns-body  { font-size: 11px; color: var(--mid); line-height: 1.5; }
+
+  /* ── MY QUOTES DASHBOARD ── */
+  .dash-layout {
+    display: grid;
+    grid-template-columns: 200px 1fr;
+    min-height: 500px;
+  }
+  .dash-sidebar {
+    background: var(--white);
+    border-right: 1px solid var(--border);
+    padding: 16px 0;
+  }
+  .dash-sidebar-item {
+    display: flex; align-items: center; gap: 10px;
+    padding: 11px 18px;
+    font-size: 13px; font-weight: 500; color: var(--mid);
+    cursor: pointer; transition: all .12s;
+    border-left: 3px solid transparent;
+  }
+  .dash-sidebar-item:hover { background: var(--surface); color: var(--dark); }
+  .dash-sidebar-item.active {
+    background: #2271b1;
+    color: #fff;
+    border-left-color: transparent;
+  }
+  .dash-sidebar-item.active svg { opacity: 1; }
+  .dash-sidebar-item svg { width: 14px; height: 14px; opacity: .6; flex-shrink: 0; }
+  .dash-main-area { padding: 24px; background: var(--surface); }
+  .dash-heading { font-size: 17px; font-weight: 700; color: var(--dark); margin-bottom: 3px; }
+  .dash-sub     { font-size: 13px; color: var(--mid); margin-bottom: 20px; }
+
+  /* Quote cards in dashboard */
+  .dash-quote-card {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 18px;
+    margin-bottom: 12px;
+    transition: box-shadow .15s;
+  }
+  .dash-quote-card:hover { box-shadow: 0 4px 12px rgba(0,0,0,.07); }
+  .dqc-top { display: flex; align-items: flex-start; justify-content: space-between; margin-bottom: 4px; }
+  .dqc-name { font-size: 15px; font-weight: 700; color: var(--dark); }
+  .status-badge {
+    font-size: 11px; font-weight: 700; padding: 4px 12px; border-radius: 20px;
+    border: 1.5px solid var(--blue); color: var(--blue); background: none;
+    letter-spacing: .3px; white-space: nowrap;
+  }
+  .status-badge.paid { border-color: var(--green); color: var(--green); }
+  .dqc-meta { font-size: 12px; color: var(--muted); margin-bottom: 16px; }
+
+  /* Progress tracker */
+  .progress-track {
+    display: flex;
+    align-items: flex-start;
+    margin-bottom: 16px;
+    overflow-x: auto;
+  }
+  .pt-step { display: flex; flex-direction: column; align-items: center; gap: 5px; flex-shrink: 0; }
+  .pt-dot {
+    width: 28px; height: 28px; border-radius: 50%;
+    background: var(--orange); border: 2px solid var(--orange);
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+  }
+  .pt-dot.pending { background: none; border-color: var(--border); }
+  .pt-dot.next    { background: none; border-color: var(--orange); }
+  .pt-dot svg { width: 12px; height: 12px; stroke: #fff; stroke-width: 2.5; fill: none; }
+  .pt-line { flex: 1; height: 2px; background: var(--orange); min-width: 40px; margin-top: 14px; }
+  .pt-line.empty { background: var(--border); }
+  .pt-label { text-align: center; }
+  .pt-label strong { display: block; font-size: 11px; font-weight: 700; color: var(--dark); white-space: nowrap; }
+  .pt-label span   { font-size: 10px; color: var(--muted); }
+  .pt-label.muted strong { color: var(--muted); }
+
+  .dqc-footer {
+    display: flex; align-items: center; justify-content: space-between;
+    padding-top: 14px; border-top: 1px solid var(--border);
+  }
+  .dqc-offer-label { font-size: 12px; color: var(--muted); margin-bottom: 2px; }
+  .dqc-offer-price { font-size: 22px; font-weight: 700; color: var(--orange); }
+  .dqc-offer-price.green { color: var(--green); }
+  .ship-btn {
+    padding: 9px 14px; border: 1.5px solid var(--orange);
+    border-radius: var(--radius-sm); font-family: 'DM Sans', sans-serif;
+    font-size: 11px; font-weight: 700; color: var(--orange);
+    background: none; cursor: pointer; letter-spacing: .4px;
+    transition: all .15s;
+  }
+  .ship-btn:hover { background: var(--orange); color: #fff; }
+
+  /* ── SIDEBAR NOTES PANEL ── */
+  .notes-panel { position: sticky; top: 72px; }
+  .notes-card {
+    background: var(--white);
+    border-radius: var(--radius);
+    border: 1px solid var(--border);
+    padding: 20px;
+    margin-bottom: 16px;
+  }
+  .notes-title { font-size: 13px; font-weight: 700; color: var(--dark); margin-bottom: 12px; }
+  .note-item { display: flex; gap: 10px; margin-bottom: 12px; align-items: flex-start; }
+  .note-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--orange); margin-top: 5px; flex-shrink: 0; }
+  .note-text { font-size: 12px; color: var(--mid); line-height: 1.5; }
+  .note-text strong { color: var(--dark); font-weight: 700; }
+
+  .screen-label {
+    font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: .8px;
+    color: var(--muted); margin-bottom: 8px;
+  }
+  .screen-desc {
+    font-size: 13px; color: var(--mid); line-height: 1.6; margin-bottom: 16px;
+  }
+  .tag-row { display: flex; gap: 6px; flex-wrap: wrap; }
+  .tag {
+    padding: 4px 10px; border-radius: 20px;
+    font-size: 11px; font-weight: 700;
+    background: #fff0eb; color: var(--orange);
+  }
+  .tag.green { background: #e8f4e9; color: var(--green); }
+  .tag.blue  { background: #e6f1fb; color: var(--blue); }
+
+  /* Footer watermark */
+  .mockup-footer {
+    text-align: center; padding: 24px;
+    font-size: 12px; color: var(--muted);
+  }
+  .mockup-footer strong { color: var(--mid); }
+
+  /* Responsive */
+  @media (max-width: 800px) {
+    .main { grid-template-columns: 1fr; }
+    .notes-panel { position: static; }
+    .dash-layout { grid-template-columns: 1fr; }
+    .dash-sidebar { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<!-- TOP BAR -->
+<div class="topbar">
+  <div class="topbar-logo">Cash <span>Fore</span> Clubs</div>
+  <div class="topbar-note">UI Mockup — For Client Review</div>
+</div>
+
+<!-- SCREEN NAV -->
+<div class="screen-nav">
+  <button class="snav-btn active" onclick="showScreen(0)">1. Upload</button>
+  <button class="snav-btn" onclick="showScreen(1)">2. Photos added</button>
+  <button class="snav-btn" onclick="showScreen(2)">3. Valuing...</button>
+  <button class="snav-btn" onclick="showScreen(3)">4. Instant offer</button>
+  <button class="snav-btn" onclick="showScreen(4)">5. Your details</button>
+  <button class="snav-btn" onclick="showScreen(5)">6. Confirmed</button>
+  <button class="snav-btn" onclick="showScreen(6)">7. My quotes</button>
+</div>
+
+<div class="main">
+
+  <!-- LEFT: Device frame -->
+  <div>
+    <div class="device-frame">
+
+      <!-- SCREEN 0: Empty upload -->
+      <div class="screen active" id="sc0">
+        <div class="form-inner">
+          <div class="page-title">Let's get selling...</div>
+          <div class="trust-bar">
+            <div class="trust-item">
+              <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="1" y="5" width="14" height="9" rx="1.5"/><path d="M5 5V4a3 3 0 016 0v1"/></svg>
+              Free tracked postage
+            </div>
+            <div class="trust-item">
+              <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="1" y="4" width="14" height="10" rx="1.5"/><path d="M1 8h14M5 12h2"/></svg>
+              Paid within 48 hours
+            </div>
+            <div class="trust-item">
+              <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M8 1l1.8 3.7 4.2.6-3 3 .7 4.1L8 10.5l-3.7 1.9.7-4.1-3-3 4.2-.6z"/></svg>
+              Fully insured
+            </div>
+          </div>
+          <div class="drop-zone">
+            <div class="dz-icon-wrap">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#E8491D" stroke-width="1.5"><rect x="2" y="4" width="20" height="16" rx="2"/><circle cx="8" cy="10" r="2"/><path d="M2 18l5-5 4 4 3-3 8 8"/></svg>
+            </div>
+            <div class="dz-title">Drop your club photos here</div>
+            <div class="dz-sub">or click to browse — up to 5 photos</div>
+            <div class="dz-hint">or paste from clipboard (Ctrl+V / ⌘V)</div>
+            <div class="dz-meta">JPG · PNG · WebP · Max 8MB each</div>
+            <button class="photo-lib-btn">
+              <svg width="13" height="13" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="1" y="3" width="14" height="11" rx="1.5"/><circle cx="6" cy="7" r="1.5"/><path d="M1 12l4-4 4 4 3-3 3 3"/></svg>
+              Photo Library
+            </button>
+          </div>
+          <div class="tips-row">
+            <svg width="13" height="13" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="8" cy="8" r="7"/><path d="M8 7v4M8 5h.01"/></svg>
+            Tips for better photos ∨
+          </div>
+          <div class="desc-label">Tell us about your clubs (brand, model, condition, specs)</div>
+          <textarea class="desc-box" placeholder="e.g. TaylorMade Stealth 2, 2023, good condition, stiff shaft... (max 300)"></textarea>
+          <div class="char-count">0 / 300</div>
+          <button class="cta-btn disabled">GET MY INSTANT OFFER →</button>
+          <div class="cta-note">Free · No obligation · Offer valid for 24 hours</div>
+        </div>
+      </div>
+
+      <!-- SCREEN 1: Photos added -->
+      <div class="screen" id="sc1">
+        <div class="form-inner">
+          <div class="page-title">Let's get selling...</div>
+          <div class="trust-bar">
+            <div class="trust-item"><svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="1" y="5" width="14" height="9" rx="1.5"/><path d="M5 5V4a3 3 0 016 0v1"/></svg>Free tracked postage</div>
+            <div class="trust-item"><svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="1" y="4" width="14" height="10" rx="1.5"/><path d="M1 8h14M5 12h2"/></svg>Paid within 48 hours</div>
+            <div class="trust-item"><svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M8 1l1.8 3.7 4.2.6-3 3 .7 4.1L8 10.5l-3.7 1.9.7-4.1-3-3 4.2-.6z"/></svg>Fully insured</div>
+          </div>
+          <div class="drop-zone" style="padding:18px">
+            <div class="dz-icon-wrap" style="margin-bottom:8px"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#E8491D" stroke-width="1.5"><rect x="2" y="4" width="20" height="16" rx="2"/><circle cx="8" cy="10" r="2"/><path d="M2 18l5-5 4 4 3-3 8 8"/></svg></div>
+            <div class="dz-title" style="margin-bottom:2px">Drop your club photos here</div>
+            <div class="dz-sub" style="margin-bottom:10px">or click to browse — up to 5 photos</div>
+            <button class="photo-lib-btn" style="margin-bottom:14px"><svg width="13" height="13" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="1" y="3" width="14" height="11" rx="1.5"/><circle cx="6" cy="7" r="1.5"/><path d="M1 12l4-4 4 4 3-3 3 3"/></svg>Photo Library</button>
+            <div class="photos-row">
+              <div class="photo-thumb"></div>
+              <div class="photo-thumb"></div>
+              <div class="photo-thumb"></div>
+              <div class="photo-thumb"></div>
+            </div>
+          </div>
+          <div class="photos-count">✓ 4 photos added</div>
+          <div class="tips-row"><svg width="13" height="13" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="8" cy="8" r="7"/><path d="M8 7v4M8 5h.01"/></svg>Tips for better photos ∨</div>
+          <div class="desc-label">Tell us about your clubs (brand, model, condition, specs)</div>
+          <textarea class="desc-box">callaway paradym driver good condition</textarea>
+          <div class="char-count">38 / 300</div>
+          <button class="cta-btn" onclick="showScreen(2)">GET MY INSTANT OFFER →</button>
+          <div class="cta-note">Free · No obligation · Offer valid for 24 hours</div>
+        </div>
+      </div>
+
+      <!-- SCREEN 2: Valuing -->
+      <div class="screen" id="sc2">
+        <div class="loading-wrap">
+          <div class="spinner-ring"></div>
+          <div class="load-title">Valuing your clubs...</div>
+          <div class="load-sub">Checking live market prices...<br>This usually takes less than 60 seconds.</div>
+          <div class="load-steps">
+            <div class="load-step done-step"><div class="ldot done"></div>Uploading your photos</div>
+            <div class="load-step done-step"><div class="ldot done"></div>Identifying club model</div>
+            <div class="load-step active-step"><div class="ldot active"></div>Checking second-hand market value</div>
+            <div class="load-step"><div class="ldot"></div>Calculating your offer</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- SCREEN 3: Offer -->
+      <div class="screen" id="sc3">
+        <div class="offer-wrap">
+          <div class="offer-price-big">£128</div>
+          <div class="offer-club-line">
+            Our offer for your
+            <strong>Callaway</strong>
+            <span class="club-dot">·</span>
+            <strong>Paradym Driver</strong>
+            <span class="club-dot">·</span>
+            Good condition
+          </div>
+          <div class="expiry-row">
+            <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="8" cy="8" r="7"/><path d="M8 4v4l2.5 2"/></svg>
+            Offer expires in <span class="expiry-bold">23h 59m 55s</span>
+          </div>
+          <button class="cta-btn" onclick="showScreen(4)">ACCEPT OFFER</button>
+          <div class="decline-link">No thanks, I'll pass</div>
+          <div class="no-commit">Accepting this offer is not a final commitment until collection is arranged.</div>
+        </div>
+      </div>
+
+      <!-- SCREEN 4: Details -->
+      <div class="screen" id="sc4">
+        <div class="form-section">
+          <a class="back-link" onclick="showScreen(3)">
+            <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M10 3L5 8l5 5"/></svg>
+            Back to offer
+          </a>
+          <div class="form-section-title">Your details</div>
+          <div class="form-section-sub">We need a few details to arrange your postage label.</div>
+          <div class="fl">Full name</div>
+          <input class="fi" type="text" placeholder="James Robertson">
+          <div class="fl">Email address</div>
+          <input class="fi" type="email" placeholder="james@email.co.uk">
+          <div class="fl">Phone number</div>
+          <input class="fi" type="tel" placeholder="07700 900123">
+          <div class="fl">How will you send the club?</div>
+          <select class="fi">
+            <option>DPD Drop Point (we'll send you a label)</option>
+            <option>DPD Collection from your address</option>
+            <option>Drop off in-store — Chippenham</option>
+          </select>
+          <button class="cta-btn" onclick="showScreen(5)">CONFIRM OFFER — £128</button>
+          <div class="cta-note" style="margin-top:8px">Free · No obligation · Offer valid for 24 hours</div>
+        </div>
+      </div>
+
+      <!-- SCREEN 5: Confirmed -->
+      <div class="screen" id="sc5">
+        <div class="conf-wrap">
+          <div class="conf-circle">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#2D5A27" stroke-width="2.5"><polyline points="4,12 10,18 20,6"/></svg>
+          </div>
+          <div class="conf-title">Offer accepted!</div>
+          <div class="conf-sub">
+            We'll send your prepaid postage label to <strong>james@email.co.uk</strong>.<br>
+            Pack your club safely and drop it at any DPD point.
+          </div>
+          <div style="font-size:15px;font-weight:700;color:var(--dark);margin-bottom:14px;text-align:left">What happens next</div>
+          <div class="next-steps-row">
+            <div class="ns">
+              <div class="ns-num">1</div>
+              <div class="ns-title">Check your email</div>
+              <div class="ns-body">Your prepaid postage label will arrive within a few hours.</div>
+            </div>
+            <div class="ns">
+              <div class="ns-num">2</div>
+              <div class="ns-title">Pack and post</div>
+              <div class="ns-body">Wrap securely and drop at your nearest DPD point.</div>
+            </div>
+            <div class="ns">
+              <div class="ns-num">3</div>
+              <div class="ns-title">Get paid</div>
+              <div class="ns-body">We transfer payment within 48 hours of inspection.</div>
+            </div>
+          </div>
+          <button class="cta-btn" onclick="showScreen(6)">VIEW MY QUOTES</button>
+        </div>
+      </div>
+
+      <!-- SCREEN 6: My Quotes Dashboard -->
+      <div class="screen" id="sc6">
+        <div class="dash-layout">
+          <div class="dash-sidebar">
+            <div class="dash-sidebar-item"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="1" y="1" width="6" height="6" rx="1"/><rect x="9" y="1" width="6" height="6" rx="1"/><rect x="1" y="9" width="6" height="6" rx="1"/><rect x="9" y="9" width="6" height="6" rx="1"/></svg>Dashboard</div>
+            <div class="dash-sidebar-item"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 3h12l-1.5 9H3.5L2 3z"/></svg>Orders</div>
+            <div class="dash-sidebar-item"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M8 2v9M5 8l3 3 3-3"/><path d="M2 13h12"/></svg>Downloads</div>
+            <div class="dash-sidebar-item"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 13V5a2 2 0 012-2h8a2 2 0 012 2v8"/><path d="M6 13V9h4v4"/></svg>Addresses</div>
+            <div class="dash-sidebar-item"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="8" cy="5" r="3"/><path d="M2 14c0-3 2.7-5 6-5s6 2 6 5"/></svg>Account details</div>
+            <div class="dash-sidebar-item active"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 2h10a1 1 0 011 1v11a1 1 0 01-1 1H3a1 1 0 01-1-1V3a1 1 0 011-1z"/><path d="M5 6h6M5 9h6M5 12h3"/></svg>My Club Quotes</div>
+            <div class="dash-sidebar-item"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M10 8H2M6 5l-3 3 3 3"/><path d="M10 3h3a1 1 0 011 1v8a1 1 0 01-1 1h-3"/></svg>Log out</div>
+          </div>
+          <div class="dash-main-area">
+            <div class="dash-heading">Your Club Quotes, yarmalik007</div>
+            <div class="dash-sub">You have 4 quotes on file.</div>
+
+            <!-- Quote 1: Accepted / In progress -->
+            <div class="dash-quote-card">
+              <div class="dqc-top">
+                <div class="dqc-name">Callaway Paradym</div>
+                <span class="status-badge">Accepted</span>
+              </div>
+              <div class="dqc-meta">Good condition · Today · 8fec9b29-6c76-479b-a0b5-518a070e9e71</div>
+              <div class="progress-track">
+                <div class="pt-step">
+                  <div class="pt-dot"><svg viewBox="0 0 12 12"><polyline points="2,6 5,9 10,3"/></svg></div>
+                  <div class="pt-label"><strong>Offer Accepted</strong><span>1 May</span></div>
+                </div>
+                <div class="pt-line empty"></div>
+                <div class="pt-step">
+                  <div class="pt-dot next"></div>
+                  <div class="pt-label"><strong>Clubs Received</strong><span>&nbsp;</span></div>
+                </div>
+                <div class="pt-line empty"></div>
+                <div class="pt-step">
+                  <div class="pt-dot pending"></div>
+                  <div class="pt-label muted"><strong>Inspected</strong><span>&nbsp;</span></div>
+                </div>
+                <div class="pt-line empty"></div>
+                <div class="pt-step">
+                  <div class="pt-dot pending"></div>
+                  <div class="pt-label muted"><strong>Payment Sent</strong><span>&nbsp;</span></div>
+                </div>
+              </div>
+              <div class="dqc-footer">
+                <div>
+                  <div class="dqc-offer-label">Our offer:</div>
+                  <div class="dqc-offer-price">£128</div>
+                </div>
+                <button class="ship-btn">VIEW SHIPPING INSTRUCTIONS</button>
+              </div>
+            </div>
+
+            <!-- Quote 2: Completed -->
+            <div class="dash-quote-card">
+              <div class="dqc-top">
+                <div class="dqc-name">TaylorMade Stealth 2 Driver</div>
+                <span class="status-badge paid">Paid</span>
+              </div>
+              <div class="dqc-meta">Very good condition · 12 Apr · CFC-A1B2C3D4</div>
+              <div class="progress-track">
+                <div class="pt-step">
+                  <div class="pt-dot"><svg viewBox="0 0 12 12"><polyline points="2,6 5,9 10,3"/></svg></div>
+                  <div class="pt-label"><strong>Offer Accepted</strong><span>12 Apr</span></div>
+                </div>
+                <div class="pt-line"></div>
+                <div class="pt-step">
+                  <div class="pt-dot"><svg viewBox="0 0 12 12"><polyline points="2,6 5,9 10,3"/></svg></div>
+                  <div class="pt-label"><strong>Clubs Received</strong><span>15 Apr</span></div>
+                </div>
+                <div class="pt-line"></div>
+                <div class="pt-step">
+                  <div class="pt-dot"><svg viewBox="0 0 12 12"><polyline points="2,6 5,9 10,3"/></svg></div>
+                  <div class="pt-label"><strong>Inspected</strong><span>16 Apr</span></div>
+                </div>
+                <div class="pt-line" style="background:var(--green)"></div>
+                <div class="pt-step">
+                  <div class="pt-dot" style="background:var(--green);border-color:var(--green)"><svg viewBox="0 0 12 12"><polyline points="2,6 5,9 10,3"/></svg></div>
+                  <div class="pt-label"><strong>Payment Sent</strong><span>17 Apr</span></div>
+                </div>
+              </div>
+              <div class="dqc-footer">
+                <div>
+                  <div class="dqc-offer-label">Paid:</div>
+                  <div class="dqc-offer-price green">£95</div>
+                </div>
+                <span style="font-size:12px;color:var(--muted)">Completed ✓</span>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+    </div><!-- /device-frame -->
+  </div>
+
+  <!-- RIGHT: Notes panel -->
+  <div class="notes-panel">
+    <div class="notes-card" id="notes-card">
+      <div class="screen-label" id="note-screen-label">Screen 1 of 7</div>
+      <div style="font-size:16px;font-weight:700;color:var(--dark);margin-bottom:6px" id="note-title">Upload screen</div>
+      <div class="screen-desc" id="note-desc">Customer lands here. They upload up to 5 photos of their club and optionally add a description. The CTA button is disabled until at least one photo is added.</div>
+      <div class="tag-row" id="note-tags">
+        <span class="tag">Photo upload</span>
+        <span class="tag">Drag & drop</span>
+        <span class="tag green">Trust signals</span>
+      </div>
+    </div>
+    <div class="notes-card">
+      <div class="notes-title">About this mockup</div>
+      <div class="note-item"><div class="note-dot"></div><div class="note-text"><strong>7 screens</strong> covering the full sell flow from upload to payment tracking.</div></div>
+      <div class="note-item"><div class="note-dot"></div><div class="note-text"><strong>GPT-4 Vision</strong> identifies the club from the photo — no manual entry needed.</div></div>
+      <div class="note-item"><div class="note-dot"></div><div class="note-text"><strong>Instant offer</strong> shown in seconds with a 24-hour countdown timer.</div></div>
+      <div class="note-item"><div class="note-dot"></div><div class="note-text"><strong>My Quotes</strong> dashboard integrates with the WooCommerce account area.</div></div>
+      <div class="note-item"><div class="note-dot"></div><div class="note-text">Built by <strong>AI Agency Plus</strong> for Cash Fore Clubs.</div></div>
+    </div>
+  </div>
+
+</div>
+
+<div class="mockup-footer">
+  Prepared by <strong>AI Agency Plus</strong> for Cash Fore Clubs &nbsp;·&nbsp; Confidential
+</div>
+
+<script>
+  var screenData = [
+    { label: 'Screen 1 of 7', title: 'Upload screen', desc: 'Customer lands here. They upload up to 5 photos of their club and optionally add a description. The CTA is disabled until at least one photo is added.', tags: [['Photo upload',''], ['Drag & drop',''], ['Trust signals','green']] },
+    { label: 'Screen 2 of 7', title: 'Photos added', desc: 'Once photos are uploaded, thumbnails appear inside the drop zone and the photo count is shown. The CTA button activates. Customer can also type a description for extra context.', tags: [['Photos confirmed','green'], ['CTA active','green'], ['Description field','']] },
+    { label: 'Screen 3 of 7', title: 'Valuing your clubs...', desc: 'Loading state shown while GPT-4 Vision analyses the photos and checks second-hand market prices. Step-by-step progress shown to keep the customer informed.', tags: [['AI analysis',''], ['Live market check',''], ['~10 seconds','blue']] },
+    { label: 'Screen 4 of 7', title: 'Instant offer revealed', desc: 'The buyback price is shown large and clear. Club name and condition confirmed. A 24-hour countdown creates urgency. Customer can accept or decline.', tags: [['Big price reveal',''], ['Countdown timer',''], ['Accept / Decline','green']] },
+    { label: 'Screen 5 of 7', title: 'Customer details', desc: 'Minimal form — name, email, phone and preferred shipping method. No account required. Confirm button shows the offer price for reassurance.', tags: [['Name & email',''], ['Shipping choice',''], ['No account needed','green']] },
+    { label: 'Screen 6 of 7', title: 'Offer confirmed', desc: 'Clear confirmation with the customer\'s email address shown. Three-step "what happens next" flow sets expectations. CTA leads to the My Quotes dashboard.', tags: [['Email confirmation','green'], ['Next steps',''], ['View My Quotes','blue']] },
+    { label: 'Screen 7 of 7', title: 'My Quotes dashboard', desc: 'Integrated into the WooCommerce account sidebar. Each quote shows the club name, a 4-step progress tracker with dates, the offer price and a shipping instructions button.', tags: [['WooCommerce account',''], ['Progress tracker','green'], ['Quote history','blue']] },
+  ];
+
+  function showScreen(n) {
+    document.querySelectorAll('.screen').forEach(function(s,i){ s.classList.toggle('active', i===n); });
+    document.querySelectorAll('.snav-btn').forEach(function(b,i){ b.classList.toggle('active', i===n); });
+    var d = screenData[n];
+    document.getElementById('note-screen-label').textContent = d.label;
+    document.getElementById('note-title').textContent = d.title;
+    document.getElementById('note-desc').textContent = d.desc;
+    var tagRow = document.getElementById('note-tags');
+    tagRow.innerHTML = d.tags.map(function(t){ return '<span class="tag ' + t[1] + '">' + t[0] + '</span>'; }).join('');
+  }
+</script>
+</body>
+</html>
