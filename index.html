@@ -3,957 +3,2459 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Cash Fore Clubs — Instant Quote Flow</title>
+<title>Cash Fore Clubs — UI Mockup</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=DM+Serif+Display&display=swap" rel="stylesheet">
 <style>
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-  :root {
-    --orange: #E8491D;
-    --orange-dark: #c73d17;
-    --green: #2D5A27;
-    --dark: #111827;
-    --mid: #4B5563;
-    --muted: #9CA3AF;
-    --border: #E5E7EB;
-    --surface: #F9FAFB;
-    --white: #FFFFFF;
-    --blue: #2271b1;
-    --radius: 12px;
-    --radius-sm: 8px;
-  }
+/* ═══════════════════════════════════════════════════════════════════════════
+   RESET
+═══════════════════════════════════════════════════════════════════════════ */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-  html { scroll-behavior: smooth; }
+/* ═══════════════════════════════════════════════════════════════════════════
+   DESIGN TOKENS  (unified — single source of truth for both modes)
+═══════════════════════════════════════════════════════════════════════════ */
+:root {
+  /* Brand */
+  --orange:      #E8491D;
+  --orange-dark: #c73d17;
+  --green:       #2D5A27;
+  --blue:        #2271b1;
+  --blue-dark:   #135e96;
+  --red:         #d63638;
 
-  body {
-    font-family: 'DM Sans', sans-serif;
-    background: #F3F4F6;
-    color: var(--dark);
-    min-height: 100vh;
-  }
+  /* Neutrals — unified to WP admin palette */
+  --dark:        #1d2327;   /* was #111827 in index → unified */
+  --mid:         #50575e;
+  --muted:       #8c8f94;
+  --border:      #dcdcde;
+  --surface:     #f6f7f7;
+  --white:       #ffffff;
 
-  /* ── TOP BAR ── */
-  .topbar {
-    background: var(--green);
-    padding: 14px 24px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    position: sticky;
-    top: 0;
-    z-index: 100;
-  }
-  .topbar-logo {
-    font-family: 'DM Serif Display', serif;
-    color: #fff;
-    font-size: 20px;
-    letter-spacing: 0.3px;
-  }
-  .topbar-logo span { color: #fbbf24; }
-  .topbar-note {
-    font-size: 12px;
-    color: rgba(255,255,255,0.65);
-    background: rgba(255,255,255,0.1);
-    padding: 5px 12px;
-    border-radius: 20px;
-    letter-spacing: 0.3px;
-  }
+  /* Shape */
+  --radius:      8px;       /* was 12px in index, 4px in admin → unified */
+  --radius-sm:   5px;       /* was 8px in index, 3px in admin → unified */
+}
 
-  /* ── SCREEN NAV ── */
-  .screen-nav {
-    background: var(--white);
-    border-bottom: 1px solid var(--border);
-    padding: 0 24px;
-    display: flex;
-    align-items: center;
-    gap: 4px;
-    overflow-x: auto;
-    -webkit-overflow-scrolling: touch;
-    scrollbar-width: none;
-  }
-  .screen-nav::-webkit-scrollbar { display: none; }
-  .snav-btn {
-    flex-shrink: 0;
-    padding: 14px 16px;
-    border: none;
-    background: none;
-    font-family: 'DM Sans', sans-serif;
-    font-size: 13px;
-    font-weight: 500;
-    color: var(--muted);
-    cursor: pointer;
-    border-bottom: 2.5px solid transparent;
-    transition: all .15s;
-    white-space: nowrap;
-  }
-  .snav-btn:hover { color: var(--mid); }
-  .snav-btn.active { color: var(--orange); border-bottom-color: var(--orange); }
+/* ═══════════════════════════════════════════════════════════════════════════
+   BASE
+═══════════════════════════════════════════════════════════════════════════ */
+html { scroll-behavior: smooth; }
+body {
+  font-family: 'DM Sans', sans-serif;
+  background: #F3F4F6;
+  color: var(--dark);
+  min-height: 100vh;
+  font-size: 13px;
+}
 
-  /* ── MAIN LAYOUT ── */
-  .main {
-    max-width: 1100px;
-    margin: 0 auto;
-    padding: 40px 24px;
-    display: grid;
-    grid-template-columns: 1fr 360px;
-    gap: 32px;
-    align-items: start;
-  }
+/* ═══════════════════════════════════════════════════════════════════════════
+   TOPBAR
+═══════════════════════════════════════════════════════════════════════════ */
+.topbar {
+  background: var(--green);
+  padding: 12px 24px;
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  position: sticky;
+  top: 0;
+  z-index: 200;
+  gap: 16px;
+}
+.topbar-logo {
+  font-family: 'DM Serif Display', serif;
+  color: #fff;
+  font-size: 20px;
+  letter-spacing: 0.3px;
+}
+.topbar-logo span { color: #fbbf24; }
+.topbar-end {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+.topbar-badge {
+  font-size: 12px;
+  color: rgba(255,255,255,0.65);
+  background: rgba(255,255,255,0.1);
+  padding: 5px 12px;
+  border-radius: 20px;
+  letter-spacing: 0.3px;
+  white-space: nowrap;
+}
 
-  /* ── DEVICE FRAME ── */
-  .device-frame {
-    background: var(--white);
-    border-radius: 20px;
-    box-shadow: 0 4px 6px -1px rgba(0,0,0,.07), 0 2px 4px -1px rgba(0,0,0,.04), 0 0 0 1px rgba(0,0,0,.06);
-    overflow: hidden;
-    min-height: 500px;
-  }
+/* ═══════════════════════════════════════════════════════════════════════════
+   MODE PILL TOGGLE
+═══════════════════════════════════════════════════════════════════════════ */
+.mode-pill {
+  display: flex;
+  background: rgba(0,0,0,0.28);
+  border-radius: 24px;
+  padding: 3px;
+  gap: 2px;
+}
+.mode-btn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 16px;
+  border: none;
+  border-radius: 20px;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 12px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background .2s, color .2s;
+  background: transparent;
+  color: rgba(255,255,255,0.55);
+  letter-spacing: 0.2px;
+  white-space: nowrap;
+}
+.mode-btn.active {
+  background: var(--orange);
+  color: #fff;
+  box-shadow: 0 1px 6px rgba(232,73,29,0.45);
+}
+.mode-btn:hover:not(.active) { color: rgba(255,255,255,0.9); }
 
-  /* ── SCREENS ── */
-  .screen { display: none; }
-  .screen.active { display: block; }
+/* ═══════════════════════════════════════════════════════════════════════════
+   SCREEN NAV  (shared chrome, buttons swapped per mode)
+═══════════════════════════════════════════════════════════════════════════ */
+.screen-nav-outer {
+  background: var(--white);
+  border-bottom: 1px solid var(--border);
+  position: relative;
+}
+.screen-nav {
+  padding: 0 24px;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+}
+.screen-nav::-webkit-scrollbar { display: none; }
+.snav-btn {
+  flex-shrink: 0;
+  padding: 13px 16px;
+  border: none;
+  background: none;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--muted);
+  cursor: pointer;
+  border-bottom: 2.5px solid transparent;
+  transition: color .15s, border-color .15s;
+  white-space: nowrap;
+}
+.snav-btn:hover { color: var(--mid); }
+.snav-btn.active { color: var(--orange); border-bottom-color: var(--orange); }
+.nav-kbd-hint {
+  margin-left: auto;
+  padding: 0 16px 0 8px;
+  font-size: 11px;
+  color: var(--muted);
+  white-space: nowrap;
+  flex-shrink: 0;
+  user-select: none;
+}
 
-  /* Common card inside device */
-  .form-inner { padding: 28px 24px; }
-  .page-title {
-    font-size: 22px;
-    font-weight: 700;
-    color: var(--dark);
-    margin-bottom: 16px;
-  }
+/* ═══════════════════════════════════════════════════════════════════════════
+   PROGRESS BAR
+═══════════════════════════════════════════════════════════════════════════ */
+.progress-bar-wrap {
+  height: 3px;
+  background: var(--border);
+  width: 100%;
+}
+.progress-bar-fill {
+  height: 100%;
+  background: var(--green);
+  transition: width 0.3s ease;
+  width: 0%;
+}
 
-  /* Trust bar */
-  .trust-bar {
-    display: flex;
-    gap: 12px;
-    flex-wrap: wrap;
-    padding-bottom: 16px;
-    border-bottom: 1px solid var(--border);
-    margin-bottom: 20px;
-  }
-  .trust-item {
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    font-size: 12px;
-    color: var(--mid);
-    font-weight: 500;
-  }
-  .trust-item svg { color: var(--muted); }
+/* ═══════════════════════════════════════════════════════════════════════════
+   PAGE LAYOUT
+═══════════════════════════════════════════════════════════════════════════ */
+.page-layout {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 36px 24px;
+  display: grid;
+  grid-template-columns: 1fr 320px;
+  gap: 32px;
+  align-items: start;
+}
 
-  /* Drop zone */
-  .drop-zone {
-    border: 2px dashed var(--orange);
-    border-radius: var(--radius);
-    padding: 28px 20px;
-    text-align: center;
-    cursor: pointer;
-    margin-bottom: 14px;
-    transition: background .15s;
-    background: #fff9f7;
-  }
-  .drop-zone:hover { background: #fff0eb; }
-  .dz-icon-wrap {
-    width: 48px;
-    height: 48px;
-    background: #fff0eb;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin: 0 auto 12px;
-  }
-  .dz-title { font-size: 15px; font-weight: 700; color: var(--dark); margin-bottom: 3px; }
-  .dz-sub   { font-size: 13px; color: var(--mid); margin-bottom: 2px; }
-  .dz-hint  { font-size: 11px; color: var(--muted); margin-bottom: 12px; }
-  .dz-meta  { font-size: 11px; color: var(--muted); margin-bottom: 14px; }
+/* Admin full-viewport mode — edge-to-edge, notes panel alongside */
+.page-layout.admin-mode {
+  max-width: 100%;
+  padding: 0;
+  grid-template-columns: 1fr 300px;
+  gap: 0;
+  align-items: stretch;
+}
+.page-layout.admin-mode .notes-col {
+  padding: 24px 16px 24px 0;
+  background: #F3F4F6;
+}
+.page-layout.admin-mode .notes-panel {
+  position: sticky;
+  top: 97px;
+}
+.page-layout.admin-mode .wp-frame {
+  border-radius: 0;
+  box-shadow: none;
+  height: calc(100vh - 95px);
+}
 
-  .photo-lib-btn {
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-    padding: 9px 18px;
-    border: 1.5px solid var(--orange);
-    border-radius: var(--radius-sm);
-    font-family: 'DM Sans', sans-serif;
-    font-size: 13px;
-    font-weight: 700;
-    color: var(--orange);
-    background: none;
-    cursor: pointer;
-    transition: all .15s;
-  }
-  .photo-lib-btn:hover { background: var(--orange); color: #fff; }
+/* ═══════════════════════════════════════════════════════════════════════════
+   MODE PANELS  (show/hide entire layout)
+═══════════════════════════════════════════════════════════════════════════ */
+.mode-panel          { display: none; }
+.mode-panel.active   { display: block; }
 
-  /* Photo thumbs */
-  .photos-row { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 6px; }
-  .photo-thumb {
-    width: 72px; height: 58px;
-    border-radius: var(--radius-sm);
-    border: 1px solid var(--border);
-    background: #dde4ec;
-    overflow: hidden;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-  .photo-thumb:nth-child(1) { background: #c4d1de; }
-  .photo-thumb:nth-child(2) { background: #b4c1ce; }
-  .photo-thumb:nth-child(3) { background: #a4b1be; }
-  .photo-thumb:nth-child(4) { background: #94a1ae; }
-  .photos-count { font-size: 12px; font-weight: 700; color: var(--green); margin-bottom: 14px; }
+/* ═══════════════════════════════════════════════════════════════════════════
+   CUSTOMER: DEVICE FRAME
+═══════════════════════════════════════════════════════════════════════════ */
+.device-frame {
+  background: var(--white);
+  border-radius: 20px;
+  box-shadow: 0 4px 6px -1px rgba(0,0,0,.07),
+              0 2px 4px -1px rgba(0,0,0,.04),
+              0 0 0 1px rgba(0,0,0,.06);
+  overflow: hidden;
+  min-height: 500px;
+}
 
-  /* Tips */
-  .tips-row {
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    font-size: 13px;
-    color: var(--muted);
-    cursor: pointer;
-    margin-bottom: 14px;
-  }
-  .tips-row:hover { color: var(--mid); }
+/* Customer screens */
+.cust-screen          { display: none; }
+.cust-screen.active   { display: block; }
 
-  /* Desc field */
-  .desc-label { font-size: 13px; font-weight: 700; color: var(--dark); margin-bottom: 6px; }
-  .desc-box {
-    width: 100%;
-    border: 1.5px solid var(--border);
-    border-radius: var(--radius-sm);
-    padding: 10px 12px;
-    font-family: 'DM Sans', sans-serif;
-    font-size: 13px;
-    color: var(--dark);
-    background: var(--surface);
-    resize: none;
-    height: 64px;
-    transition: border-color .15s;
-    outline: none;
-  }
-  .desc-box:focus { border-color: var(--orange); }
-  .char-count { text-align: right; font-size: 11px; color: var(--muted); margin-bottom: 18px; }
+/* ── Common inner padding ── */
+.form-inner { padding: 28px 24px; }
+.page-title { font-size: 22px; font-weight: 700; color: var(--dark); margin-bottom: 16px; }
 
-  /* CTA buttons */
-  .cta-btn {
-    width: 100%;
-    padding: 15px;
-    background: var(--orange);
-    color: #fff;
-    border: none;
-    border-radius: var(--radius-sm);
-    font-family: 'DM Sans', sans-serif;
-    font-size: 14px;
-    font-weight: 700;
-    letter-spacing: .5px;
-    cursor: pointer;
-    margin-bottom: 8px;
-    transition: background .15s, transform .1s;
-  }
-  .cta-btn:hover { background: var(--orange-dark); transform: translateY(-1px); }
-  .cta-btn:active { transform: translateY(0); }
-  .cta-btn.disabled { background: #D1D5DB; cursor: not-allowed; transform: none; }
-  .cta-btn.outline {
-    background: none;
-    border: 1.5px solid var(--orange);
-    color: var(--orange);
-  }
-  .cta-btn.outline:hover { background: #fff0eb; }
-  .cta-note { text-align: center; font-size: 11px; color: var(--muted); }
+/* ── Trust bar ── */
+.trust-bar {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  padding-bottom: 16px;
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 20px;
+}
+.trust-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  color: var(--mid);
+  font-weight: 500;
+}
 
-  /* Loading screen */
-  .loading-wrap { padding: 48px 28px; text-align: center; }
-  .spinner-ring {
-    width: 52px; height: 52px;
-    border: 3.5px solid var(--border);
-    border-top-color: var(--orange);
-    border-radius: 50%;
-    animation: spin .75s linear infinite;
-    margin: 0 auto 24px;
-  }
-  @keyframes spin { to { transform: rotate(360deg); } }
-  .load-title { font-size: 18px; font-weight: 700; color: var(--dark); margin-bottom: 6px; }
-  .load-sub   { font-size: 13px; color: var(--mid); line-height: 1.6; margin-bottom: 24px; }
-  .load-steps { text-align: left; display: inline-block; }
-  .load-step  { display: flex; align-items: center; gap: 10px; font-size: 13px; color: var(--muted); margin-bottom: 8px; }
-  .ldot { width: 8px; height: 8px; border-radius: 50%; background: var(--border); flex-shrink: 0; }
-  .ldot.done   { background: var(--green); }
-  .ldot.active { background: var(--orange); }
-  .load-step.done-step   { color: var(--mid); }
-  .load-step.active-step { color: var(--dark); font-weight: 500; }
+/* ── Drop zone ── */
+.drop-zone {
+  border: 2px dashed var(--orange);
+  border-radius: var(--radius);
+  padding: 28px 20px;
+  text-align: center;
+  cursor: pointer;
+  margin-bottom: 14px;
+  transition: background .15s;
+  background: #fff9f7;
+}
+.drop-zone:hover { background: #fff0eb; }
+.dz-icon-wrap {
+  width: 48px; height: 48px;
+  background: #fff0eb;
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  margin: 0 auto 12px;
+}
+.dz-title { font-size: 15px; font-weight: 700; color: var(--dark); margin-bottom: 3px; }
+.dz-sub   { font-size: 13px; color: var(--mid); margin-bottom: 2px; }
+.dz-hint  { font-size: 11px; color: var(--muted); margin-bottom: 12px; }
+.dz-meta  { font-size: 11px; color: var(--muted); margin-bottom: 14px; }
+.photo-lib-btn {
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 9px 18px;
+  border: 1.5px solid var(--orange);
+  border-radius: var(--radius-sm);
+  font-family: 'DM Sans', sans-serif;
+  font-size: 13px; font-weight: 700;
+  color: var(--orange); background: none;
+  cursor: pointer; transition: all .15s;
+}
+.photo-lib-btn:hover { background: var(--orange); color: #fff; }
 
-  /* Offer screen */
-  .offer-wrap { padding: 40px 28px 28px; text-align: center; }
-  .offer-price-big {
-    font-size: 72px;
-    font-weight: 700;
-    color: var(--dark);
-    line-height: 1;
-    margin-bottom: 10px;
-  }
-  .offer-club-line {
-    font-size: 14px;
-    color: var(--mid);
-    margin-bottom: 18px;
-    padding-bottom: 18px;
-    border-bottom: 1px solid var(--border);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 6px;
-    flex-wrap: wrap;
-  }
-  .offer-club-line strong { color: var(--dark); font-weight: 700; }
-  .club-dot { color: var(--border); font-size: 16px; }
-  .expiry-row {
-    display: flex; align-items: center; justify-content: center; gap: 6px;
-    font-size: 13px; color: var(--mid); margin-bottom: 24px;
-  }
-  .expiry-bold { font-weight: 700; color: var(--dark); }
-  .decline-link {
-    display: block; text-align: center; font-size: 13px; color: var(--muted);
-    cursor: pointer; text-decoration: underline; text-underline-offset: 2px;
-    margin-bottom: 10px;
-  }
-  .decline-link:hover { color: var(--mid); }
-  .no-commit { font-size: 11px; color: var(--muted); text-align: center; }
+/* ── Photo thumbs ── */
+.photos-row { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 6px; }
+.photo-thumb {
+  width: 72px; height: 58px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border);
+  background: #dde4ec;
+  overflow: hidden;
+  display: flex; align-items: center; justify-content: center;
+}
+.photo-thumb:nth-child(1) { background: #c4d1de; }
+.photo-thumb:nth-child(2) { background: #b4c1ce; }
+.photo-thumb:nth-child(3) { background: #a4b1be; }
+.photo-thumb:nth-child(4) { background: #94a1ae; }
+.photos-count { font-size: 12px; font-weight: 700; color: var(--green); margin-bottom: 14px; }
 
-  /* Confirmed */
-  .conf-wrap { padding: 36px 24px; text-align: center; }
-  .conf-circle {
-    width: 60px; height: 60px; border-radius: 50%;
-    border: 2.5px solid var(--green);
-    display: flex; align-items: center; justify-content: center;
-    margin: 0 auto 16px;
-    animation: popIn .4s ease;
-  }
-  @keyframes popIn { from { transform: scale(.5); opacity: 0; } to { transform: scale(1); opacity: 1; } }
-  .conf-title { font-size: 20px; font-weight: 700; color: var(--dark); margin-bottom: 8px; }
-  .conf-sub   { font-size: 13px; color: var(--mid); line-height: 1.6; margin-bottom: 24px; }
-  .next-steps-row { display: flex; gap: 10px; margin-bottom: 24px; text-align: left; }
-  .ns { flex: 1; }
-  .ns-num {
-    width: 26px; height: 26px; border-radius: 50%; background: var(--orange);
-    color: #fff; font-size: 12px; font-weight: 700;
-    display: flex; align-items: center; justify-content: center; margin-bottom: 8px;
-  }
-  .ns-title { font-size: 12px; font-weight: 700; color: var(--dark); margin-bottom: 3px; }
-  .ns-body  { font-size: 11px; color: var(--mid); line-height: 1.5; }
+/* ── Tips row ── */
+.tips-row {
+  display: flex; align-items: center; gap: 6px;
+  font-size: 13px; color: var(--muted);
+  cursor: pointer; margin-bottom: 14px;
+}
+.tips-row:hover { color: var(--mid); }
 
-  /* ── LOGIN SCREEN ── */
-  .login-inner { padding: 32px 28px 28px; }
-  .login-title {
-    font-size: 26px;
-    font-weight: 700;
-    color: var(--dark);
-    margin-bottom: 8px;
-    line-height: 1.2;
-  }
-  .login-subtitle {
-    font-size: 13px;
-    color: var(--mid);
-    margin-bottom: 20px;
-    line-height: 1.5;
-  }
-  .condition-guide-btn {
-    display: inline-flex;
-    align-items: center;
-    padding: 10px 20px;
-    border: 2px solid var(--orange);
-    border-radius: var(--radius-sm);
-    font-family: 'DM Sans', sans-serif;
-    font-size: 12px;
-    font-weight: 700;
-    color: var(--orange);
-    background: none;
-    cursor: pointer;
-    letter-spacing: .8px;
-    margin-bottom: 24px;
-    transition: all .15s;
-  }
-  .condition-guide-btn:hover { background: var(--orange); color: #fff; }
-  .login-field-label {
-    font-size: 11px;
-    font-weight: 700;
-    color: var(--dark);
-    text-transform: uppercase;
-    letter-spacing: .5px;
-    margin-bottom: 6px;
-  }
-  .login-input {
-    width: 100%;
-    padding: 11px 14px;
-    border: 1.5px solid var(--border);
-    border-radius: var(--radius-sm);
-    font-family: 'DM Sans', sans-serif;
-    font-size: 14px;
-    color: var(--dark);
-    background: var(--white);
-    margin-bottom: 16px;
-    outline: none;
-    transition: border-color .15s;
-  }
-  .login-input:focus { border-color: var(--orange); }
-  .remember-row {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    margin-bottom: 20px;
-  }
-  .remember-row input[type="checkbox"] {
-    width: 16px;
-    height: 16px;
-    border: 1.5px solid var(--border);
-    border-radius: 3px;
-    accent-color: var(--orange);
-    cursor: pointer;
-    flex-shrink: 0;
-  }
-  .remember-label {
-    font-size: 12px;
-    font-weight: 700;
-    color: var(--dark);
-    text-transform: uppercase;
-    letter-spacing: .5px;
-    cursor: pointer;
-  }
-  .login-btn {
-    width: 100%;
-    padding: 15px;
-    background: var(--blue);
-    color: #fff;
-    border: none;
-    border-radius: var(--radius-sm);
-    font-family: 'DM Sans', sans-serif;
-    font-size: 14px;
-    font-weight: 700;
-    letter-spacing: .5px;
-    cursor: pointer;
-    margin-bottom: 12px;
-    transition: background .15s, transform .1s;
-  }
-  .login-btn:hover { background: #1a5a99; transform: translateY(-1px); }
-  .login-btn:active { transform: translateY(0); }
-  .lost-password-link {
+/* ── Description textarea ── */
+.desc-label { font-size: 13px; font-weight: 700; color: var(--dark); margin-bottom: 6px; }
+.desc-box {
+  width: 100%;
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 10px 12px;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 13px; color: var(--dark);
+  background: var(--surface);
+  resize: none; height: 64px;
+  transition: border-color .15s; outline: none;
+}
+.desc-box:focus { border-color: var(--orange); }
+.char-count { text-align: right; font-size: 11px; color: var(--muted); margin-bottom: 18px; }
+
+/* ── CTA buttons ── */
+.cta-btn {
+  width: 100%; padding: 15px;
+  background: var(--orange); color: #fff;
+  border: none; border-radius: var(--radius-sm);
+  font-family: 'DM Sans', sans-serif;
+  font-size: 14px; font-weight: 700; letter-spacing: .5px;
+  cursor: pointer; margin-bottom: 8px;
+  transition: background .15s, transform .1s;
+}
+.cta-btn:hover { background: var(--orange-dark); transform: translateY(-1px); }
+.cta-btn:active { transform: translateY(0); }
+.cta-btn.disabled { background: #D1D5DB; cursor: not-allowed; transform: none; }
+.cta-btn.outline {
+  background: none;
+  border: 1.5px solid var(--orange);
+  color: var(--orange);
+}
+.cta-btn.outline:hover { background: #fff0eb; }
+.cta-note { text-align: center; font-size: 11px; color: var(--muted); }
+
+/* ── Loading / Valuing screen ── */
+.loading-wrap { padding: 48px 28px; text-align: center; }
+.spinner-ring {
+  width: 52px; height: 52px;
+  border: 3.5px solid var(--border);
+  border-top-color: var(--orange);
+  border-radius: 50%;
+  animation: spin .75s linear infinite;
+  margin: 0 auto 24px;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+.load-title { font-size: 18px; font-weight: 700; color: var(--dark); margin-bottom: 6px; }
+.load-sub   { font-size: 13px; color: var(--mid); line-height: 1.6; margin-bottom: 24px; }
+.load-steps { text-align: left; display: inline-block; }
+.load-step  { display: flex; align-items: center; gap: 10px; font-size: 13px; color: var(--muted); margin-bottom: 8px; }
+.ldot { width: 8px; height: 8px; border-radius: 50%; background: var(--border); flex-shrink: 0; }
+.ldot.done   { background: var(--green); }
+.ldot.active { background: var(--orange); }
+.load-step.done-step   { color: var(--mid); }
+.load-step.active-step { color: var(--dark); font-weight: 500; }
+
+/* ── Offer screen ── */
+.offer-wrap { padding: 40px 28px 28px; text-align: center; }
+.offer-price-big {
+  font-size: 72px; font-weight: 700;
+  color: var(--dark); line-height: 1; margin-bottom: 10px;
+}
+.offer-club-line {
+  font-size: 14px; color: var(--mid);
+  margin-bottom: 18px; padding-bottom: 18px;
+  border-bottom: 1px solid var(--border);
+  display: flex; align-items: center;
+  justify-content: center; gap: 6px; flex-wrap: wrap;
+}
+.offer-club-line strong { color: var(--dark); font-weight: 700; }
+.club-dot { color: var(--border); font-size: 16px; }
+.expiry-row {
+  display: flex; align-items: center;
+  justify-content: center; gap: 6px;
+  font-size: 13px; color: var(--mid); margin-bottom: 24px;
+}
+.expiry-bold { font-weight: 700; color: var(--dark); }
+.decline-link {
+  display: block; text-align: center;
+  font-size: 13px; color: var(--muted);
+  cursor: pointer; text-decoration: underline;
+  text-underline-offset: 2px; margin-bottom: 10px;
+}
+.decline-link:hover { color: var(--mid); }
+.no-commit { font-size: 11px; color: var(--muted); text-align: center; }
+
+/* ── Confirmed screen ── */
+.conf-wrap { padding: 36px 24px; text-align: center; }
+.conf-circle {
+  width: 60px; height: 60px; border-radius: 50%;
+  border: 2.5px solid var(--green);
+  display: flex; align-items: center; justify-content: center;
+  margin: 0 auto 16px;
+  animation: popIn .4s ease;
+}
+@keyframes popIn {
+  from { transform: scale(.5); opacity: 0; }
+  to   { transform: scale(1);  opacity: 1; }
+}
+.conf-title { font-size: 20px; font-weight: 700; color: var(--dark); margin-bottom: 8px; }
+.conf-sub   { font-size: 13px; color: var(--mid); line-height: 1.6; margin-bottom: 24px; }
+.next-steps-row { display: flex; gap: 10px; margin-bottom: 24px; text-align: left; }
+.ns { flex: 1; }
+.ns-num {
+  width: 26px; height: 26px; border-radius: 50%;
+  background: var(--orange); color: #fff;
+  font-size: 12px; font-weight: 700;
+  display: flex; align-items: center; justify-content: center;
+  margin-bottom: 8px;
+}
+.ns-title { font-size: 12px; font-weight: 700; color: var(--dark); margin-bottom: 3px; }
+.ns-body  { font-size: 11px; color: var(--mid); line-height: 1.5; }
+
+/* ── Login screen ── */
+.login-inner { padding: 32px 28px 28px; }
+.login-title { font-size: 26px; font-weight: 700; color: var(--dark); margin-bottom: 8px; line-height: 1.2; }
+.login-subtitle { font-size: 13px; color: var(--mid); margin-bottom: 20px; line-height: 1.5; }
+.condition-guide-btn {
+  display: inline-flex; align-items: center;
+  padding: 10px 20px;
+  border: 2px solid var(--orange);
+  border-radius: var(--radius-sm);
+  font-family: 'DM Sans', sans-serif;
+  font-size: 12px; font-weight: 700;
+  color: var(--orange); background: none;
+  cursor: pointer; letter-spacing: .8px;
+  margin-bottom: 24px; transition: all .15s;
+}
+.condition-guide-btn:hover { background: var(--orange); color: #fff; }
+.login-field-label {
+  font-size: 11px; font-weight: 700;
+  color: var(--dark); text-transform: uppercase;
+  letter-spacing: .5px; margin-bottom: 6px;
+}
+.login-input {
+  width: 100%; padding: 11px 14px;
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius-sm);
+  font-family: 'DM Sans', sans-serif;
+  font-size: 14px; color: var(--dark);
+  background: var(--white); margin-bottom: 16px;
+  outline: none; transition: border-color .15s;
+}
+.login-input:focus { border-color: var(--orange); }
+.remember-row { display: flex; align-items: center; gap: 10px; margin-bottom: 20px; }
+.remember-row input[type="checkbox"] {
+  width: 16px; height: 16px;
+  accent-color: var(--orange);
+  cursor: pointer; flex-shrink: 0;
+}
+.remember-label {
+  font-size: 12px; font-weight: 700;
+  color: var(--dark); text-transform: uppercase;
+  letter-spacing: .5px; cursor: pointer;
+}
+.login-btn {
+  width: 100%; padding: 15px;
+  background: var(--blue); color: #fff;
+  border: none; border-radius: var(--radius-sm);
+  font-family: 'DM Sans', sans-serif;
+  font-size: 14px; font-weight: 700; letter-spacing: .5px;
+  cursor: pointer; margin-bottom: 12px;
+  transition: background .15s, transform .1s;
+}
+.login-btn:hover { background: #1a5a99; transform: translateY(-1px); }
+.login-btn:active { transform: translateY(0); }
+.lost-password-link {
+  display: block; text-align: left;
+  font-size: 13px; color: var(--orange);
+  text-decoration: underline; text-underline-offset: 2px;
+  cursor: pointer; margin-bottom: 20px;
+}
+.lost-password-link:hover { color: var(--orange-dark); }
+.login-divider { height: 1px; background: var(--border); margin-bottom: 20px; }
+.new-to-cfc { font-size: 13px; color: var(--mid); margin-bottom: 12px; }
+.create-account-btn {
+  width: 100%; padding: 15px;
+  background: var(--orange); color: #fff;
+  border: none; border-radius: var(--radius-sm);
+  font-family: 'DM Sans', sans-serif;
+  font-size: 14px; font-weight: 700; letter-spacing: .5px;
+  cursor: pointer; transition: background .15s, transform .1s;
+}
+.create-account-btn:hover { background: var(--orange-dark); transform: translateY(-1px); }
+.create-account-btn:active { transform: translateY(0); }
+
+/* ── My Quotes dashboard ── */
+.dash-layout {
+  display: grid;
+  grid-template-columns: 200px 1fr;
+  min-height: 500px;
+}
+.dash-sidebar { background: var(--white); border-right: 1px solid var(--border); padding: 16px 0; }
+.dash-sidebar-item {
+  display: flex; align-items: center; gap: 10px;
+  padding: 11px 18px;
+  font-size: 13px; font-weight: 500; color: var(--mid);
+  cursor: pointer; transition: all .12s;
+  border-left: 3px solid transparent;
+}
+.dash-sidebar-item:hover { background: var(--surface); color: var(--dark); }
+.dash-sidebar-item.active { background: var(--blue); color: #fff; border-left-color: transparent; }
+.dash-sidebar-item svg { width: 14px; height: 14px; opacity: .6; flex-shrink: 0; }
+.dash-sidebar-item.active svg { opacity: 1; }
+.dash-main-area { padding: 24px; background: var(--surface); }
+.dash-heading { font-size: 17px; font-weight: 700; color: var(--dark); margin-bottom: 3px; }
+.dash-sub     { font-size: 13px; color: var(--mid); margin-bottom: 20px; }
+.dash-quote-card {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 18px; margin-bottom: 12px;
+  transition: box-shadow .15s;
+}
+.dash-quote-card:hover { box-shadow: 0 4px 12px rgba(0,0,0,.07); }
+.dqc-top { display: flex; align-items: flex-start; justify-content: space-between; margin-bottom: 4px; }
+.dqc-name { font-size: 15px; font-weight: 700; color: var(--dark); }
+.status-badge {
+  font-size: 11px; font-weight: 700;
+  padding: 4px 12px; border-radius: 20px;
+  border: 1.5px solid var(--blue); color: var(--blue);
+  background: none; letter-spacing: .3px; white-space: nowrap;
+}
+.status-badge.paid { border-color: var(--green); color: var(--green); }
+.dqc-meta { font-size: 12px; color: var(--muted); margin-bottom: 16px; }
+.progress-track { display: flex; align-items: flex-start; margin-bottom: 16px; overflow-x: auto; }
+.pt-step { display: flex; flex-direction: column; align-items: center; gap: 5px; flex-shrink: 0; }
+.pt-dot {
+  width: 28px; height: 28px; border-radius: 50%;
+  background: var(--orange); border: 2px solid var(--orange);
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+}
+.pt-dot.pending { background: none; border-color: var(--border); }
+.pt-dot.next    { background: none; border-color: var(--orange); }
+.pt-dot svg { width: 12px; height: 12px; stroke: #fff; stroke-width: 2.5; fill: none; }
+.pt-line { flex: 1; height: 2px; background: var(--orange); min-width: 40px; margin-top: 14px; }
+.pt-line.empty { background: var(--border); }
+.pt-label { text-align: center; }
+.pt-label strong { display: block; font-size: 11px; font-weight: 700; color: var(--dark); white-space: nowrap; }
+.pt-label span   { font-size: 10px; color: var(--muted); }
+.pt-label.muted strong { color: var(--muted); }
+.dqc-footer {
+  display: flex; align-items: center; justify-content: space-between;
+  padding-top: 14px; border-top: 1px solid var(--border);
+}
+.dqc-offer-label { font-size: 12px; color: var(--muted); margin-bottom: 2px; }
+.dqc-offer-price { font-size: 22px; font-weight: 700; color: var(--orange); }
+.dqc-offer-price.green { color: var(--green); }
+.ship-btn {
+  padding: 9px 14px;
+  border: 1.5px solid var(--orange);
+  border-radius: var(--radius-sm);
+  font-family: 'DM Sans', sans-serif;
+  font-size: 11px; font-weight: 700; color: var(--orange);
+  background: none; cursor: pointer; letter-spacing: .4px;
+  transition: all .15s;
+}
+.ship-btn:hover { background: var(--orange); color: #fff; }
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   ADMIN: WP FRAME  — fixed-height consistent viewport
+═══════════════════════════════════════════════════════════════════════════ */
+.wp-frame {
+  height: 680px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  background: #f0f0f1;
+  border-radius: var(--radius);
+  box-shadow: 0 2px 8px rgba(0,0,0,.12), 0 0 0 1px rgba(0,0,0,.06);
+}
+
+/* ── WP Admin bar (always pinned at top of frame) ── */
+.wp-adminbar {
+  flex-shrink: 0;
+  background: #1d2327;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  padding: 0 12px;
+  gap: 16px;
+}
+.wp-adminbar-item { font-size: 11px; color: #a7aaad; cursor: pointer; user-select: none; }
+.wp-adminbar-item:hover { color: #fff; }
+.wp-adminbar-sep { color: #3c434a; }
+
+/* ── WP Layout grid (fills remaining height) ── */
+.wp-layout {
+  flex: 1;
+  display: grid;
+  grid-template-columns: 160px 1fr;
+  min-height: 0;    /* critical: lets flex child shrink */
+  overflow: hidden;
+}
+
+/* ── WP Sidebar (fixed 160px, full height, scrolls internally) ── */
+.wp-sidebar {
+  background: #1e2327;
+  padding: 8px 0;
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: #3c434a #1e2327;
+}
+.wp-menu-item {
+  display: flex; align-items: center; gap: 8px;
+  padding: 9px 14px;
+  font-size: 12px; color: #a7aaad;
+  cursor: pointer;
+  transition: background .1s, color .1s;
+}
+.wp-menu-item:hover { background: #2c3338; color: #fff; }
+.wp-menu-item.active { background: var(--blue); color: #fff; }
+.wp-menu-item svg { width: 14px; height: 14px; flex-shrink: 0; opacity: .7; }
+.wp-menu-item.active svg { opacity: 1; }
+.wp-menu-sep { height: 1px; background: #2c3338; margin: 6px 0; }
+/* Cash Fore Clubs custom plugin highlight */
+.wp-menu-cfc {
+  color: #fbbf24 !important;
+  font-weight: 700;
+}
+.wp-menu-cfc svg { opacity: 1 !important; }
+.wp-submenu-item {
+  display: block;
+  padding: 6px 14px 6px 36px;
+  font-size: 11px; color: #72777c;
+  cursor: pointer; transition: color .1s, background .1s;
+}
+.wp-submenu-item:hover { color: #fff; }
+.wp-submenu-item.active { color: #fff; background: rgba(255,255,255,0.1); }
+
+/* ── WP Main content area (scrolls inside the fixed frame) ── */
+.wp-content {
+  background: #f0f0f1;
+  padding: 20px;
+  overflow-y: auto;
+  height: 100%;
+}
+
+/* Admin screens — opacity swap keeps wp-frame height stable */
+.admin-screens-container {
+  position: relative;
+}
+.admin-screen {
+  position: absolute;
+  top: 0; left: 0; width: 100%;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity .15s;
+}
+.admin-screen.active {
+  position: relative;
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/* ── WP Page header ── */
+.page-header {
+  display: flex; align-items: center;
+  justify-content: space-between;
+  margin-bottom: 16px; flex-wrap: wrap; gap: 10px;
+}
+.page-title-row { display: flex; align-items: center; gap: 10px; }
+.page-h1 { font-size: 20px; font-weight: 700; color: var(--dark); line-height: 1; }
+
+/* ── WP Buttons ── */
+.wp-btn {
+  display: inline-flex; align-items: center; gap: 5px;
+  padding: 6px 12px;
+  border: 1px solid var(--blue);
+  border-radius: var(--radius);
+  font-family: 'DM Sans', sans-serif;
+  font-size: 12px; font-weight: 500;
+  color: var(--blue); background: var(--white);
+  cursor: pointer; transition: all .12s;
+}
+.wp-btn:hover { background: var(--blue); color: #fff; }
+.wp-btn.primary { background: var(--blue); color: #fff; border-color: var(--blue-dark); }
+.wp-btn.primary:hover { background: var(--blue-dark); }
+.wp-btn.orange { background: var(--orange); color: #fff; border-color: var(--orange-dark); }
+.wp-btn.orange:hover { background: var(--orange-dark); }
+
+/* ── Stat cards ── */
+.stat-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px; margin-bottom: 20px;
+}
+.stat-card {
+  background: var(--white); border: 1px solid var(--border);
+  border-radius: var(--radius); padding: 16px;
+  display: flex; align-items: center; gap: 14px;
+}
+.stat-icon {
+  width: 40px; height: 40px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0; color: var(--muted);
+}
+.stat-body  { flex: 1; min-width: 0; }
+.stat-label { font-size: 10px; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: .5px; margin-bottom: 3px; }
+.stat-num   { font-size: 22px; font-weight: 700; color: var(--dark); line-height: 1; margin-bottom: 3px; }
+.stat-sub   { font-size: 11px; color: var(--muted); }
+
+/* ── Quotes table layout ── */
+.quotes-layout { display: grid; grid-template-columns: 180px 1fr; gap: 16px; align-items: start; }
+.filter-sidebar {
+  background: var(--white); border: 1px solid var(--border);
+  border-radius: var(--radius); padding: 14px;
+}
+.filter-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
+.filter-title { font-size: 13px; font-weight: 700; color: var(--dark); }
+.filter-clear { font-size: 11px; color: var(--blue); cursor: pointer; text-decoration: underline; }
+.filter-section-title {
+  font-size: 10px; font-weight: 700; color: var(--muted);
+  text-transform: uppercase; letter-spacing: .6px;
+  margin-bottom: 8px; margin-top: 14px;
+}
+.filter-section-title:first-of-type { margin-top: 0; }
+.filter-check-row { display: flex; align-items: center; justify-content: space-between; margin-bottom: 6px; }
+.filter-check-left { display: flex; align-items: center; gap: 7px; font-size: 12px; color: var(--mid); }
+.filter-check-left input[type="checkbox"] { accent-color: var(--blue); width: 13px; height: 13px; }
+.filter-count { font-size: 10px; background: #e0e0e0; color: var(--mid); padding: 1px 6px; border-radius: 20px; font-weight: 700; }
+.filter-date-label { font-size: 11px; color: var(--mid); margin-bottom: 4px; }
+.filter-date-input {
+  width: 100%; padding: 6px 8px;
+  border: 1px solid var(--border); border-radius: var(--radius-sm);
+  font-family: 'DM Sans', sans-serif; font-size: 12px; color: var(--dark);
+  margin-bottom: 8px; outline: none;
+}
+.table-area { background: var(--white); border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; }
+.table-toolbar {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 10px 14px; border-bottom: 1px solid var(--border); gap: 10px;
+}
+.table-toolbar-left  { display: flex; align-items: center; gap: 8px; }
+.table-toolbar-right { display: flex; align-items: center; gap: 8px; }
+.bulk-select {
+  padding: 5px 8px; border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  font-family: 'DM Sans', sans-serif; font-size: 12px;
+  color: var(--mid); background: var(--white); cursor: pointer;
+}
+.search-input {
+  padding: 5px 10px; border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  font-family: 'DM Sans', sans-serif; font-size: 12px;
+  color: var(--dark); outline: none; width: 160px;
+}
+.item-count { font-size: 12px; color: var(--muted); align-self: center; }
+.tbl { width: 100%; border-collapse: collapse; font-size: 12px; }
+.tbl th {
+  background: #f6f7f7; border-bottom: 1px solid var(--border);
+  padding: 9px 10px; text-align: left;
+  font-size: 11px; font-weight: 700; color: var(--mid); white-space: nowrap;
+}
+.tbl th.sortable { color: var(--blue); cursor: pointer; }
+.tbl th.sortable:hover { text-decoration: underline; }
+.tbl td { padding: 10px; border-bottom: 1px solid #f0f0f1; color: var(--mid); vertical-align: middle; }
+.tbl tr:last-child td { border-bottom: none; }
+.tbl tr:hover td { background: #f9f9f9; }
+.ref-link { color: var(--blue); font-weight: 700; cursor: pointer; text-decoration: underline; }
+.ref-sub  { font-size: 10px; color: var(--muted); margin-top: 1px; }
+.customer-name  { color: var(--blue); cursor: pointer; font-weight: 500; }
+.customer-email { font-size: 10px; color: var(--muted); margin-top: 1px; }
+.conf-badge       { font-weight: 700; }
+.conf-badge.high  { color: #1a7a1a; }
+.conf-badge.zero  { color: var(--muted); }
+.status-pill { display: inline-block; padding: 3px 10px; border-radius: 20px; font-size: 11px; font-weight: 700; letter-spacing: .2px; white-space: nowrap; }
+.status-pill.accepted { background: #e6f1fb; color: var(--blue);   border: 1px solid #b3d1ef; }
+.status-pill.review   { background: #fff3cd; color: #856404;        border: 1px solid #ffc107; }
+.status-pill.paid     { background: #e8f4e9; color: var(--green);   border: 1px solid #a3d1a6; }
+.status-pill.transit  { background: #fff0eb; color: var(--orange);  border: 1px solid #f5c6b3; }
+.action-btn { padding: 5px 10px; border-radius: var(--radius-sm); font-family: 'DM Sans', sans-serif; font-size: 11px; font-weight: 700; cursor: pointer; border: none; letter-spacing: .2px; white-space: nowrap; }
+.action-btn.received { background: var(--orange); color: #fff; }
+.action-btn.received:hover { background: var(--orange-dark); }
+.action-btn.send     { background: var(--blue); color: #fff; }
+.action-btn.send:hover { background: var(--blue-dark); }
+
+/* ── Settings ── */
+.settings-wrap { display: flex; flex-direction: column; gap: 16px; }
+.settings-section { background: var(--white); border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; }
+.settings-section-header { padding: 14px 18px; border-bottom: 1px solid var(--border); font-size: 14px; font-weight: 700; color: var(--dark); }
+.settings-section-body { padding: 18px; }
+.settings-tabs { display: flex; border-bottom: 1px solid var(--border); margin-bottom: 18px; }
+.stab {
+  padding: 9px 16px; font-size: 13px; font-weight: 500; color: var(--mid);
+  cursor: pointer; border-bottom: 2px solid transparent; margin-bottom: -1px;
+  display: flex; align-items: center; gap: 6px; transition: all .12s;
+}
+.stab:hover { color: var(--dark); }
+.stab.active { color: var(--orange); border-bottom-color: var(--orange); }
+.stab-count { background: #ccc; color: #fff; font-size: 10px; font-weight: 700; padding: 1px 6px; border-radius: 20px; }
+.settings-row {
+  display: grid; grid-template-columns: 200px 1fr; gap: 16px; align-items: start;
+  margin-bottom: 18px; padding-bottom: 18px; border-bottom: 1px solid #f0f0f1;
+}
+.settings-row:last-child { margin-bottom: 0; padding-bottom: 0; border-bottom: none; }
+.settings-label { font-size: 13px; font-weight: 700; color: var(--dark); padding-top: 6px; }
+.settings-field select {
+  padding: 7px 10px; border: 1px solid var(--border); border-radius: var(--radius-sm);
+  font-family: 'DM Sans', sans-serif; font-size: 13px; color: var(--dark);
+  background: var(--white); outline: none; transition: border-color .12s;
+  width: 100%; max-width: 380px; cursor: pointer;
+}
+.settings-field select:focus { border-color: var(--blue); }
+.model-badge {
+  display: inline-block; padding: 2px 8px; border-radius: 20px;
+  font-size: 10px; font-weight: 700; letter-spacing: .3px;
+  background: #fff0eb; color: var(--orange); border: 1px solid #f5c6b3;
+  margin-left: 6px; vertical-align: middle;
+}
+.settings-field input[type="text"],
+.settings-field input[type="email"],
+.settings-field input[type="number"],
+.settings-field input[type="password"] {
+  padding: 7px 10px; border: 1px solid var(--border); border-radius: var(--radius-sm);
+  font-family: 'DM Sans', sans-serif; font-size: 13px; color: var(--dark);
+  background: var(--white); outline: none; transition: border-color .12s;
+  width: 100%; max-width: 380px;
+}
+.settings-field input:focus { border-color: var(--blue); }
+.settings-desc { font-size: 12px; color: var(--muted); margin-top: 5px; line-height: 1.5; }
+.settings-check-row { display: flex; align-items: center; gap: 8px; margin-bottom: 8px; font-size: 13px; color: var(--mid); }
+.settings-check-row input[type="checkbox"] { accent-color: var(--blue); width: 14px; height: 14px; }
+.slider-row { display: flex; align-items: center; gap: 10px; margin-bottom: 6px; }
+.slider-num { padding: 6px 8px; border: 1px solid var(--border); border-radius: var(--radius-sm); font-size: 13px; font-weight: 700; color: var(--dark); width: 60px; text-align: center; }
+.slider-unit { font-size: 13px; color: var(--mid); }
+input[type="range"] {
+  -webkit-appearance: none; height: 4px; border-radius: 2px;
+  background: linear-gradient(to right, var(--blue) 40%, #dcdcde 40%);
+  outline: none; cursor: pointer; width: 200px;
+}
+input[type="range"].conf { background: linear-gradient(to right, var(--blue) 72%, #dcdcde 72%); }
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none; width: 16px; height: 16px; border-radius: 50%;
+  background: var(--blue); border: 2px solid var(--white);
+  box-shadow: 0 0 0 1px var(--blue); cursor: pointer;
+}
+.example-box { display: inline-block; background: #e8f4e9; border: 1px solid #a3d1a6; border-radius: var(--radius); padding: 8px 14px; font-size: 13px; color: var(--green); margin-top: 8px; }
+.shortcode-row { display: flex; align-items: center; gap: 8px; }
+.shortcode-box { padding: 7px 10px; border: 1px solid var(--border); border-radius: var(--radius-sm); font-family: monospace; font-size: 12px; color: var(--dark); background: var(--surface); }
+.merge-tags { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 14px; }
+.merge-tag { padding: 3px 9px; background: #f0f0f1; border: 1px solid var(--border); border-radius: var(--radius-sm); font-family: monospace; font-size: 11px; color: var(--blue); cursor: pointer; }
+.merge-tag:hover { background: #e6f1fb; }
+.email-template-row { border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; margin-bottom: 8px; }
+.email-template-header { display: flex; align-items: center; gap: 8px; padding: 10px 14px; background: var(--surface); cursor: pointer; font-size: 13px; font-weight: 600; color: var(--dark); }
+.email-template-header svg { color: var(--muted); }
+.email-template-header:hover { background: #ebebeb; }
+
+/* ── Payouts ── */
+.payouts-filter-row { display: flex; align-items: center; gap: 10px; background: var(--white); border: 1px solid var(--border); border-radius: var(--radius); padding: 14px; margin-bottom: 14px; flex-wrap: wrap; }
+.filter-group { display: flex; flex-direction: column; gap: 3px; }
+.filter-group-label { font-size: 10px; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: .5px; }
+.filter-group input[type="date"],
+.filter-group select { padding: 6px 8px; border: 1px solid var(--border); border-radius: var(--radius-sm); font-family: 'DM Sans', sans-serif; font-size: 12px; color: var(--dark); background: var(--white); outline: none; }
+.payouts-spacer { flex: 1; }
+.export-btn { display: inline-flex; align-items: center; gap: 6px; padding: 7px 14px; background: var(--orange); color: #fff; border: none; border-radius: var(--radius); font-family: 'DM Sans', sans-serif; font-size: 12px; font-weight: 700; cursor: pointer; transition: background .12s; }
+.export-btn:hover { background: var(--orange-dark); }
+.empty-state { background: var(--white); border: 1px solid var(--border); border-radius: var(--radius); padding: 60px 24px; text-align: center; }
+.empty-icon  { color: var(--muted); margin-bottom: 12px; }
+.empty-text  { font-size: 13px; color: var(--muted); }
+
+/* ── Quote detail ── */
+.qd-3col { display: grid; grid-template-columns: 1fr 1.25fr 1fr; gap: 14px; align-items: start; margin-bottom: 0; }
+.qd-card { background: var(--white); border: 1px solid var(--border); border-radius: var(--radius); padding: 16px; margin-bottom: 14px; }
+.qd-card:last-child { margin-bottom: 0; }
+.qd-card-title { font-size: 13px; font-weight: 700; color: var(--dark); margin-bottom: 12px; border-bottom: 1px solid var(--border); padding-bottom: 8px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 6px; }
+.qd-row { display: flex; justify-content: space-between; align-items: center; padding: 6px 0; border-bottom: 1px solid #f6f7f7; font-size: 12px; }
+.qd-row:last-child { border-bottom: none; }
+.qd-key { color: var(--muted); font-weight: 500; }
+.qd-val { color: var(--dark); font-weight: 600; }
+.qd-photos-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; }
+.qd-photo { height: 76px; border-radius: var(--radius); border: 1px solid var(--border); }
+.qd-photo:nth-child(1) { background: #b8cbd9; }
+.qd-photo:nth-child(2) { background: #a8bbc9; }
+.qd-photo:nth-child(3) { background: #98abb9; }
+.qd-photo:nth-child(4) { background: #8899a9; }
+.qd-ai-tag { display: inline-block; padding: 2px 8px; border-radius: 3px; font-size: 11px; font-weight: 700; }
+.qd-ai-tag.green { background: #e8f4e9; color: var(--green); }
+/* Confidence bar */
+.conf-bar-wrap { height: 6px; background: var(--border); border-radius: 3px; }
+.conf-bar-fill { height: 100%; border-radius: 3px; background: var(--green); }
+/* AI model pills */
+.model-pill { display: inline-flex; align-items: center; gap: 4px; padding: 3px 9px; border-radius: 20px; font-size: 11px; font-weight: 700; white-space: nowrap; }
+.model-pill.vision  { background: #e6f1fb; color: var(--blue); border: 1px solid #b3d1ef; }
+.model-pill.pricing { background: #fff0eb; color: var(--orange); border: 1px solid #f5c6b3; }
+/* Market range visual */
+.mkt-range-bar { position: relative; height: 4px; background: var(--border); border-radius: 2px; margin: 12px 0 4px; }
+.mkt-range-fill { position: absolute; left: 0; right: 0; top: 0; height: 100%; background: linear-gradient(to right, #d1e5f5, var(--blue)); border-radius: 2px; }
+.mkt-range-dot { position: absolute; top: 50%; transform: translate(-50%,-50%); width: 13px; height: 13px; border-radius: 50%; background: var(--orange); border: 2px solid #fff; box-shadow: 0 0 0 1.5px var(--orange); }
+/* Offer formula display */
+.offer-formula { display: flex; align-items: center; justify-content: center; gap: 14px; padding: 20px 0 10px; }
+.of-block { text-align: center; }
+.of-val { font-size: 26px; font-weight: 700; color: var(--dark); line-height: 1; }
+.of-val.orange { color: var(--orange); }
+.of-label { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: .6px; color: var(--muted); margin-top: 4px; }
+.of-op { font-size: 22px; color: var(--muted); font-weight: 300; line-height: 1; margin-bottom: 14px; }
+/* AI rationale box */
+.rationale-box { background: #fffbeb; border: 1px solid #fde68a; border-radius: var(--radius); padding: 12px 14px; margin-bottom: 14px; }
+.rationale-label { font-size: 10px; font-weight: 700; letter-spacing: .7px; text-transform: uppercase; color: #92400e; margin-bottom: 6px; }
+.rationale-text { font-size: 11px; color: #78350f; line-height: 1.6; }
+/* Offer breakdown table */
+.ob-row { display: flex; justify-content: space-between; padding: 5px 0; border-bottom: 1px solid #f0f0f1; font-size: 12px; color: var(--mid); }
+.ob-row:last-child { border-bottom: none; font-weight: 700; font-size: 13px; }
+.ob-row.total { color: var(--orange); }
+.ob-neg { color: var(--red); }
+/* Status select */
+.qd-status-select { padding: 8px 10px; border: 1px solid var(--border); border-radius: var(--radius-sm); font-family: 'DM Sans', sans-serif; font-size: 13px; color: var(--dark); background: var(--white); outline: none; width: 100%; cursor: pointer; transition: border-color .12s; }
+.qd-status-select:focus { border-color: var(--blue); }
+/* Condition toggle buttons */
+.cond-btns { display: flex; gap: 6px; flex-wrap: wrap; }
+.cond-btn { padding: 6px 14px; border: 1.5px solid var(--border); border-radius: var(--radius-sm); font-family: 'DM Sans', sans-serif; font-size: 12px; font-weight: 700; color: var(--mid); background: var(--white); cursor: pointer; transition: all .12s; }
+.cond-btn:hover { border-color: var(--orange); color: var(--orange); }
+.cond-btn.active { border-color: var(--orange); background: #fff0eb; color: var(--orange); }
+/* Activity timeline */
+.timeline-filter-btns { display: flex; gap: 4px; flex-wrap: wrap; }
+.tl-filter-btn { padding: 4px 12px; border: 1px solid var(--border); border-radius: 20px; font-family: 'DM Sans', sans-serif; font-size: 11px; font-weight: 700; color: var(--muted); background: var(--white); cursor: pointer; transition: all .12s; }
+.tl-filter-btn.active { background: var(--orange); color: #fff; border-color: var(--orange-dark); }
+.tl-filter-btn:hover:not(.active) { color: var(--mid); border-color: var(--mid); }
+.tl-entry { display: flex; gap: 12px; padding: 10px 0; border-bottom: 1px solid #f6f7f7; }
+.tl-entry:last-child { border-bottom: none; }
+.tl-dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; margin-top: 3px; }
+.tl-dot.green  { background: var(--green); }
+.tl-dot.blue   { background: var(--blue); }
+.tl-dot.muted  { background: var(--border); }
+.tl-meta { font-size: 11px; color: var(--muted); margin-bottom: 2px; }
+.tl-text { font-size: 12px; color: var(--mid); line-height: 1.5; }
+/* Notes tabs (inside qd-card) */
+.qd-notes-tabs { display: flex; border-bottom: 1px solid var(--border); margin-bottom: 12px; margin-top: -4px; }
+.qd-ntab { padding: 7px 0; margin-right: 16px; font-size: 12px; font-weight: 700; color: var(--muted); cursor: pointer; border-bottom: 2px solid transparent; margin-bottom: -1px; transition: all .12s; }
+.qd-ntab.active { color: var(--orange); border-bottom-color: var(--orange); }
+/* Customer footer */
+.qd-customer-footer { display: flex; justify-content: space-between; align-items: center; padding: 10px 0 4px; font-size: 12px; color: var(--muted); flex-wrap: wrap; gap: 6px; }
+/* Seller description box */
+.qd-seller-desc { font-size: 12px; color: var(--mid); font-style: italic; background: var(--surface); padding: 8px 10px; border-radius: var(--radius-sm); margin-bottom: 10px; line-height: 1.5; }
+/* AI id table */
+.qd-id-table { width: 100%; font-size: 12px; border-collapse: collapse; margin-bottom: 12px; }
+.qd-id-table td { padding: 4px 0; vertical-align: top; }
+.qd-id-table td:first-child { color: var(--muted); width: 80px; }
+.qd-id-table td:last-child { font-weight: 600; color: var(--dark); }
+/* Offer input */
+.offer-input-row { display: flex; align-items: center; gap: 8px; }
+.offer-input { padding: 7px 10px; border: 1px solid var(--border); border-radius: var(--radius-sm); font-family: 'DM Sans', sans-serif; font-size: 14px; font-weight: 700; color: var(--dark); flex: 1; outline: none; }
+.offer-input:focus { border-color: var(--blue); }
+/* Inspection textarea */
+.inspect-textarea { width: 100%; border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 8px 10px; font-family: 'DM Sans', sans-serif; font-size: 12px; color: var(--dark); background: var(--white); resize: none; height: 72px; outline: none; transition: border-color .12s; }
+.inspect-textarea:focus { border-color: var(--orange); }
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   NOTES PANEL  (right column, sticky)
+═══════════════════════════════════════════════════════════════════════════ */
+.notes-col { }  /* grid column wrapper — holds toggle + panel */
+.notes-toggle-btn { display: none; } /* shown on mobile only */
+.notes-panel { position: sticky; top: 72px; }
+.notes-card {
+  background: var(--white); border-radius: var(--radius);
+  border: 1px solid var(--border); padding: 20px; margin-bottom: 16px;
+}
+.notes-title { font-size: 13px; font-weight: 700; color: var(--dark); margin-bottom: 12px; }
+.note-item { display: flex; gap: 10px; margin-bottom: 12px; align-items: flex-start; }
+.note-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--orange); margin-top: 5px; flex-shrink: 0; }
+.note-text { font-size: 12px; color: var(--mid); line-height: 1.5; }
+.note-text strong { color: var(--dark); font-weight: 700; }
+.screen-label { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: .8px; color: var(--muted); margin-bottom: 8px; }
+.screen-desc  { font-size: 13px; color: var(--mid); line-height: 1.6; margin-bottom: 16px; }
+.tag-row { display: flex; gap: 6px; flex-wrap: wrap; }
+.tag { padding: 4px 10px; border-radius: 20px; font-size: 11px; font-weight: 700; background: #fff0eb; color: var(--orange); }
+.tag.green { background: #e8f4e9; color: var(--green); }
+.tag.blue  { background: #e6f1fb; color: var(--blue); }
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   FOOTER
+═══════════════════════════════════════════════════════════════════════════ */
+.mockup-footer {
+  text-align: center; padding: 24px;
+  font-size: 12px; color: var(--muted);
+}
+.mockup-footer strong { color: var(--mid); }
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   RESPONSIVE  — ≤ 800px
+═══════════════════════════════════════════════════════════════════════════ */
+@media (max-width: 800px) {
+  /* Topbar stacks to single column on mobile */
+  .topbar { grid-template-columns: 1fr; gap: 8px; }
+  .mode-pill { width: 100%; }
+  .mode-btn  { flex: 1; justify-content: center; }
+  .topbar-end { justify-content: center; }
+
+  /* Page layout: single column */
+  .page-layout { grid-template-columns: 1fr; padding: 20px 16px; }
+  .page-layout.admin-mode { grid-template-columns: 1fr; padding: 0; }
+  .page-layout.admin-mode .notes-col { padding: 16px; }
+
+  /* Notes panel: collapsible below content */
+  .notes-toggle-btn {
     display: block;
-    text-align: left;
-    font-size: 13px;
-    color: var(--orange);
-    text-decoration: underline;
-    text-underline-offset: 2px;
-    cursor: pointer;
-    margin-bottom: 20px;
-  }
-  .lost-password-link:hover { color: var(--orange-dark); }
-  .login-divider {
-    height: 1px;
-    background: var(--border);
-    margin-bottom: 20px;
-  }
-  .new-to-cfc {
-    font-size: 13px;
-    color: var(--mid);
-    margin-bottom: 12px;
-  }
-  .create-account-btn {
     width: 100%;
-    padding: 15px;
-    background: var(--orange);
-    color: #fff;
-    border: none;
-    border-radius: var(--radius-sm);
+    padding: 11px 16px;
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
     font-family: 'DM Sans', sans-serif;
-    font-size: 14px;
-    font-weight: 700;
-    letter-spacing: .5px;
-    cursor: pointer;
-    transition: background .15s, transform .1s;
-  }
-  .create-account-btn:hover { background: var(--orange-dark); transform: translateY(-1px); }
-  .create-account-btn:active { transform: translateY(0); }
-
-  /* ── MY QUOTES DASHBOARD ── */
-  .dash-layout {
-    display: grid;
-    grid-template-columns: 200px 1fr;
-    min-height: 500px;
-  }
-  .dash-sidebar {
-    background: var(--white);
-    border-right: 1px solid var(--border);
-    padding: 16px 0;
-  }
-  .dash-sidebar-item {
-    display: flex; align-items: center; gap: 10px;
-    padding: 11px 18px;
-    font-size: 13px; font-weight: 500; color: var(--mid);
-    cursor: pointer; transition: all .12s;
-    border-left: 3px solid transparent;
-  }
-  .dash-sidebar-item:hover { background: var(--surface); color: var(--dark); }
-  .dash-sidebar-item.active {
-    background: #2271b1;
-    color: #fff;
-    border-left-color: transparent;
-  }
-  .dash-sidebar-item.active svg { opacity: 1; }
-  .dash-sidebar-item svg { width: 14px; height: 14px; opacity: .6; flex-shrink: 0; }
-  .dash-main-area { padding: 24px; background: var(--surface); }
-  .dash-heading { font-size: 17px; font-weight: 700; color: var(--dark); margin-bottom: 3px; }
-  .dash-sub     { font-size: 13px; color: var(--mid); margin-bottom: 20px; }
-
-  /* Quote cards in dashboard */
-  .dash-quote-card {
-    background: var(--white);
-    border: 1px solid var(--border);
-    border-radius: var(--radius);
-    padding: 18px;
+    font-size: 13px; font-weight: 700; color: var(--mid);
+    cursor: pointer; text-align: left;
     margin-bottom: 12px;
-    transition: box-shadow .15s;
   }
-  .dash-quote-card:hover { box-shadow: 0 4px 12px rgba(0,0,0,.07); }
-  .dqc-top { display: flex; align-items: flex-start; justify-content: space-between; margin-bottom: 4px; }
-  .dqc-name { font-size: 15px; font-weight: 700; color: var(--dark); }
-  .status-badge {
-    font-size: 11px; font-weight: 700; padding: 4px 12px; border-radius: 20px;
-    border: 1.5px solid var(--blue); color: var(--blue); background: none;
-    letter-spacing: .3px; white-space: nowrap;
-  }
-  .status-badge.paid { border-color: var(--green); color: var(--green); }
-  .dqc-meta { font-size: 12px; color: var(--muted); margin-bottom: 16px; }
+  .notes-panel { position: static; display: none; }
+  .notes-panel.open { display: block; }
 
-  /* Progress tracker */
-  .progress-track {
-    display: flex;
-    align-items: flex-start;
-    margin-bottom: 16px;
-    overflow-x: auto;
-  }
-  .pt-step { display: flex; flex-direction: column; align-items: center; gap: 5px; flex-shrink: 0; }
-  .pt-dot {
-    width: 28px; height: 28px; border-radius: 50%;
-    background: var(--orange); border: 2px solid var(--orange);
-    display: flex; align-items: center; justify-content: center;
-    flex-shrink: 0;
-  }
-  .pt-dot.pending { background: none; border-color: var(--border); }
-  .pt-dot.next    { background: none; border-color: var(--orange); }
-  .pt-dot svg { width: 12px; height: 12px; stroke: #fff; stroke-width: 2.5; fill: none; }
-  .pt-line { flex: 1; height: 2px; background: var(--orange); min-width: 40px; margin-top: 14px; }
-  .pt-line.empty { background: var(--border); }
-  .pt-label { text-align: center; }
-  .pt-label strong { display: block; font-size: 11px; font-weight: 700; color: var(--dark); white-space: nowrap; }
-  .pt-label span   { font-size: 10px; color: var(--muted); }
-  .pt-label.muted strong { color: var(--muted); }
+  /* Customer */
+  .dash-layout { grid-template-columns: 1fr; }
+  .dash-sidebar { display: none; }
+  .device-frame { border-radius: 12px; }
+  .offer-price-big { font-size: 56px; }
 
-  .dqc-footer {
-    display: flex; align-items: center; justify-content: space-between;
-    padding-top: 14px; border-top: 1px solid var(--border);
-  }
-  .dqc-offer-label { font-size: 12px; color: var(--muted); margin-bottom: 2px; }
-  .dqc-offer-price { font-size: 22px; font-weight: 700; color: var(--orange); }
-  .dqc-offer-price.green { color: var(--green); }
-  .ship-btn {
-    padding: 9px 14px; border: 1.5px solid var(--orange);
-    border-radius: var(--radius-sm); font-family: 'DM Sans', sans-serif;
-    font-size: 11px; font-weight: 700; color: var(--orange);
-    background: none; cursor: pointer; letter-spacing: .4px;
-    transition: all .15s;
-  }
-  .ship-btn:hover { background: var(--orange); color: #fff; }
+  /* Admin */
+  .stat-grid     { grid-template-columns: repeat(2, 1fr); }
+  .quotes-layout { grid-template-columns: 1fr; }
+  .filter-sidebar { display: none; }
+  .wp-layout     { grid-template-columns: 1fr; }
+  .wp-sidebar    { display: none; }
+  .settings-row  { grid-template-columns: 1fr; }
+  .qd-3col       { grid-template-columns: 1fr; }
+}
 
-  /* ── SIDEBAR NOTES PANEL ── */
-  .notes-panel { position: sticky; top: 72px; }
-  .notes-card {
-    background: var(--white);
-    border-radius: var(--radius);
-    border: 1px solid var(--border);
-    padding: 20px;
-    margin-bottom: 16px;
-  }
-  .notes-title { font-size: 13px; font-weight: 700; color: var(--dark); margin-bottom: 12px; }
-  .note-item { display: flex; gap: 10px; margin-bottom: 12px; align-items: flex-start; }
-  .note-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--orange); margin-top: 5px; flex-shrink: 0; }
-  .note-text { font-size: 12px; color: var(--mid); line-height: 1.5; }
-  .note-text strong { color: var(--dark); font-weight: 700; }
-
-  .screen-label {
-    font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: .8px;
-    color: var(--muted); margin-bottom: 8px;
-  }
-  .screen-desc {
-    font-size: 13px; color: var(--mid); line-height: 1.6; margin-bottom: 16px;
-  }
-  .tag-row { display: flex; gap: 6px; flex-wrap: wrap; }
-  .tag {
-    padding: 4px 10px; border-radius: 20px;
-    font-size: 11px; font-weight: 700;
-    background: #fff0eb; color: var(--orange);
-  }
-  .tag.green { background: #e8f4e9; color: var(--green); }
-  .tag.blue  { background: #e6f1fb; color: var(--blue); }
-
-  /* Footer watermark */
-  .mockup-footer {
-    text-align: center; padding: 24px;
-    font-size: 12px; color: var(--muted);
-  }
-  .mockup-footer strong { color: var(--mid); }
-
-  /* Responsive */
-  @media (max-width: 800px) {
-    .main { grid-template-columns: 1fr; }
-    .notes-panel { position: static; }
-    .dash-layout { grid-template-columns: 1fr; }
-    .dash-sidebar { display: none; }
-  }
 </style>
 </head>
 <body>
 
-<!-- TOP BAR -->
+<!-- ══════════════════════════════════════════════════════════════════════════
+     TOPBAR
+══════════════════════════════════════════════════════════════════════════ -->
 <div class="topbar">
   <div class="topbar-logo">Cash <span>Fore</span> Clubs</div>
-  <div class="topbar-note">UI Mockup — For Client Review</div>
-</div>
-
-<!-- SCREEN NAV -->
-<div class="screen-nav">
-  <button class="snav-btn active" onclick="showScreen(0)">1. Log in</button>
-  <button class="snav-btn" onclick="showScreen(1)">2. Upload</button>
-  <button class="snav-btn" onclick="showScreen(2)">3. Photos added</button>
-  <button class="snav-btn" onclick="showScreen(3)">4. Valuing...</button>
-  <button class="snav-btn" onclick="showScreen(4)">5. Instant offer</button>
-  <button class="snav-btn" onclick="showScreen(5)">6. Confirmed</button>
-  <button class="snav-btn" onclick="showScreen(6)">7. My quotes</button>
-</div>
-
-<div class="main">
-
-  <!-- LEFT: Device frame -->
-  <div>
-    <div class="device-frame">
-
-      <!-- SCREEN 0: Login -->
-      <div class="screen active" id="sc0">
-        <div class="login-inner">
-          <div class="login-title">LET'S GET SELLING...</div>
-          <div class="login-subtitle">Not sure about the condition of your clubs? Check our guide.</div>
-          <button class="condition-guide-btn">CONDITION GUIDE</button>
-
-          <div class="login-field-label">Username or Email Address</div>
-          <input class="login-input" type="text" placeholder="">
-
-          <div class="login-field-label">Password</div>
-          <input class="login-input" type="password" placeholder="">
-
-          <div class="remember-row">
-            <input type="checkbox" id="rememberMe">
-            <label class="remember-label" for="rememberMe">Remember Me</label>
-          </div>
-
-          <button class="login-btn" onclick="showScreen(1)">LOG IN</button>
-          <a class="lost-password-link">Lost your password?</a>
-
-          <div class="login-divider"></div>
-
-          <div class="new-to-cfc">New to Cash For Clubs?</div>
-          <button class="create-account-btn">CREATE YOUR ACCOUNT</button>
-        </div>
-      </div>
-
-      <!-- SCREEN 1: Empty upload -->
-      <div class="screen" id="sc1">
-        <div class="form-inner">
-          <div class="page-title">Let's get selling...</div>
-          <div class="trust-bar">
-            <div class="trust-item">
-              <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="1" y="5" width="14" height="9" rx="1.5"/><path d="M5 5V4a3 3 0 016 0v1"/></svg>
-              Free tracked postage
-            </div>
-            <div class="trust-item">
-              <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="1" y="4" width="14" height="10" rx="1.5"/><path d="M1 8h14M5 12h2"/></svg>
-              Paid within 48 hours
-            </div>
-            <div class="trust-item">
-              <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M8 1l1.8 3.7 4.2.6-3 3 .7 4.1L8 10.5l-3.7 1.9.7-4.1-3-3 4.2-.6z"/></svg>
-              Fully insured
-            </div>
-          </div>
-          <div class="drop-zone">
-            <div class="dz-icon-wrap">
-              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#E8491D" stroke-width="1.5"><rect x="2" y="4" width="20" height="16" rx="2"/><circle cx="8" cy="10" r="2"/><path d="M2 18l5-5 4 4 3-3 8 8"/></svg>
-            </div>
-            <div class="dz-title">Drop your club photos here</div>
-            <div class="dz-sub">or click to browse — up to 5 photos</div>
-            <div class="dz-hint">or paste from clipboard (Ctrl+V / ⌘V)</div>
-            <div class="dz-meta">JPG · PNG · WebP · Max 8MB each</div>
-            <button class="photo-lib-btn">
-              <svg width="13" height="13" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="1" y="3" width="14" height="11" rx="1.5"/><circle cx="6" cy="7" r="1.5"/><path d="M1 12l4-4 4 4 3-3 3 3"/></svg>
-              Photo Library
-            </button>
-          </div>
-          <div class="tips-row">
-            <svg width="13" height="13" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="8" cy="8" r="7"/><path d="M8 7v4M8 5h.01"/></svg>
-            Tips for better photos ∨
-          </div>
-          <div class="desc-label">Tell us about your clubs (brand, model, condition, specs)</div>
-          <textarea class="desc-box" placeholder="e.g. TaylorMade Stealth 2, 2023, good condition, stiff shaft... (max 300)"></textarea>
-          <div class="char-count">0 / 300</div>
-          <button class="cta-btn disabled">GET MY INSTANT OFFER →</button>
-          <div class="cta-note">Free · No obligation · Offer valid for 24 hours</div>
-        </div>
-      </div>
-
-      <!-- SCREEN 2: Photos added -->
-      <div class="screen" id="sc2">
-        <div class="form-inner">
-          <div class="page-title">Let's get selling...</div>
-          <div class="trust-bar">
-            <div class="trust-item"><svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="1" y="5" width="14" height="9" rx="1.5"/><path d="M5 5V4a3 3 0 016 0v1"/></svg>Free tracked postage</div>
-            <div class="trust-item"><svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="1" y="4" width="14" height="10" rx="1.5"/><path d="M1 8h14M5 12h2"/></svg>Paid within 48 hours</div>
-            <div class="trust-item"><svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M8 1l1.8 3.7 4.2.6-3 3 .7 4.1L8 10.5l-3.7 1.9.7-4.1-3-3 4.2-.6z"/></svg>Fully insured</div>
-          </div>
-          <div class="drop-zone" style="padding:18px">
-            <div class="dz-icon-wrap" style="margin-bottom:8px"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#E8491D" stroke-width="1.5"><rect x="2" y="4" width="20" height="16" rx="2"/><circle cx="8" cy="10" r="2"/><path d="M2 18l5-5 4 4 3-3 8 8"/></svg></div>
-            <div class="dz-title" style="margin-bottom:2px">Drop your club photos here</div>
-            <div class="dz-sub" style="margin-bottom:10px">or click to browse — up to 5 photos</div>
-            <button class="photo-lib-btn" style="margin-bottom:14px"><svg width="13" height="13" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="1" y="3" width="14" height="11" rx="1.5"/><circle cx="6" cy="7" r="1.5"/><path d="M1 12l4-4 4 4 3-3 3 3"/></svg>Photo Library</button>
-            <div class="photos-row">
-              <div class="photo-thumb"></div>
-              <div class="photo-thumb"></div>
-              <div class="photo-thumb"></div>
-              <div class="photo-thumb"></div>
-            </div>
-          </div>
-          <div class="photos-count">✓ 4 photos added</div>
-          <div class="tips-row"><svg width="13" height="13" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="8" cy="8" r="7"/><path d="M8 7v4M8 5h.01"/></svg>Tips for better photos ∨</div>
-          <div class="desc-label">Tell us about your clubs (brand, model, condition, specs)</div>
-          <textarea class="desc-box">callaway paradym driver good condition</textarea>
-          <div class="char-count">38 / 300</div>
-          <button class="cta-btn" onclick="showScreen(3)">GET MY INSTANT OFFER →</button>
-          <div class="cta-note">Free · No obligation · Offer valid for 24 hours</div>
-        </div>
-      </div>
-
-      <!-- SCREEN 3: Valuing -->
-      <div class="screen" id="sc3">
-        <div class="loading-wrap">
-          <div class="spinner-ring"></div>
-          <div class="load-title">Valuing your clubs...</div>
-          <div class="load-sub">Checking live market prices...<br>This usually takes less than 60 seconds.</div>
-          <div class="load-steps">
-            <div class="load-step done-step"><div class="ldot done"></div>Uploading your photos</div>
-            <div class="load-step done-step"><div class="ldot done"></div>Identifying club model</div>
-            <div class="load-step active-step"><div class="ldot active"></div>Checking second-hand market value</div>
-            <div class="load-step"><div class="ldot"></div>Calculating your offer</div>
-          </div>
-        </div>
-      </div>
-
-      <!-- SCREEN 4: Offer -->
-      <div class="screen" id="sc4">
-        <div class="offer-wrap">
-          <div class="offer-price-big">£128</div>
-          <div class="offer-club-line">
-            Our offer for your
-            <strong>Callaway</strong>
-            <span class="club-dot">·</span>
-            <strong>Paradym Driver</strong>
-            <span class="club-dot">·</span>
-            Good condition
-          </div>
-          <div class="expiry-row">
-            <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="8" cy="8" r="7"/><path d="M8 4v4l2.5 2"/></svg>
-            Offer expires in <span class="expiry-bold">23h 59m 55s</span>
-          </div>
-          <button class="cta-btn" onclick="showScreen(5)">ACCEPT OFFER</button>
-          <div class="decline-link">No thanks, I'll pass</div>
-          <div class="no-commit">Accepting this offer is not a final commitment until collection is arranged.</div>
-        </div>
-      </div>
-
-      <!-- SCREEN 5: Confirmed -->
-      <div class="screen" id="sc5">
-        <div class="conf-wrap">
-          <div class="conf-circle">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#2D5A27" stroke-width="2.5"><polyline points="4,12 10,18 20,6"/></svg>
-          </div>
-          <div class="conf-title">Offer accepted!</div>
-          <div class="conf-sub">
-            We'll send your prepaid postage label to <strong>james@email.co.uk</strong>.<br>
-            Pack your club safely and drop it at any DPD point.
-          </div>
-          <div style="font-size:15px;font-weight:700;color:var(--dark);margin-bottom:14px;text-align:left">What happens next</div>
-          <div class="next-steps-row">
-            <div class="ns">
-              <div class="ns-num">1</div>
-              <div class="ns-title">Check your email</div>
-              <div class="ns-body">Your prepaid postage label will arrive within a few hours.</div>
-            </div>
-            <div class="ns">
-              <div class="ns-num">2</div>
-              <div class="ns-title">Pack and post</div>
-              <div class="ns-body">Wrap securely and drop at your nearest DPD point.</div>
-            </div>
-            <div class="ns">
-              <div class="ns-num">3</div>
-              <div class="ns-title">Get paid</div>
-              <div class="ns-body">We transfer payment within 48 hours of inspection.</div>
-            </div>
-          </div>
-          <button class="cta-btn" onclick="showScreen(6)">VIEW MY QUOTES</button>
-        </div>
-      </div>
-
-      <!-- SCREEN 6: My Quotes Dashboard -->
-      <div class="screen" id="sc6">
-        <div class="dash-layout">
-          <div class="dash-sidebar">
-            <div class="dash-sidebar-item"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="1" y="1" width="6" height="6" rx="1"/><rect x="9" y="1" width="6" height="6" rx="1"/><rect x="1" y="9" width="6" height="6" rx="1"/><rect x="9" y="9" width="6" height="6" rx="1"/></svg>Dashboard</div>
-            <div class="dash-sidebar-item"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 3h12l-1.5 9H3.5L2 3z"/></svg>Orders</div>
-            <div class="dash-sidebar-item"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M8 2v9M5 8l3 3 3-3"/><path d="M2 13h12"/></svg>Downloads</div>
-            <div class="dash-sidebar-item"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 13V5a2 2 0 012-2h8a2 2 0 012 2v8"/><path d="M6 13V9h4v4"/></svg>Addresses</div>
-            <div class="dash-sidebar-item"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="8" cy="5" r="3"/><path d="M2 14c0-3 2.7-5 6-5s6 2 6 5"/></svg>Account details</div>
-            <div class="dash-sidebar-item active"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 2h10a1 1 0 011 1v11a1 1 0 01-1 1H3a1 1 0 01-1-1V3a1 1 0 011-1z"/><path d="M5 6h6M5 9h6M5 12h3"/></svg>My Club Quotes</div>
-            <div class="dash-sidebar-item"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M10 8H2M6 5l-3 3 3 3"/><path d="M10 3h3a1 1 0 011 1v8a1 1 0 01-1 1h-3"/></svg>Log out</div>
-          </div>
-          <div class="dash-main-area">
-            <div class="dash-heading">Your Club Quotes, yarmalik007</div>
-            <div class="dash-sub">You have 4 quotes on file.</div>
-
-            <!-- Quote 1: Accepted / In progress -->
-            <div class="dash-quote-card">
-              <div class="dqc-top">
-                <div class="dqc-name">Callaway Paradym</div>
-                <span class="status-badge">Accepted</span>
-              </div>
-              <div class="dqc-meta">Good condition · Today · 8fec9b29-6c76-479b-a0b5-518a070e9e71</div>
-              <div class="progress-track">
-                <div class="pt-step">
-                  <div class="pt-dot"><svg viewBox="0 0 12 12"><polyline points="2,6 5,9 10,3"/></svg></div>
-                  <div class="pt-label"><strong>Offer Accepted</strong><span>1 May</span></div>
-                </div>
-                <div class="pt-line empty"></div>
-                <div class="pt-step">
-                  <div class="pt-dot next"></div>
-                  <div class="pt-label"><strong>Clubs Received</strong><span>&nbsp;</span></div>
-                </div>
-                <div class="pt-line empty"></div>
-                <div class="pt-step">
-                  <div class="pt-dot pending"></div>
-                  <div class="pt-label muted"><strong>Inspected</strong><span>&nbsp;</span></div>
-                </div>
-                <div class="pt-line empty"></div>
-                <div class="pt-step">
-                  <div class="pt-dot pending"></div>
-                  <div class="pt-label muted"><strong>Payment Sent</strong><span>&nbsp;</span></div>
-                </div>
-              </div>
-              <div class="dqc-footer">
-                <div>
-                  <div class="dqc-offer-label">Our offer:</div>
-                  <div class="dqc-offer-price">£128</div>
-                </div>
-                <button class="ship-btn">VIEW SHIPPING INSTRUCTIONS</button>
-              </div>
-            </div>
-
-            <!-- Quote 2: Completed -->
-            <div class="dash-quote-card">
-              <div class="dqc-top">
-                <div class="dqc-name">TaylorMade Stealth 2 Driver</div>
-                <span class="status-badge paid">Paid</span>
-              </div>
-              <div class="dqc-meta">Very good condition · 12 Apr · CFC-A1B2C3D4</div>
-              <div class="progress-track">
-                <div class="pt-step">
-                  <div class="pt-dot"><svg viewBox="0 0 12 12"><polyline points="2,6 5,9 10,3"/></svg></div>
-                  <div class="pt-label"><strong>Offer Accepted</strong><span>12 Apr</span></div>
-                </div>
-                <div class="pt-line"></div>
-                <div class="pt-step">
-                  <div class="pt-dot"><svg viewBox="0 0 12 12"><polyline points="2,6 5,9 10,3"/></svg></div>
-                  <div class="pt-label"><strong>Clubs Received</strong><span>15 Apr</span></div>
-                </div>
-                <div class="pt-line"></div>
-                <div class="pt-step">
-                  <div class="pt-dot"><svg viewBox="0 0 12 12"><polyline points="2,6 5,9 10,3"/></svg></div>
-                  <div class="pt-label"><strong>Inspected</strong><span>16 Apr</span></div>
-                </div>
-                <div class="pt-line" style="background:var(--green)"></div>
-                <div class="pt-step">
-                  <div class="pt-dot" style="background:var(--green);border-color:var(--green)"><svg viewBox="0 0 12 12"><polyline points="2,6 5,9 10,3"/></svg></div>
-                  <div class="pt-label"><strong>Payment Sent</strong><span>17 Apr</span></div>
-                </div>
-              </div>
-              <div class="dqc-footer">
-                <div>
-                  <div class="dqc-offer-label">Paid:</div>
-                  <div class="dqc-offer-price green">£95</div>
-                </div>
-                <span style="font-size:12px;color:var(--muted)">Completed ✓</span>
-              </div>
-            </div>
-
-          </div>
-        </div>
-      </div>
-
-    </div><!-- /device-frame -->
+  <div class="mode-pill">
+    <button class="mode-btn active" id="mode-btn-customer" onclick="switchMode('customer')">
+      ● Customer Flow · 7 screens
+    </button>
+    <button class="mode-btn" id="mode-btn-admin" onclick="switchMode('admin')">
+      ○ Admin Panel · 5 screens
+    </button>
   </div>
-
-  <!-- RIGHT: Notes panel -->
-  <div class="notes-panel">
-    <div class="notes-card" id="notes-card">
-      <div class="screen-label" id="note-screen-label">Screen 1 of 7</div>
-      <div style="font-size:16px;font-weight:700;color:var(--dark);margin-bottom:6px" id="note-title">Log in screen</div>
-      <div class="screen-desc" id="note-desc">Returning customers log in with their username or email and password. New customers can create an account. A "Condition Guide" link helps sellers assess their club's grade before getting started.</div>
-      <div class="tag-row" id="note-tags">
-        <span class="tag">Login / Register</span>
-        <span class="tag green">Returning customers</span>
-        <span class="tag blue">Condition guide</span>
-      </div>
-    </div>
-    <div class="notes-card">
-      <div class="notes-title">About this mockup</div>
-      <div class="note-item"><div class="note-dot"></div><div class="note-text"><strong>7 screens</strong> covering the full sell flow from login to payment tracking.</div></div>
-      <div class="note-item"><div class="note-dot"></div><div class="note-text"><strong>GPT-4 Vision</strong> identifies the club from the photo — no manual entry needed.</div></div>
-      <div class="note-item"><div class="note-dot"></div><div class="note-text"><strong>Instant offer</strong> shown in seconds with a 24-hour countdown timer.</div></div>
-      <div class="note-item"><div class="note-dot"></div><div class="note-text"><strong>My Quotes</strong> dashboard integrates with the WooCommerce account area.</div></div>
-      <div class="note-item"><div class="note-dot"></div><div class="note-text">Built by <strong>AI Agency Plus</strong> for Cash Fore Clubs.</div></div>
-    </div>
+  <div class="topbar-end">
+    <div class="topbar-badge">UI Mockup — For Client Review</div>
   </div>
-
 </div>
 
+<!-- ══════════════════════════════════════════════════════════════════════════
+     SCREEN NAV  (buttons injected by JS on mode switch)
+══════════════════════════════════════════════════════════════════════════ -->
+<div class="screen-nav-outer">
+  <div class="screen-nav" id="screen-nav">
+    <!-- Populated by renderNav() -->
+  </div>
+  <div class="progress-bar-wrap">
+    <div class="progress-bar-fill" id="progress-fill"></div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════════════════════
+     PAGE LAYOUT
+══════════════════════════════════════════════════════════════════════════ -->
+<div class="page-layout">
+
+  <!-- ── Content column ─────────────────────────────────────────────────── -->
+  <div id="content-col">
+
+    <!-- CUSTOMER PANEL -->
+    <div class="mode-panel customer-panel active" id="customer-panel">
+      <div class="device-frame">
+
+        <!-- SCREEN 0: Login -->
+        <div class="cust-screen active" id="sc0">
+          <div class="login-inner">
+            <div class="login-title">LET'S GET SELLING...</div>
+            <div class="login-subtitle">Not sure about the condition of your clubs? Check our guide.</div>
+            <button class="condition-guide-btn">CONDITION GUIDE</button>
+
+            <div class="login-field-label">Username or Email Address</div>
+            <input class="login-input" type="text" placeholder="">
+
+            <div class="login-field-label">Password</div>
+            <input class="login-input" type="password" placeholder="">
+
+            <div class="remember-row">
+              <input type="checkbox" id="rememberMe">
+              <label class="remember-label" for="rememberMe">Remember Me</label>
+            </div>
+
+            <button class="login-btn" onclick="showScreen(1)">LOG IN</button>
+            <a class="lost-password-link">Lost your password?</a>
+
+            <div class="login-divider"></div>
+
+            <div class="new-to-cfc">New to Cash For Clubs?</div>
+            <button class="create-account-btn">CREATE YOUR ACCOUNT</button>
+          </div>
+        </div>
+
+        <!-- SCREEN 1: Empty upload -->
+        <div class="cust-screen" id="sc1">
+          <div class="form-inner">
+            <div class="page-title">Let's get selling...</div>
+            <div class="trust-bar">
+              <div class="trust-item">
+                <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="1" y="5" width="14" height="9" rx="1.5"/><path d="M5 5V4a3 3 0 016 0v1"/></svg>
+                Free tracked postage
+              </div>
+              <div class="trust-item">
+                <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="1" y="4" width="14" height="10" rx="1.5"/><path d="M1 8h14M5 12h2"/></svg>
+                Paid within 48 hours
+              </div>
+              <div class="trust-item">
+                <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M8 1l1.8 3.7 4.2.6-3 3 .7 4.1L8 10.5l-3.7 1.9.7-4.1-3-3 4.2-.6z"/></svg>
+                Fully insured
+              </div>
+            </div>
+            <div class="drop-zone">
+              <div class="dz-icon-wrap">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#E8491D" stroke-width="1.5"><rect x="2" y="4" width="20" height="16" rx="2"/><circle cx="8" cy="10" r="2"/><path d="M2 18l5-5 4 4 3-3 8 8"/></svg>
+              </div>
+              <div class="dz-title">Drop your club photos here</div>
+              <div class="dz-sub">or click to browse — up to 5 photos</div>
+              <div class="dz-hint">or paste from clipboard (Ctrl+V / ⌘V)</div>
+              <div class="dz-meta">JPG · PNG · WebP · Max 8MB each</div>
+              <button class="photo-lib-btn">
+                <svg width="13" height="13" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="1" y="3" width="14" height="11" rx="1.5"/><circle cx="6" cy="7" r="1.5"/><path d="M1 12l4-4 4 4 3-3 3 3"/></svg>
+                Photo Library
+              </button>
+            </div>
+            <div class="tips-row">
+              <svg width="13" height="13" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="8" cy="8" r="7"/><path d="M8 7v4M8 5h.01"/></svg>
+              Tips for better photos ∨
+            </div>
+            <div class="desc-label">Tell us about your clubs (brand, model, condition, specs)</div>
+            <textarea class="desc-box" placeholder="e.g. TaylorMade Stealth 2, 2023, good condition, stiff shaft... (max 300)"></textarea>
+            <div class="char-count">0 / 300</div>
+            <button class="cta-btn disabled">GET MY INSTANT OFFER →</button>
+            <div class="cta-note">Free · No obligation · Offer valid for 24 hours</div>
+          </div>
+        </div>
+
+        <!-- SCREEN 2: Photos added -->
+        <div class="cust-screen" id="sc2">
+          <div class="form-inner">
+            <div class="page-title">Let's get selling...</div>
+            <div class="trust-bar">
+              <div class="trust-item"><svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="1" y="5" width="14" height="9" rx="1.5"/><path d="M5 5V4a3 3 0 016 0v1"/></svg>Free tracked postage</div>
+              <div class="trust-item"><svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="1" y="4" width="14" height="10" rx="1.5"/><path d="M1 8h14M5 12h2"/></svg>Paid within 48 hours</div>
+              <div class="trust-item"><svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M8 1l1.8 3.7 4.2.6-3 3 .7 4.1L8 10.5l-3.7 1.9.7-4.1-3-3 4.2-.6z"/></svg>Fully insured</div>
+            </div>
+            <div class="drop-zone" style="padding:18px">
+              <div class="dz-icon-wrap" style="margin-bottom:8px"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#E8491D" stroke-width="1.5"><rect x="2" y="4" width="20" height="16" rx="2"/><circle cx="8" cy="10" r="2"/><path d="M2 18l5-5 4 4 3-3 8 8"/></svg></div>
+              <div class="dz-title" style="margin-bottom:2px">Drop your club photos here</div>
+              <div class="dz-sub" style="margin-bottom:10px">or click to browse — up to 5 photos</div>
+              <button class="photo-lib-btn" style="margin-bottom:14px"><svg width="13" height="13" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="1" y="3" width="14" height="11" rx="1.5"/><circle cx="6" cy="7" r="1.5"/><path d="M1 12l4-4 4 4 3-3 3 3"/></svg>Photo Library</button>
+              <div class="photos-row">
+                <div class="photo-thumb"></div>
+                <div class="photo-thumb"></div>
+                <div class="photo-thumb"></div>
+                <div class="photo-thumb"></div>
+              </div>
+            </div>
+            <div class="photos-count">✓ 4 photos added</div>
+            <div class="tips-row"><svg width="13" height="13" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="8" cy="8" r="7"/><path d="M8 7v4M8 5h.01"/></svg>Tips for better photos ∨</div>
+            <div class="desc-label">Tell us about your clubs (brand, model, condition, specs)</div>
+            <textarea class="desc-box">callaway paradym driver good condition</textarea>
+            <div class="char-count">38 / 300</div>
+            <button class="cta-btn" onclick="showScreen(3)">GET MY INSTANT OFFER →</button>
+            <div class="cta-note">Free · No obligation · Offer valid for 24 hours</div>
+          </div>
+        </div>
+
+        <!-- SCREEN 3: Valuing -->
+        <div class="cust-screen" id="sc3">
+          <div class="loading-wrap">
+            <div class="spinner-ring"></div>
+            <div class="load-title">Valuing your clubs...</div>
+            <div class="load-sub">Checking live market prices...<br>This usually takes less than 60 seconds.</div>
+            <div class="load-steps">
+              <div class="load-step done-step"><div class="ldot done"></div>Uploading your photos</div>
+              <div class="load-step done-step"><div class="ldot done"></div>Identifying club model</div>
+              <div class="load-step active-step"><div class="ldot active"></div>Checking second-hand market value</div>
+              <div class="load-step"><div class="ldot"></div>Calculating your offer</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- SCREEN 4: Offer -->
+        <div class="cust-screen" id="sc4">
+          <div class="offer-wrap">
+            <div class="offer-price-big">£128</div>
+            <div class="offer-club-line">
+              Our offer for your
+              <strong>Callaway</strong>
+              <span class="club-dot">·</span>
+              <strong>Paradym Driver</strong>
+              <span class="club-dot">·</span>
+              Good condition
+            </div>
+            <div class="expiry-row">
+              <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="8" cy="8" r="7"/><path d="M8 4v4l2.5 2"/></svg>
+              Offer expires in <span class="expiry-bold" id="countdown-display">23h 59m 59s</span>
+            </div>
+            <button class="cta-btn" onclick="showScreen(5)">ACCEPT OFFER</button>
+            <div class="decline-link">No thanks, I'll pass</div>
+            <div class="no-commit">Accepting this offer is not a final commitment until collection is arranged.</div>
+          </div>
+        </div>
+
+        <!-- SCREEN 5: Confirmed -->
+        <div class="cust-screen" id="sc5">
+          <div class="conf-wrap">
+            <div class="conf-circle">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#2D5A27" stroke-width="2.5"><polyline points="4,12 10,18 20,6"/></svg>
+            </div>
+            <div class="conf-title">Offer accepted!</div>
+            <div class="conf-sub">
+              We'll send your prepaid postage label to <strong>james@email.co.uk</strong>.<br>
+              Pack your club safely and drop it at any DPD point.
+            </div>
+            <div style="font-size:15px;font-weight:700;color:var(--dark);margin-bottom:14px;text-align:left">What happens next</div>
+            <div class="next-steps-row">
+              <div class="ns">
+                <div class="ns-num">1</div>
+                <div class="ns-title">Check your email</div>
+                <div class="ns-body">Your prepaid postage label will arrive within a few hours.</div>
+              </div>
+              <div class="ns">
+                <div class="ns-num">2</div>
+                <div class="ns-title">Pack and post</div>
+                <div class="ns-body">Wrap securely and drop at your nearest DPD point.</div>
+              </div>
+              <div class="ns">
+                <div class="ns-num">3</div>
+                <div class="ns-title">Get paid</div>
+                <div class="ns-body">We transfer payment within 48 hours of inspection.</div>
+              </div>
+            </div>
+            <button class="cta-btn" onclick="showScreen(6)">VIEW MY QUOTES</button>
+          </div>
+        </div>
+
+        <!-- SCREEN 6: My Quotes Dashboard -->
+        <div class="cust-screen" id="sc6">
+          <div class="dash-layout">
+            <div class="dash-sidebar">
+              <div class="dash-sidebar-item"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="1" y="1" width="6" height="6" rx="1"/><rect x="9" y="1" width="6" height="6" rx="1"/><rect x="1" y="9" width="6" height="6" rx="1"/><rect x="9" y="9" width="6" height="6" rx="1"/></svg>Dashboard</div>
+              <div class="dash-sidebar-item"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 3h12l-1.5 9H3.5L2 3z"/></svg>Orders</div>
+              <div class="dash-sidebar-item"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M8 2v9M5 8l3 3 3-3"/><path d="M2 13h12"/></svg>Downloads</div>
+              <div class="dash-sidebar-item"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 13V5a2 2 0 012-2h8a2 2 0 012 2v8"/><path d="M6 13V9h4v4"/></svg>Addresses</div>
+              <div class="dash-sidebar-item"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="8" cy="5" r="3"/><path d="M2 14c0-3 2.7-5 6-5s6 2 6 5"/></svg>Account details</div>
+              <div class="dash-sidebar-item active"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 2h10a1 1 0 011 1v11a1 1 0 01-1 1H3a1 1 0 01-1-1V3a1 1 0 011-1z"/><path d="M5 6h6M5 9h6M5 12h3"/></svg>My Club Quotes</div>
+              <div class="dash-sidebar-item"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M10 8H2M6 5l-3 3 3 3"/><path d="M10 3h3a1 1 0 011 1v8a1 1 0 01-1 1h-3"/></svg>Log out</div>
+            </div>
+            <div class="dash-main-area">
+              <div class="dash-heading">Your Club Quotes</div>
+              <div class="dash-sub">You have 4 quotes on file.</div>
+
+              <!-- Quote 1: Accepted / In progress -->
+              <div class="dash-quote-card">
+                <div class="dqc-top">
+                  <div class="dqc-name">Callaway Paradym</div>
+                  <span class="status-badge">Accepted</span>
+                </div>
+                <div class="dqc-meta">Good condition · Today · 8fec9b29-6c76-479b-a0b5-518a070e9e71</div>
+                <div class="progress-track">
+                  <div class="pt-step">
+                    <div class="pt-dot"><svg viewBox="0 0 12 12"><polyline points="2,6 5,9 10,3"/></svg></div>
+                    <div class="pt-label"><strong>Offer Accepted</strong><span>1 May</span></div>
+                  </div>
+                  <div class="pt-line empty"></div>
+                  <div class="pt-step">
+                    <div class="pt-dot next"></div>
+                    <div class="pt-label"><strong>Clubs Received</strong><span>&nbsp;</span></div>
+                  </div>
+                  <div class="pt-line empty"></div>
+                  <div class="pt-step">
+                    <div class="pt-dot pending"></div>
+                    <div class="pt-label muted"><strong>Inspected</strong><span>&nbsp;</span></div>
+                  </div>
+                  <div class="pt-line empty"></div>
+                  <div class="pt-step">
+                    <div class="pt-dot pending"></div>
+                    <div class="pt-label muted"><strong>Payment Sent</strong><span>&nbsp;</span></div>
+                  </div>
+                </div>
+                <div class="dqc-footer">
+                  <div>
+                    <div class="dqc-offer-label">Our offer:</div>
+                    <div class="dqc-offer-price">£128</div>
+                  </div>
+                  <button class="ship-btn">VIEW SHIPPING INSTRUCTIONS</button>
+                </div>
+              </div>
+
+              <!-- Quote 2: Completed -->
+              <div class="dash-quote-card">
+                <div class="dqc-top">
+                  <div class="dqc-name">TaylorMade Stealth 2 Driver</div>
+                  <span class="status-badge paid">Paid</span>
+                </div>
+                <div class="dqc-meta">Very good condition · 12 Apr · CFC-A1B2C3D4</div>
+                <div class="progress-track">
+                  <div class="pt-step">
+                    <div class="pt-dot"><svg viewBox="0 0 12 12"><polyline points="2,6 5,9 10,3"/></svg></div>
+                    <div class="pt-label"><strong>Offer Accepted</strong><span>12 Apr</span></div>
+                  </div>
+                  <div class="pt-line"></div>
+                  <div class="pt-step">
+                    <div class="pt-dot"><svg viewBox="0 0 12 12"><polyline points="2,6 5,9 10,3"/></svg></div>
+                    <div class="pt-label"><strong>Clubs Received</strong><span>15 Apr</span></div>
+                  </div>
+                  <div class="pt-line"></div>
+                  <div class="pt-step">
+                    <div class="pt-dot"><svg viewBox="0 0 12 12"><polyline points="2,6 5,9 10,3"/></svg></div>
+                    <div class="pt-label"><strong>Inspected</strong><span>16 Apr</span></div>
+                  </div>
+                  <div class="pt-line" style="background:var(--green)"></div>
+                  <div class="pt-step">
+                    <div class="pt-dot" style="background:var(--green);border-color:var(--green)"><svg viewBox="0 0 12 12"><polyline points="2,6 5,9 10,3"/></svg></div>
+                    <div class="pt-label"><strong>Payment Sent</strong><span>17 Apr</span></div>
+                  </div>
+                </div>
+                <div class="dqc-footer">
+                  <div>
+                    <div class="dqc-offer-label">Paid:</div>
+                    <div class="dqc-offer-price green">£95</div>
+                  </div>
+                  <span style="font-size:12px;color:var(--muted)">Completed ✓</span>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+
+      </div><!-- /device-frame -->
+    </div>
+
+    <!-- ADMIN PANEL -->
+    <div class="mode-panel admin-panel" id="admin-panel">
+      <div class="wp-frame">
+
+        <!-- WP Admin bar — always visible at top of frame -->
+        <div class="wp-adminbar">
+          <span class="wp-adminbar-item">&#9632; WordPress</span>
+          <span class="wp-adminbar-sep">|</span>
+          <span class="wp-adminbar-item">Cash Fore Clubs</span>
+          <span class="wp-adminbar-sep">|</span>
+          <span class="wp-adminbar-item">+ New</span>
+        </div>
+
+        <!-- WP body: sidebar + content -->
+        <div class="wp-layout">
+
+          <!-- ── WP Sidebar — fixed, never re-sizes ─────────────────────── -->
+          <div class="wp-sidebar" id="wp-sidebar">
+            <div class="wp-menu-item"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="1" y="1" width="6" height="6" rx="1"/><rect x="9" y="1" width="6" height="6" rx="1"/><rect x="1" y="9" width="6" height="6" rx="1"/><rect x="9" y="9" width="6" height="6" rx="1"/></svg>Dashboard</div>
+            <div class="wp-menu-item"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 3h12l-1.5 9H3.5L2 3z"/></svg>Posts</div>
+            <div class="wp-menu-item"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="1" y="3" width="14" height="11" rx="1.5"/><circle cx="6" cy="7" r="1.5"/><path d="M1 12l4-4 4 4 3-3 3 3"/></svg>Media</div>
+            <div class="wp-menu-item"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 2h10a1 1 0 011 1v11a1 1 0 01-1 1H3a1 1 0 01-1-1V3a1 1 0 011-1z"/></svg>Pages</div>
+            <div class="wp-menu-item"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 3h12l-1.5 9H3.5L2 3z"/></svg>WooCommerce</div>
+            <div class="wp-submenu-item">Orders</div>
+            <div class="wp-submenu-item">Products</div>
+            <div class="wp-menu-sep"></div>
+
+            <!-- QuoteAI plugin — highlighted in brand amber -->
+            <div class="wp-menu-item wp-menu-cfc"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="8" cy="8" r="6"/><path d="M8 5v3l2 2"/></svg>QuoteAI</div>
+            <div class="wp-submenu-item active" id="wp-sub-quotes"  onclick="showScreen(0)">All Quotes</div>
+            <div class="wp-submenu-item"         id="wp-sub-settings" onclick="showScreen(2)">Settings</div>
+            <div class="wp-submenu-item"         id="wp-sub-payouts"  onclick="showScreen(4)">Payouts</div>
+
+            <div class="wp-menu-sep"></div>
+            <div class="wp-menu-item"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M1 12c0-3 2.7-5 7-5s7 2 7 5"/><circle cx="8" cy="5" r="3"/></svg>Appearance</div>
+            <div class="wp-menu-item"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="8" cy="8" r="6"/><path d="M6 8h4M8 6v4"/></svg>Plugins</div>
+            <div class="wp-menu-item"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="8" cy="5" r="3"/><path d="M2 14c0-3 2.7-5 6-5s6 2 6 5"/></svg>Users</div>
+            <div class="wp-menu-item"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="8" cy="8" r="6"/><path d="M8 5v3l2 2"/></svg>Settings</div>
+            <div class="wp-menu-sep"></div>
+            <div class="wp-menu-item"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M10 8H2M6 5l-3 3 3 3"/><path d="M10 3h3a1 1 0 011 1v8a1 1 0 01-1 1h-3"/></svg>Log out</div>
+          </div><!-- /wp-sidebar -->
+
+          <!-- ── WP Content — scrolls inside fixed frame ────────────────── -->
+          <div class="wp-content">
+            <div class="admin-screens-container">
+
+              <!-- ADMIN SCREEN 0: All Quotes -->
+              <div class="admin-screen active" id="asc0">
+                <div class="page-header">
+                  <div class="page-title-row">
+                    <div class="page-h1">Cash Fore Clubs — All Quotes</div>
+                    <button class="wp-btn" onclick="showScreen(2)">Settings</button>
+                  </div>
+                </div>
+
+                <!-- Stat cards -->
+                <div class="stat-grid">
+                  <div class="stat-card">
+                    <div class="stat-icon"><svg width="18" height="18" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 2h10a1 1 0 011 1v11a1 1 0 01-1 1H3a1 1 0 01-1-1V3a1 1 0 011-1z"/><path d="M5 6h6M5 9h6M5 12h3"/></svg></div>
+                    <div class="stat-body">
+                      <div class="stat-label">Quotes Today</div>
+                      <div class="stat-num">5</div>
+                      <div class="stat-sub">vs 3 yesterday</div>
+                    </div>
+                  </div>
+                  <div class="stat-card">
+                    <div class="stat-icon"><svg width="18" height="18" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="8" cy="8" r="6"/><path d="M8 5v3l2 2"/></svg></div>
+                    <div class="stat-body">
+                      <div class="stat-label">Awaiting Response</div>
+                      <div class="stat-num">2</div>
+                      <div class="stat-sub">1 expiring in 4h</div>
+                    </div>
+                  </div>
+                  <div class="stat-card">
+                    <div class="stat-icon"><svg width="18" height="18" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M8 2v9M5 8l3 3 3-3"/><path d="M2 13h12"/></svg></div>
+                    <div class="stat-body">
+                      <div class="stat-label">Items in Transit</div>
+                      <div class="stat-num">4</div>
+                      <div class="stat-sub">Oldest: 3 days</div>
+                    </div>
+                  </div>
+                  <div class="stat-card">
+                    <div class="stat-icon"><svg width="18" height="18" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="8" cy="8" r="6"/><path d="M8 5v1.5l1.5 1.5"/><path d="M5 8h1"/></svg></div>
+                    <div class="stat-body">
+                      <div class="stat-label">Paid This Week</div>
+                      <div class="stat-num">£486</div>
+                      <div class="stat-sub">7 completed sales</div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Table + filters -->
+                <div class="quotes-layout">
+                  <!-- Filter sidebar -->
+                  <div class="filter-sidebar">
+                    <div class="filter-header">
+                      <span class="filter-title">Filters</span>
+                      <span class="filter-clear">Clear all</span>
+                    </div>
+                    <div class="filter-section-title">Status</div>
+                    <div class="filter-check-row"><div class="filter-check-left"><input type="checkbox"> Awaiting Response</div></div>
+                    <div class="filter-check-row"><div class="filter-check-left"><input type="checkbox"> Accepted</div><span class="filter-count">3</span></div>
+                    <div class="filter-check-row"><div class="filter-check-left"><input type="checkbox"> Item Received</div></div>
+                    <div class="filter-check-row"><div class="filter-check-left"><input type="checkbox"> Inspected</div></div>
+                    <div class="filter-check-row"><div class="filter-check-left"><input type="checkbox"> Revised Offer</div></div>
+                    <div class="filter-check-row"><div class="filter-check-left"><input type="checkbox"> Payment Sent</div></div>
+                    <div class="filter-check-row"><div class="filter-check-left"><input type="checkbox"> Payment Made</div></div>
+                    <div class="filter-check-row"><div class="filter-check-left"><input type="checkbox"> Complete</div></div>
+                    <div class="filter-check-row"><div class="filter-check-left"><input type="checkbox"> Under Review</div><span class="filter-count">1</span></div>
+                    <div class="filter-check-row"><div class="filter-check-left"><input type="checkbox"> Declined</div></div>
+                    <div class="filter-check-row"><div class="filter-check-left"><input type="checkbox"> Expired</div></div>
+                    <div class="filter-section-title">Date Range</div>
+                    <div class="filter-date-label">From</div>
+                    <input type="date" class="filter-date-input">
+                    <div class="filter-date-label">To</div>
+                    <input type="date" class="filter-date-input">
+                  </div>
+
+                  <!-- Table -->
+                  <div>
+                    <div class="table-area">
+                      <div class="table-toolbar">
+                        <div class="table-toolbar-left">
+                          <select class="bulk-select"><option>Bulk actions</option><option>Mark Received</option><option>Mark Paid</option><option>Delete</option></select>
+                          <button class="wp-btn" style="padding:5px 10px;font-size:12px">Apply</button>
+                        </div>
+                        <div class="table-toolbar-right">
+                          <input class="search-input" type="text" placeholder="Search quotes...">
+                          <button class="wp-btn primary" style="padding:5px 12px;font-size:12px">Search Quotes</button>
+                          <span class="item-count">14 items</span>
+                        </div>
+                      </div>
+                      <table class="tbl">
+                        <thead>
+                          <tr>
+                            <th style="width:28px"><input type="checkbox"></th>
+                            <th class="sortable">Ref ↕</th>
+                            <th>Customer</th>
+                            <th>Club Identified</th>
+                            <th class="sortable" style="color:var(--blue)">Confidence ↕</th>
+                            <th>Market Mid</th>
+                            <th class="sortable" style="color:var(--blue)">Our Offer ↕</th>
+                            <th class="sortable" style="color:var(--blue)">Status ↕</th>
+                            <th class="sortable" style="color:var(--blue)">Age ↕</th>
+                            <th>Last Activity</th>
+                            <th>Quick Action</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr style="cursor:pointer" onclick="showScreen(1)">
+                            <td><input type="checkbox"></td>
+                            <td><div class="ref-link">#CFC-0042</div><div class="ref-sub">8fec9b29...</div></td>
+                            <td><div class="customer-name">James Thornton</div><div class="customer-email">j.thornton@gmail.com</div></td>
+                            <td><div style="font-size:12px;font-weight:600;color:var(--dark)">Callaway Paradym</div><div style="font-size:10px;color:var(--muted)">Driver · 2023</div></td>
+                            <td><span class="conf-badge high">99%</span></td>
+                            <td>£213</td>
+                            <td>£128</td>
+                            <td><span class="status-pill accepted">Accepted</span></td>
+                            <td>2h ago</td>
+                            <td>—</td>
+                            <td><button class="action-btn received">Mark Received</button></td>
+                          </tr>
+                          <tr>
+                            <td><input type="checkbox"></td>
+                            <td><div class="ref-link">#CFC-0041</div><div class="ref-sub">d72c4a11...</div></td>
+                            <td><div class="customer-name">Sarah Mitchell</div><div class="customer-email">s.mitchell@outlook.com</div></td>
+                            <td><div style="font-size:12px;font-weight:600;color:var(--dark)">TaylorMade Stealth 2</div><div style="font-size:10px;color:var(--muted)">Iron Set (5–PW) · 2022</div></td>
+                            <td><span class="conf-badge high">91%</span></td>
+                            <td>£340</td>
+                            <td>£204</td>
+                            <td><span class="status-pill transit">In Transit</span></td>
+                            <td>1d ago</td>
+                            <td>Shipped 30 Apr</td>
+                            <td><button class="action-btn received">Mark Received</button></td>
+                          </tr>
+                          <tr>
+                            <td><input type="checkbox"></td>
+                            <td><div class="ref-link">#CFC-0040</div><div class="ref-sub">b487542b...</div></td>
+                            <td><div class="customer-name">David Clarke</div><div class="customer-email">d.clarke84@hotmail.com</div></td>
+                            <td><div style="font-size:12px;font-weight:600;color:var(--dark)">Low confidence — mixed set</div><div style="font-size:10px;color:var(--muted)">Irons · Unknown brand</div></td>
+                            <td><span class="conf-badge zero">38%</span></td>
+                            <td>—</td>
+                            <td>—</td>
+                            <td><span class="status-pill review">Under Review</span></td>
+                            <td>3h ago</td>
+                            <td>—</td>
+                            <td><button class="action-btn send">Send Quote</button></td>
+                          </tr>
+                          <tr>
+                            <td><input type="checkbox"></td>
+                            <td><div class="ref-link">#CFC-0039</div><div class="ref-sub">a91e3f70...</div></td>
+                            <td><div class="customer-name">Emma Patel</div><div class="customer-email">emma.patel@gmail.com</div></td>
+                            <td><div style="font-size:12px;font-weight:600;color:var(--dark)">Ping G425 Max</div><div style="font-size:10px;color:var(--muted)">Fairway Wood · 2021</div></td>
+                            <td><span class="conf-badge high">87%</span></td>
+                            <td>£89</td>
+                            <td>£54</td>
+                            <td><span class="status-pill paid">Paid</span></td>
+                            <td>4d ago</td>
+                            <td>Paid 27 Apr</td>
+                            <td><button class="action-btn send" style="background:var(--green)">Paid ✓</button></td>
+                          </tr>
+                        </tbody>
+                        <tfoot>
+                          <tr>
+                            <th style="width:28px"><input type="checkbox"></th>
+                            <th class="sortable">Ref ↕</th>
+                            <th>Customer</th>
+                            <th>Club Identified</th>
+                            <th class="sortable" style="color:var(--blue)">Confidence ↕</th>
+                            <th>Market Mid</th>
+                            <th class="sortable" style="color:var(--blue)">Our Offer ↕</th>
+                            <th class="sortable" style="color:var(--blue)">Status ↕</th>
+                            <th class="sortable" style="color:var(--blue)">Age ↕</th>
+                            <th>Last Activity</th>
+                            <th>Quick Action</th>
+                          </tr>
+                        </tfoot>
+                      </table>
+                      <div style="padding:8px 14px;font-size:12px;color:var(--muted);text-align:right;border-top:1px solid var(--border)">Showing 4 of 14 items</div>
+                    </div>
+                  </div>
+                </div>
+              </div><!-- /asc0 -->
+
+              <!-- ADMIN SCREEN 1: Quote Detail -->
+              <div class="admin-screen" id="asc1">
+
+                <!-- Page header -->
+                <div class="page-header">
+                  <div class="page-title-row">
+                    <button class="wp-btn" onclick="showScreen(0)">← All Quotes</button>
+                    <div class="page-h1">Quote #CFC-0042</div>
+                    <span style="font-size:11px;color:var(--muted);font-family:monospace;font-weight:400">8fec9b29-6fad-4e6e-ad9b-edf068a7a462</span>
+                  </div>
+                  <span class="status-pill accepted" style="font-size:12px;padding:5px 14px">Accepted</span>
+                </div>
+
+                <!-- 3-column grid -->
+                <div class="qd-3col">
+
+                  <!-- ── LEFT: Photos · AI ID · AI Reasoning ── -->
+                  <div>
+
+                    <!-- Submitted Photos -->
+                    <div class="qd-card">
+                      <div class="qd-card-title">
+                        Submitted Photos
+                        <span style="font-size:11px;font-weight:400;color:var(--muted)">4 photos</span>
+                      </div>
+                      <div class="qd-photos-grid">
+                        <div class="qd-photo"></div>
+                        <div class="qd-photo"></div>
+                        <div class="qd-photo"></div>
+                        <div class="qd-photo"></div>
+                      </div>
+                    </div>
+
+                    <!-- AI Identification -->
+                    <div class="qd-card">
+                      <div class="qd-card-title">AI Identification</div>
+
+                      <div class="screen-label" style="margin-bottom:4px">Seller Description</div>
+                      <div class="qd-seller-desc">callaway paradym driver good condition</div>
+
+                      <table class="qd-id-table">
+                        <tr><td>Brand</td><td>Callaway</td></tr>
+                        <tr><td>Model</td><td>Paradym</td></tr>
+                        <tr><td>Year</td><td>2023</td></tr>
+                        <tr><td>Type</td><td><span class="status-pill accepted" style="font-size:10px;padding:2px 8px">Driver</span></td></tr>
+                        <tr><td>Condition</td><td><span style="background:#fff0eb;color:var(--orange);border:1px solid #f5c6b3;border-radius:20px;font-size:10px;font-weight:700;padding:2px 8px">Good</span></td></tr>
+                      </table>
+
+                      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:5px">
+                        <span class="screen-label" style="margin-bottom:0">ID Confidence</span>
+                        <span style="font-size:13px;font-weight:700;color:var(--green)">99%</span>
+                      </div>
+                      <div class="conf-bar-wrap" style="margin-bottom:12px"><div class="conf-bar-fill" style="width:99%"></div></div>
+
+                      <div class="screen-label" style="margin-bottom:4px">Vision Notes</div>
+                      <div style="font-size:12px;color:var(--mid);line-height:1.6">Visible sole and crown text read "PARADYM" and "FORGED CARBON" with light play marks and minor face wear only.</div>
+                    </div>
+
+                    <!-- AI Reasoning -->
+                    <div class="qd-card">
+                      <div class="qd-card-title">
+                        AI Reasoning
+                        <div style="display:flex;gap:5px;flex-wrap:wrap">
+                          <span class="model-pill vision">◎ Vision: gpt-4.5-mini</span>
+                          <span class="model-pill pricing">$ Pricing: gpt-4.5-mini</span>
+                        </div>
+                      </div>
+
+                      <div class="rationale-box">
+                        <div class="rationale-label">⚠ Market Pricing Rationale</div>
+                        <div class="rationale-text">Recent UK comparables cluster around £239.95–£247 for Good/Refurbished Callaway Paradym drivers on eBay UK from Golfbidder/re-playgolf, with head-only used examples lower around £136–£192. GolfSupport's new-stock Paradym pricing is about £529–£599, which supports a used private-sale discount into the low- to mid-£200s; a clean good-condition full driver with standard loft/shaft should realistically sell around £210–£255 privately today.</div>
+                      </div>
+
+                      <div class="screen-label" style="margin-bottom:8px">Offer Calculation Breakdown</div>
+                      <div>
+                        <div class="ob-row"><span>AI market low</span><span>£210</span></div>
+                        <div class="ob-row"><span>AI market high</span><span>£255</span></div>
+                        <div class="ob-row"><span>Midpoint</span><span style="font-weight:700;color:var(--dark)">£233</span></div>
+                        <div class="ob-row"><span>Buy-back margin (–40%)</span><span class="ob-neg">–£93</span></div>
+                        <div class="ob-row total"><span>Final offer</span><span>£140</span></div>
+                      </div>
+                    </div>
+
+                  </div><!-- /left col -->
+
+                  <!-- ── CENTRE: Market Intelligence · Offer Calculation ── -->
+                  <div>
+
+                    <!-- Market Intelligence -->
+                    <div class="qd-card">
+                      <div class="qd-card-title">Market Intelligence</div>
+                      <div class="qd-row"><span class="qd-key">Market Low</span><span class="qd-val">£210</span></div>
+                      <div class="qd-row"><span class="qd-key">Market High</span><span class="qd-val">£255</span></div>
+                      <div class="qd-row" style="border-bottom:none">
+                        <span class="qd-key" style="font-weight:700;color:var(--dark);font-size:13px">Midpoint</span>
+                        <span class="qd-val" style="font-size:18px;font-weight:700">£233</span>
+                      </div>
+                      <div class="mkt-range-bar">
+                        <div class="mkt-range-fill"></div>
+                        <div class="mkt-range-dot" style="left:51%"></div>
+                      </div>
+                      <div style="display:flex;justify-content:space-between;font-size:10px;color:var(--muted)">
+                        <span>£210</span><span>£255</span>
+                      </div>
+                    </div>
+
+                    <!-- Offer Calculation -->
+                    <div class="qd-card">
+                      <div class="qd-card-title">Offer Calculation</div>
+                      <div class="offer-formula">
+                        <div class="of-block">
+                          <div class="of-val">£233</div>
+                          <div class="of-label">Midpoint</div>
+                        </div>
+                        <div class="of-op">×</div>
+                        <div class="of-block">
+                          <div class="of-val">60%</div>
+                          <div class="of-label">Multiplier</div>
+                        </div>
+                        <div class="of-op">=</div>
+                        <div class="of-block">
+                          <div class="of-val orange">£140</div>
+                          <div class="of-label">Offer</div>
+                        </div>
+                      </div>
+                      <div style="text-align:center;font-size:11px;color:var(--muted);margin-bottom:16px;padding-bottom:14px;border-bottom:1px solid var(--border)">Buy-back margin: 40%</div>
+                      <div style="font-size:12px;font-weight:700;color:var(--dark);margin-bottom:8px">Override offer price</div>
+                      <div class="offer-input-row">
+                        <span style="font-size:18px;font-weight:700;color:var(--mid);flex-shrink:0">£</span>
+                        <input class="offer-input" type="text" placeholder="e.g. 75">
+                        <button class="wp-btn" style="border-color:var(--orange);color:var(--orange);white-space:nowrap;flex-shrink:0">Save Override</button>
+                      </div>
+                    </div>
+
+                  </div><!-- /centre col -->
+
+                  <!-- ── RIGHT: Status · Next Action · Notes ── -->
+                  <div>
+
+                    <!-- Current Status -->
+                    <div class="qd-card">
+                      <div class="qd-card-title">Current Status</div>
+                      <span class="status-pill accepted" style="font-size:12px;padding:5px 14px;display:inline-block;margin-bottom:5px">Accepted</span>
+                      <div style="font-size:11px;color:var(--muted);margin-bottom:12px">Updated 2 hours ago</div>
+                      <div style="font-size:12px;font-weight:700;color:var(--dark);margin-bottom:6px">Change status</div>
+                      <div style="display:flex;gap:8px;align-items:center">
+                        <select class="qd-status-select">
+                          <option selected>Accepted</option>
+                          <option>Item Received</option>
+                          <option>Inspected</option>
+                          <option>Revised Offer Sent</option>
+                          <option>Payment Sent</option>
+                          <option>Complete</option>
+                          <option>Under Review</option>
+                          <option>Declined</option>
+                        </select>
+                        <button class="wp-btn orange" style="flex-shrink:0">Update</button>
+                      </div>
+                    </div>
+
+                    <!-- Next Action -->
+                    <div class="qd-card">
+                      <div class="qd-card-title">Next Action</div>
+                      <div style="font-size:12px;color:var(--mid);line-height:1.6;margin-bottom:12px">Clubs are with you. Complete your inspection below.</div>
+
+                      <div style="font-size:11px;font-weight:700;color:var(--dark);text-transform:uppercase;letter-spacing:.4px;margin-bottom:8px">Actual condition received</div>
+                      <div class="cond-btns" style="margin-bottom:14px">
+                        <button class="cond-btn">Mint</button>
+                        <button class="cond-btn active">Good</button>
+                        <button class="cond-btn">Fair</button>
+                        <button class="cond-btn">Poor</button>
+                      </div>
+
+                      <div style="font-size:11px;font-weight:700;color:var(--dark);text-transform:uppercase;letter-spacing:.4px;margin-bottom:6px">Inspection notes <span style="font-size:10px;color:var(--muted);text-transform:none;letter-spacing:0;font-weight:400">(sent to seller)</span></div>
+                      <textarea class="inspect-textarea" placeholder="Describe your findings..."></textarea>
+                      <div style="font-size:10px;color:var(--muted);margin-bottom:14px;margin-top:4px">Tip: Be specific — sellers convert better when they understand the adjustment.</div>
+
+                      <div style="font-size:11px;font-weight:700;color:var(--dark);text-transform:uppercase;letter-spacing:.4px;margin-bottom:8px">Offer decision</div>
+                      <label style="display:flex;align-items:center;gap:8px;font-size:12px;color:var(--mid);margin-bottom:6px;cursor:pointer">
+                        <input type="radio" name="offer-decision" checked style="accent-color:var(--orange)"> Confirm original offer of <strong style="color:var(--dark)">£140</strong>
+                      </label>
+                      <label style="display:flex;align-items:center;gap:8px;font-size:12px;color:var(--mid);margin-bottom:14px;cursor:pointer">
+                        <input type="radio" name="offer-decision" style="accent-color:var(--orange)"> Revise offer to: &nbsp;
+                        <span style="font-weight:700;color:var(--mid)">£</span>
+                        <input type="text" style="width:60px;padding:4px 8px;border:1px solid var(--border);border-radius:var(--radius-sm);font-family:'DM Sans',sans-serif;font-size:12px;outline:none" placeholder="0">
+                      </label>
+                      <button class="wp-btn orange" style="width:100%;justify-content:center;padding:10px;font-size:13px">Complete Inspection</button>
+                    </div>
+
+                    <!-- Notes -->
+                    <div class="qd-card">
+                      <div class="qd-card-title" style="border-bottom:none;margin-bottom:0">Notes</div>
+                      <div class="qd-notes-tabs">
+                        <div class="qd-ntab active">Internal</div>
+                        <div class="qd-ntab">Seller</div>
+                      </div>
+                      <div style="font-size:12px;color:var(--muted);margin-bottom:8px;font-style:italic">No internal notes yet.</div>
+                      <textarea class="inspect-textarea" placeholder="Add internal note (admin-only)..."></textarea>
+                      <button class="wp-btn orange" style="margin-top:8px;padding:7px 14px">Add Note</button>
+                    </div>
+
+                  </div><!-- /right col -->
+
+                </div><!-- /qd-3col -->
+
+                <!-- Activity Timeline -->
+                <div class="qd-card">
+                  <div class="qd-card-title">
+                    Activity Timeline
+                    <div class="timeline-filter-btns">
+                      <button class="tl-filter-btn active">All</button>
+                      <button class="tl-filter-btn">Notes</button>
+                      <button class="tl-filter-btn">Status</button>
+                      <button class="tl-filter-btn">Emails</button>
+                      <button class="tl-filter-btn">System</button>
+                    </div>
+                  </div>
+                  <div class="tl-entry">
+                    <div class="tl-dot green"></div>
+                    <div>
+                      <div class="tl-meta"><strong>James Thornton</strong> &nbsp;·&nbsp; 2 May 2026, 09:22 &nbsp;·&nbsp; <span style="color:var(--green);font-weight:700">Visible to seller</span></div>
+                      <div class="tl-text">Offer accepted. Confirmation email sent to j.thornton@gmail.com.</div>
+                    </div>
+                  </div>
+                  <div class="tl-entry">
+                    <div class="tl-dot blue"></div>
+                    <div>
+                      <div class="tl-meta"><strong>System</strong> &nbsp;·&nbsp; 2 May 2026, 09:14</div>
+                      <div class="tl-text">Quote generated via GPT-4.5-mini. Callaway Paradym Driver identified at 99% confidence. Offer £140 sent to customer.</div>
+                    </div>
+                  </div>
+                  <div class="tl-entry">
+                    <div class="tl-dot muted"></div>
+                    <div>
+                      <div class="tl-meta"><strong>James Thornton</strong> &nbsp;·&nbsp; 2 May 2026, 09:11</div>
+                      <div class="tl-text">Quote submitted via valuation form. 4 photos uploaded. Seller description: "callaway paradym driver good condition".</div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Customer footer row -->
+                <div class="qd-customer-footer">
+                  <div>
+                    <strong style="color:var(--dark)">James Thornton</strong> &nbsp;
+                    <a style="color:var(--blue);text-decoration:underline;cursor:pointer">j.thornton@gmail.com</a> &nbsp;
+                    <a style="color:var(--muted);text-decoration:underline;cursor:pointer;font-size:11px">Edit account</a>
+                  </div>
+                  <div style="text-align:right;font-size:11px">
+                    Submitted: 2 May 2026, 09:11 &nbsp;·&nbsp; Expires: 3 May 2026, 09:11 &nbsp;·&nbsp;
+                    <span style="font-family:monospace">CFC-0042</span>
+                  </div>
+                </div>
+
+              </div><!-- /asc1 -->
+
+              <!-- ADMIN SCREEN 2: Settings — AI & Pricing -->
+              <div class="admin-screen" id="asc2">
+                <div class="page-header">
+                  <div class="page-title-row">
+                    <div class="page-h1">Cash Fore Clubs Settings</div>
+                  </div>
+                  <button class="wp-btn primary">Save Changes</button>
+                </div>
+
+                <div class="settings-wrap">
+                  <!-- AI Configuration -->
+                  <div class="settings-section">
+                    <div class="settings-section-header">AI Configuration</div>
+                    <div class="settings-section-body">
+                      <div class="settings-row">
+                        <div class="settings-label">OpenAI API Key</div>
+                        <div class="settings-field">
+                          <input type="password" value="sk-proj-xxxxxxxxxxxxxxxxxxxxxxxx" style="max-width:340px;font-family:monospace">
+                          <div class="settings-desc">Used for vision analysis and market pricing. Leave blank to keep the existing key.</div>
+                          <button class="wp-btn" style="margin-top:10px">Test API Connection</button>
+                        </div>
+                      </div>
+                      <div class="settings-row">
+                        <div class="settings-label">
+                          Vision Model
+                          <span class="model-badge">Latest</span>
+                        </div>
+                        <div class="settings-field">
+                          <select>
+                            <option value="gpt-5.4-mini" selected>GPT-5.4-mini Vision — Recommended ✦ Fastest</option>
+                            <option value="gpt-4o">GPT-4o Vision — High accuracy</option>
+                            <option value="gpt-4o-mini">GPT-4o-mini Vision — Budget</option>
+                            <option value="gpt-4-turbo">GPT-4-turbo Vision — Legacy</option>
+                            <option value="gpt-4-vision-preview">GPT-4-vision-preview — Deprecated</option>
+                          </select>
+                          <div class="settings-desc">Model used to identify the club from customer-submitted photos. GPT-5.4-mini offers the best speed-to-accuracy balance and is the default.</div>
+                        </div>
+                      </div>
+                      <div class="settings-row">
+                        <div class="settings-label">Price Research Model</div>
+                        <div class="settings-field">
+                          <select>
+                            <option value="gpt-5.4-mini" selected>GPT-5.4-mini — Recommended ✦ Fastest</option>
+                            <option value="gpt-4o">GPT-4o — High accuracy</option>
+                            <option value="gpt-4o-mini">GPT-4o-mini — Budget</option>
+                            <option value="gpt-4-turbo">GPT-4-turbo — Legacy</option>
+                          </select>
+                          <div class="settings-desc">Model used to research second-hand market prices after the club has been identified. Can be set independently of the vision model.</div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- Pricing Configuration -->
+                  <div class="settings-section">
+                    <div class="settings-section-header">Pricing Configuration</div>
+                    <div class="settings-section-body">
+                      <div class="settings-row">
+                        <div class="settings-label">Buy-Back Margin %</div>
+                        <div class="settings-field">
+                          <div class="slider-row">
+                            <div class="slider-num">40</div>
+                            <span class="slider-unit">%</span>
+                            <input type="range" min="0" max="100" value="40">
+                          </div>
+                          <div class="settings-desc">The percentage retained. At 40%, if market value is £100, you offer £60.</div>
+                          <div class="example-box">Example: £100 market value → You offer <strong>£60</strong></div>
+                        </div>
+                      </div>
+                      <div class="settings-row">
+                        <div class="settings-label">Minimum Offer (£)</div>
+                        <div class="settings-field">
+                          <input type="number" value="5.00" style="max-width:120px">
+                          <div class="settings-desc">No offer will be lower than this amount.</div>
+                        </div>
+                      </div>
+                      <div class="settings-row">
+                        <div class="settings-label">Confidence Threshold</div>
+                        <div class="settings-field">
+                          <div class="slider-row">
+                            <input type="range" class="conf" min="0" max="100" value="72">
+                            <span class="slider-unit" style="font-weight:700;color:var(--dark)">72%</span>
+                          </div>
+                          <div class="settings-desc">Quotes below this confidence score go to manual review.</div>
+                        </div>
+                      </div>
+                      <div class="settings-row">
+                        <div class="settings-label">Quote Expiry (hours)</div>
+                        <div class="settings-field">
+                          <input type="number" value="24" style="max-width:120px">
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div><!-- /asc2 -->
+
+              <!-- ADMIN SCREEN 3: Settings — Notifications & Email -->
+              <div class="admin-screen" id="asc3">
+                <div class="page-header">
+                  <div class="page-title-row">
+                    <div class="page-h1">Cash Fore Clubs Settings</div>
+                  </div>
+                  <button class="wp-btn primary">Save Changes</button>
+                </div>
+
+                <div class="settings-wrap">
+                  <!-- Notifications -->
+                  <div class="settings-section">
+                    <div class="settings-section-header">Notifications</div>
+                    <div class="settings-section-body">
+                      <div class="settings-row">
+                        <div class="settings-label">Admin Notification Email</div>
+                        <div class="settings-field">
+                          <input type="email" value="admin@cashforeclubs.co.uk" style="max-width:320px">
+                        </div>
+                      </div>
+                      <div class="settings-row">
+                        <div class="settings-label">Notifications</div>
+                        <div class="settings-field">
+                          <div class="settings-check-row"><input type="checkbox" checked> Email admin when a new instant quote is generated</div>
+                          <div class="settings-check-row"><input type="checkbox" checked> Email admin when a quote requires manual review</div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- Front-End Settings -->
+                  <div class="settings-section">
+                    <div class="settings-section-header">Front-End Settings</div>
+                    <div class="settings-section-body">
+                      <div class="settings-row">
+                        <div class="settings-label">Valuation Shortcode</div>
+                        <div class="settings-field">
+                          <div class="shortcode-row">
+                            <span class="shortcode-box">[cashforeclubs_valuation]</span>
+                            <button class="wp-btn">Copy</button>
+                          </div>
+                          <div class="settings-desc">Paste this shortcode into any page or post to embed the valuation form.</div>
+                        </div>
+                      </div>
+                      <div class="settings-row">
+                        <div class="settings-label">Condition Guide URL <span style="font-size:11px;color:var(--muted)">(optional)</span></div>
+                        <div class="settings-field">
+                          <input type="text" placeholder="https://" style="max-width:320px">
+                          <div class="settings-desc">If set, the Condition Guide button links here. Leave blank to use modal only.</div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- Email Templates -->
+                  <div class="settings-section">
+                    <div class="settings-section-header">Email Templates</div>
+                    <div class="settings-section-body">
+                      <div style="font-size:12px;color:var(--mid);margin-bottom:10px">Available merge tags:</div>
+                      <div class="merge-tags">
+                        <span class="merge-tag">{customer_name}</span>
+                        <span class="merge-tag">{quote_ref}</span>
+                        <span class="merge-tag">{final_price}</span>
+                        <span class="merge-tag">{club_brand}</span>
+                        <span class="merge-tag">{club_model}</span>
+                        <span class="merge-tag">{club_condition}</span>
+                        <span class="merge-tag">{expires_at}</span>
+                        <span class="merge-tag">{order_number}</span>
+                        <span class="merge-tag">{site_name}</span>
+                      </div>
+                      <div class="email-template-row">
+                        <div class="email-template-header">
+                          <svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 5l3 3 3-3"/></svg>
+                          New Quote Email (to customer)
+                        </div>
+                      </div>
+                      <div class="email-template-row">
+                        <div class="email-template-header">
+                          <svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 5l3 3 3-3"/></svg>
+                          Quote Accepted Email (to customer)
+                        </div>
+                      </div>
+                      <div class="email-template-row">
+                        <div class="email-template-header">
+                          <svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 5l3 3 3-3"/></svg>
+                          Manual Review Email (to customer)
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div><!-- /asc3 -->
+
+              <!-- ADMIN SCREEN 4: Payouts -->
+              <div class="admin-screen" id="asc4">
+                <div class="page-header">
+                  <div class="page-title-row">
+                    <button class="wp-btn" onclick="showScreen(0)">← All Quotes</button>
+                    <div class="page-h1">Payouts</div>
+                  </div>
+                </div>
+
+                <!-- Stat cards -->
+                <div class="stat-grid" style="margin-bottom:16px">
+                  <div class="stat-card">
+                    <div class="stat-icon"><svg width="18" height="18" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="1" y="4" width="14" height="10" rx="1.5"/><path d="M1 8h14M5 12h2"/></svg></div>
+                    <div class="stat-body">
+                      <div class="stat-label">Total Paid Out</div>
+                      <div class="stat-num">£2,847</div>
+                      <div class="stat-sub">All time</div>
+                    </div>
+                  </div>
+                  <div class="stat-card">
+                    <div class="stat-icon"><svg width="18" height="18" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="8" cy="8" r="6"/><path d="M8 5v3l2 2"/></svg></div>
+                    <div class="stat-body">
+                      <div class="stat-label">Number of Sales</div>
+                      <div class="stat-num">31</div>
+                      <div class="stat-sub">All time</div>
+                    </div>
+                  </div>
+                  <div class="stat-card">
+                    <div class="stat-icon"><svg width="18" height="18" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 2h10a1 1 0 011 1v11a1 1 0 01-1 1H3a1 1 0 01-1-1V3a1 1 0 011-1z"/></svg></div>
+                    <div class="stat-body">
+                      <div class="stat-label">Avg Payout</div>
+                      <div class="stat-num">£92</div>
+                      <div class="stat-sub">Per sale</div>
+                    </div>
+                  </div>
+                  <div class="stat-card">
+                    <div class="stat-icon"><svg width="18" height="18" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="8" cy="8" r="6"/><path d="M8 5v3"/></svg></div>
+                    <div class="stat-body">
+                      <div class="stat-label">Pending Payment</div>
+                      <div class="stat-num">3</div>
+                      <div class="stat-sub">£386 queued</div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Filter row -->
+                <div class="payouts-filter-row">
+                  <div class="filter-group">
+                    <div class="filter-group-label">From</div>
+                    <input type="date">
+                  </div>
+                  <div class="filter-group">
+                    <div class="filter-group-label">To</div>
+                    <input type="date">
+                  </div>
+                  <div class="filter-group">
+                    <div class="filter-group-label">Status</div>
+                    <select><option>All statuses</option><option>Pending</option><option>Paid</option><option>Cancelled</option></select>
+                  </div>
+                  <button class="wp-btn" style="align-self:flex-end;border-color:var(--orange);color:var(--orange);padding:7px 14px">Filter</button>
+                  <div class="payouts-spacer"></div>
+                  <button class="export-btn">
+                    <svg width="13" height="13" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M8 2v9M5 8l3 3 3-3"/><path d="M2 13h12"/></svg>
+                    Export CSV
+                  </button>
+                </div>
+
+                <!-- Payouts table -->
+                <div class="table-area">
+                  <table class="tbl">
+                    <thead>
+                      <tr>
+                        <th style="width:28px"><input type="checkbox"></th>
+                        <th class="sortable">Ref ↕</th>
+                        <th>Customer</th>
+                        <th>Club</th>
+                        <th class="sortable" style="color:var(--blue)">Amount ↕</th>
+                        <th class="sortable" style="color:var(--blue)">Date Paid ↕</th>
+                        <th>Method</th>
+                        <th class="sortable" style="color:var(--blue)">Status ↕</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td><input type="checkbox"></td>
+                        <td><div class="ref-link">#CFC-0038</div></td>
+                        <td><div class="customer-name">Oliver Barnes</div><div class="customer-email">o.barnes@gmail.com</div></td>
+                        <td><div style="font-size:12px;font-weight:600;color:var(--dark)">Titleist TSR2 Driver</div><div style="font-size:10px;color:var(--muted)">Driver · 2023</div></td>
+                        <td style="font-weight:700;color:var(--green)">£204</td>
+                        <td>—</td>
+                        <td>Bank Transfer</td>
+                        <td><span class="status-pill review">Pending</span></td>
+                      </tr>
+                      <tr>
+                        <td><input type="checkbox"></td>
+                        <td><div class="ref-link">#CFC-0037</div></td>
+                        <td><div class="customer-name">Priya Nair</div><div class="customer-email">priya.nair@hotmail.com</div></td>
+                        <td><div style="font-size:12px;font-weight:600;color:var(--dark)">Cleveland RTX 6 Wedge</div><div style="font-size:10px;color:var(--muted)">Wedge · 2022</div></td>
+                        <td style="font-weight:700;color:var(--green)">£47</td>
+                        <td>—</td>
+                        <td>Bank Transfer</td>
+                        <td><span class="status-pill review">Pending</span></td>
+                      </tr>
+                      <tr>
+                        <td><input type="checkbox"></td>
+                        <td><div class="ref-link">#CFC-0036</div></td>
+                        <td><div class="customer-name">Tom Griffiths</div><div class="customer-email">tom.g@gmail.com</div></td>
+                        <td><div style="font-size:12px;font-weight:600;color:var(--dark)">Cobra King Speedzone</div><div style="font-size:10px;color:var(--muted)">Fairway Wood · 2020</div></td>
+                        <td style="font-weight:700;color:var(--green)">£135</td>
+                        <td>—</td>
+                        <td>Bank Transfer</td>
+                        <td><span class="status-pill review">Pending</span></td>
+                      </tr>
+                      <tr>
+                        <td><input type="checkbox"></td>
+                        <td><div class="ref-link">#CFC-0035</div></td>
+                        <td><div class="customer-name">Emma Patel</div><div class="customer-email">emma.patel@gmail.com</div></td>
+                        <td><div style="font-size:12px;font-weight:600;color:var(--dark)">Ping G425 Max</div><div style="font-size:10px;color:var(--muted)">Fairway Wood · 2021</div></td>
+                        <td style="font-weight:700;color:var(--green)">£54</td>
+                        <td>27 Apr 2026</td>
+                        <td>Bank Transfer</td>
+                        <td><span class="status-pill paid">Paid</span></td>
+                      </tr>
+                      <tr>
+                        <td><input type="checkbox"></td>
+                        <td><div class="ref-link">#CFC-0034</div></td>
+                        <td><div class="customer-name">Rachel Foster</div><div class="customer-email">rfoster@outlook.com</div></td>
+                        <td><div style="font-size:12px;font-weight:600;color:var(--dark)">TaylorMade SIM2 Max</div><div style="font-size:10px;color:var(--muted)">Driver · 2021</div></td>
+                        <td style="font-weight:700;color:var(--green)">£118</td>
+                        <td>25 Apr 2026</td>
+                        <td>Bank Transfer</td>
+                        <td><span class="status-pill paid">Paid</span></td>
+                      </tr>
+                      <tr>
+                        <td><input type="checkbox"></td>
+                        <td><div class="ref-link">#CFC-0033</div></td>
+                        <td><div class="customer-name">Marcus Webb</div><div class="customer-email">m.webb84@gmail.com</div></td>
+                        <td><div style="font-size:12px;font-weight:600;color:var(--dark)">Callaway Apex Pro</div><div style="font-size:10px;color:var(--muted)">Iron Set (5–PW) · 2021</div></td>
+                        <td style="font-weight:700;color:var(--green)">£186</td>
+                        <td>22 Apr 2026</td>
+                        <td>Bank Transfer</td>
+                        <td><span class="status-pill paid">Paid</span></td>
+                      </tr>
+                    </tbody>
+                  </table>
+                  <div style="padding:8px 14px;font-size:12px;color:var(--muted);display:flex;justify-content:space-between;border-top:1px solid var(--border)">
+                    <span>Showing 6 of 31 payouts</span>
+                    <span>Filtered total: <strong style="color:var(--dark)">£744</strong></span>
+                  </div>
+                </div>
+              </div><!-- /asc4 -->
+
+            </div><!-- /admin-screens-container -->
+          </div><!-- /wp-content -->
+        </div><!-- /wp-layout -->
+      </div><!-- /wp-frame -->
+    </div>
+
+  </div><!-- /content-col -->
+
+  <!-- ── Notes column ───────────────────────────────────────────────────── -->
+  <div class="notes-col">
+
+    <button class="notes-toggle-btn" id="notes-toggle-btn" onclick="toggleNotes()">
+      ⓘ Screen notes ▾
+    </button>
+
+    <div class="notes-panel" id="notes-panel">
+
+      <!-- Dynamic: current screen card -->
+      <div class="notes-card" id="notes-screen-card">
+        <div class="screen-label"  id="note-screen-label">Screen 1 of 7</div>
+        <div style="font-size:16px;font-weight:700;color:var(--dark);margin-bottom:6px" id="note-title"></div>
+        <div class="screen-desc"   id="note-desc"></div>
+        <div class="tag-row"       id="note-tags"></div>
+      </div>
+
+      <!-- About: Customer (shown in customer mode) -->
+      <div class="notes-card" id="about-customer">
+        <div class="notes-title">About this mockup</div>
+        <div class="note-item"><div class="note-dot"></div><div class="note-text"><strong>7 screens</strong> covering the full sell flow from login to payment tracking.</div></div>
+        <div class="note-item"><div class="note-dot"></div><div class="note-text"><strong>GPT-5.4-mini</strong> identifies the club from the photo — no manual entry needed.</div></div>
+        <div class="note-item"><div class="note-dot"></div><div class="note-text"><strong>Instant offer</strong> shown in seconds with a 24-hour countdown timer.</div></div>
+        <div class="note-item"><div class="note-dot"></div><div class="note-text"><strong>My Quotes</strong> dashboard integrates with the WooCommerce account area.</div></div>
+        <div class="note-item"><div class="note-dot"></div><div class="note-text">Built by <strong>AI Agency Plus</strong> for Cash Fore Clubs.</div></div>
+      </div>
+
+      <!-- About: Admin (shown in admin mode) -->
+      <div class="notes-card" id="about-admin" style="display:none">
+        <div class="notes-title">About this admin mockup</div>
+        <div class="note-item"><div class="note-dot"></div><div class="note-text"><strong>5 screens</strong> covering the full admin workflow inside the WordPress dashboard.</div></div>
+        <div class="note-item"><div class="note-dot"></div><div class="note-text"><strong>All Quotes</strong> table with filters, sorting, bulk actions and quick-action buttons.</div></div>
+        <div class="note-item"><div class="note-dot"></div><div class="note-text"><strong>Quote Detail</strong> shows AI analysis, photos, customer info, offer editor and timeline.</div></div>
+        <div class="note-item"><div class="note-dot"></div><div class="note-text"><strong>Settings</strong> cover AI keys, buy-back margin, confidence threshold, notifications and email templates.</div></div>
+        <div class="note-item"><div class="note-dot"></div><div class="note-text"><strong>Payouts</strong> tracks all payments with CSV export for accounting.</div></div>
+        <div class="note-item"><div class="note-dot"></div><div class="note-text">Built by <strong>AI Agency Plus</strong> for Cash Fore Clubs.</div></div>
+      </div>
+
+      <!-- Key Features (always shown, both modes) -->
+      <div class="notes-card" id="key-features-card">
+        <div class="notes-title">Key Features</div>
+        <div class="note-item"><div class="note-dot"></div><div class="note-text"><strong>GPT-5.4-mini</strong> identifies clubs from photos automatically.</div></div>
+        <div class="note-item"><div class="note-dot"></div><div class="note-text"><strong>Instant offer</strong> with 24-hour countdown timer.</div></div>
+        <div class="note-item"><div class="note-dot"></div><div class="note-text"><strong>Full WordPress / WooCommerce</strong> integration.</div></div>
+        <div class="note-item"><div class="note-dot"></div><div class="note-text"><strong>Admin panel</strong> with AI confidence scoring and margin controls.</div></div>
+        <div class="note-item"><div class="note-dot"></div><div class="note-text"><strong>Automated customer emails</strong> at each stage.</div></div>
+        <div class="note-item"><div class="note-dot"></div><div class="note-text"><strong>Payouts ledger</strong> with CSV export.</div></div>
+      </div>
+
+    </div><!-- /notes-panel -->
+  </div><!-- /notes-col -->
+
+</div><!-- /page-layout -->
+
+<!-- ══════════════════════════════════════════════════════════════════════════
+     FOOTER
+══════════════════════════════════════════════════════════════════════════ -->
 <div class="mockup-footer">
-  Prepared by <strong>AI Agency Plus</strong> for Cash Fore Clubs &nbsp;·&nbsp; Confidential
+  Prepared by <strong>AI Agency Plus</strong> for Cash Fore Clubs &nbsp;·&nbsp; Confidential &nbsp;·&nbsp; <span id="footer-year"></span>
 </div>
 
+<!-- ══════════════════════════════════════════════════════════════════════════
+     SCRIPT
+══════════════════════════════════════════════════════════════════════════ -->
 <script>
-  var screenData = [
-    { label: 'Screen 1 of 7', title: 'Log in screen', desc: 'Returning customers log in with their username or email and password. New customers can create an account. A "Condition Guide" link helps sellers assess their club\'s grade before getting started.', tags: [['Login / Register',''], ['Returning customers','green'], ['Condition guide','blue']] },
-    { label: 'Screen 2 of 7', title: 'Upload screen', desc: 'Customer lands here after logging in. They upload up to 5 photos of their club and optionally add a description. The CTA is disabled until at least one photo is added.', tags: [['Photo upload',''], ['Drag & drop',''], ['Trust signals','green']] },
-    { label: 'Screen 3 of 7', title: 'Photos added', desc: 'Once photos are uploaded, thumbnails appear inside the drop zone and the photo count is shown. The CTA button activates. Customer can also type a description for extra context.', tags: [['Photos confirmed','green'], ['CTA active','green'], ['Description field','']] },
-    { label: 'Screen 4 of 7', title: 'Valuing your clubs...', desc: 'Loading state shown while GPT-4 Vision analyses the photos and checks second-hand market prices. Step-by-step progress shown to keep the customer informed.', tags: [['AI analysis',''], ['Live market check',''], ['~10 seconds','blue']] },
-    { label: 'Screen 5 of 7', title: 'Instant offer revealed', desc: 'The buyback price is shown large and clear. Club name and condition confirmed. A 24-hour countdown creates urgency. Customer can accept or decline.', tags: [['Big price reveal',''], ['Countdown timer',''], ['Accept / Decline','green']] },
-    { label: 'Screen 6 of 7', title: 'Offer confirmed', desc: 'Clear confirmation with the customer\'s email address shown. Three-step "what happens next" flow sets expectations. CTA leads to the My Quotes dashboard.', tags: [['Email confirmation','green'], ['Next steps',''], ['View My Quotes','blue']] },
-    { label: 'Screen 7 of 7', title: 'My Quotes dashboard', desc: 'Integrated into the WooCommerce account sidebar. Each quote shows the club name, a 4-step progress tracker with dates, the offer price and a shipping instructions button.', tags: [['WooCommerce account',''], ['Progress tracker','green'], ['Quote history','blue']] },
-  ];
 
-  function showScreen(n) {
-    document.querySelectorAll('.screen').forEach(function(s,i){ s.classList.toggle('active', i===n); });
-    document.querySelectorAll('.snav-btn').forEach(function(b,i){ b.classList.toggle('active', i===n); });
-    var d = screenData[n];
-    document.getElementById('note-screen-label').textContent = d.label;
-    document.getElementById('note-title').textContent = d.title;
-    document.getElementById('note-desc').textContent = d.desc;
-    var tagRow = document.getElementById('note-tags');
-    tagRow.innerHTML = d.tags.map(function(t){ return '<span class="tag ' + t[1] + '">' + t[0] + '</span>'; }).join('');
+/* ── State ─────────────────────────────────────────────────────────────── */
+var currentMode           = 'customer';
+var currentCustomerScreen = 0;
+var currentAdminScreen    = 0;
+var countdownInterval     = null;
+var countdownSecs         = 0;
+
+/* ── Screen metadata ────────────────────────────────────────────────────── */
+var customerScreenData = [
+  { label: 'Screen 1 of 7', title: 'Log in screen',           desc: 'Returning customers log in with their username or email and password. New customers can create an account. A "Condition Guide" link helps sellers assess their club\'s grade before getting started.', tags: [['Login / Register',''], ['Returning customers','green'], ['Condition guide','blue']] },
+  { label: 'Screen 2 of 7', title: 'Upload screen',            desc: 'Customer lands here after logging in. They upload up to 5 photos of their club and optionally add a description. The CTA is disabled until at least one photo is added.',                      tags: [['Photo upload',''], ['Drag & drop',''], ['Trust signals','green']] },
+  { label: 'Screen 3 of 7', title: 'Photos added',             desc: 'Once photos are uploaded, thumbnails appear inside the drop zone and the photo count is shown. The CTA button activates. Customer can also type a description for extra context.',              tags: [['Photos confirmed','green'], ['CTA active','green'], ['Description field','']] },
+  { label: 'Screen 4 of 7', title: 'Valuing your clubs...',    desc: 'Loading state shown while GPT-5.4-mini analyses the photos and checks second-hand market prices. Step-by-step progress shown to keep the customer informed.',                                 tags: [['AI analysis',''], ['Live market check',''], ['~10 seconds','blue']] },
+  { label: 'Screen 5 of 7', title: 'Instant offer revealed',   desc: 'The buyback price is shown large and clear. Club name and condition confirmed. A 24-hour countdown creates urgency. Customer can accept or decline.',                                           tags: [['Big price reveal',''], ['Countdown timer',''], ['Accept / Decline','green']] },
+  { label: 'Screen 6 of 7', title: 'Offer confirmed',          desc: 'Clear confirmation with the customer\'s email address shown. Three-step "what happens next" flow sets expectations. CTA leads to the My Quotes dashboard.',                                      tags: [['Email confirmation','green'], ['Next steps',''], ['View My Quotes','blue']] },
+  { label: 'Screen 7 of 7', title: 'My Quotes dashboard',      desc: 'Integrated into the WooCommerce account sidebar. Each quote shows the club name, a 4-step progress tracker with dates, the offer price and a shipping instructions button.',                   tags: [['WooCommerce account',''], ['Progress tracker','green'], ['Quote history','blue']] },
+];
+
+var adminScreenData = [
+  { label: 'Screen 1 of 5', title: 'All Quotes',                         desc: 'The main admin hub. Shows live stats at a glance — quotes today, items in transit, and weekly payout. The table is filterable by status and date, with quick-action buttons to move quotes through the workflow without opening each one.',     tags: [['Live stats',''], ['Status filters','green'], ['Quick actions','blue']] },
+  { label: 'Screen 2 of 5', title: 'Quote Detail',                       desc: 'Full detail view for a single quote. Shows AI-identified club info, confidence score, market mid price, submitted photos, customer details, and a timeline. Admin can adjust the offer price and send a revised quote.',                           tags: [['AI analysis',''], ['Offer editor','green'], ['Timeline','blue']] },
+  { label: 'Screen 3 of 5', title: 'Settings — AI & Pricing',            desc: 'Configure the OpenAI API key, buy-back margin percentage, minimum offer floor, AI confidence threshold, and quote expiry. The live example updates to show the customer offer based on the current margin setting.',                            tags: [['API key',''], ['Margin slider','green'], ['Confidence threshold','blue']] },
+  { label: 'Screen 4 of 5', title: 'Settings — Notifications & Email',   desc: 'Set the admin notification email, choose which events trigger alerts, embed the valuation form via shortcode, and customise the three customer email templates using merge tags.',                                                               tags: [['Notifications',''], ['Shortcode','green'], ['Email templates','blue']] },
+  { label: 'Screen 5 of 5', title: 'Payouts',                            desc: 'A dedicated payouts ledger showing total paid out, number of sales, average payout and pending payments. Filter by date range and status, then export to CSV for your accounts team.',                                                          tags: [['Payment tracking',''], ['CSV export','green'], ['Date filter','blue']] },
+];
+
+var customerNavLabels = [
+  '1. Log in', '2. Upload', '3. Photos added',
+  '4. Valuing...', '5. Instant offer', '6. Confirmed', '7. My quotes'
+];
+var adminNavLabels = [
+  '1. All Quotes', '2. Quote Detail',
+  '3. Settings — AI &amp; Pricing', '4. Settings — Notifications &amp; Email', '5. Payouts'
+];
+
+/* ── renderNav ───────────────────────────────────────────────────────────── */
+function renderNav(labels, activeIndex) {
+  var nav = document.getElementById('screen-nav');
+  var html = '';
+  for (var i = 0; i < labels.length; i++) {
+    html += '<button class="snav-btn' + (i === activeIndex ? ' active' : '') + '" onclick="showScreen(' + i + ')">' + labels[i] + '</button>';
   }
+  html += '<span class="nav-kbd-hint">← → to navigate</span>';
+  nav.innerHTML = html;
+}
+
+/* ── updateProgressBar ───────────────────────────────────────────────────── */
+function updateProgressBar(n, total) {
+  var pct = ((n + 1) / total) * 100;
+  document.getElementById('progress-fill').style.width = pct.toFixed(2) + '%';
+}
+
+/* ── updateNotesPanel ────────────────────────────────────────────────────── */
+function updateNotesPanel(data) {
+  document.getElementById('note-screen-label').textContent = data.label;
+  document.getElementById('note-title').textContent        = data.title;
+  document.getElementById('note-desc').textContent         = data.desc;
+  var tagRow = document.getElementById('note-tags');
+  tagRow.innerHTML = data.tags.map(function(t) {
+    return '<span class="tag ' + t[1] + '">' + t[0] + '</span>';
+  }).join('');
+}
+
+/* ── updateAdminSidebar ──────────────────────────────────────────────────── */
+function updateAdminSidebar(n) {
+  ['wp-sub-quotes', 'wp-sub-settings', 'wp-sub-payouts'].forEach(function(id) {
+    document.getElementById(id).classList.remove('active');
+  });
+  if (n === 0 || n === 1) {
+    document.getElementById('wp-sub-quotes').classList.add('active');
+  } else if (n === 2 || n === 3) {
+    document.getElementById('wp-sub-settings').classList.add('active');
+  } else if (n === 4) {
+    document.getElementById('wp-sub-payouts').classList.add('active');
+  }
+}
+
+/* ── startCountdown ──────────────────────────────────────────────────────── */
+function startCountdown() {
+  clearInterval(countdownInterval);
+  countdownSecs = 23 * 3600 + 59 * 60 + 59;
+  var el = document.getElementById('countdown-display');
+  function tick() {
+    if (countdownSecs <= 0) { clearInterval(countdownInterval); return; }
+    countdownSecs--;
+    var h = Math.floor(countdownSecs / 3600);
+    var m = Math.floor((countdownSecs % 3600) / 60);
+    var s = countdownSecs % 60;
+    if (el) el.textContent = h + 'h ' + (m < 10 ? '0' : '') + m + 'm ' + (s < 10 ? '0' : '') + s + 's';
+  }
+  tick();
+  countdownInterval = setInterval(tick, 1000);
+}
+
+/* ── toggleNotes ─────────────────────────────────────────────────────────── */
+function toggleNotes() {
+  var panel = document.getElementById('notes-panel');
+  var btn   = document.getElementById('notes-toggle-btn');
+  var open  = panel.classList.toggle('open');
+  btn.textContent = open ? 'ⓘ Screen notes ▴' : 'ⓘ Screen notes ▾';
+}
+
+/* ── switchMode ──────────────────────────────────────────────────────────── */
+function switchMode(mode) {
+  clearInterval(countdownInterval);
+  countdownInterval = null;
+
+  currentMode = mode;
+  document.getElementById('mode-btn-customer').classList.toggle('active', mode === 'customer');
+  document.getElementById('mode-btn-admin').classList.toggle('active', mode === 'admin');
+  document.getElementById('customer-panel').classList.toggle('active', mode === 'customer');
+  document.getElementById('admin-panel').classList.toggle('active', mode === 'admin');
+  document.getElementById('about-customer').style.display = mode === 'customer' ? '' : 'none';
+  document.getElementById('about-admin').style.display    = mode === 'admin'    ? '' : 'none';
+  document.querySelector('.page-layout').classList.toggle('admin-mode', mode === 'admin');
+  if (mode === 'customer') {
+    renderNav(customerNavLabels, 0);
+    currentCustomerScreen = 0;
+    _showCustomerScreen(0);
+  } else {
+    renderNav(adminNavLabels, 0);
+    currentAdminScreen = 0;
+    _showAdminScreen(0);
+  }
+}
+
+/* ── showScreen (public, called by nav buttons and in-screen CTAs) ───────── */
+function showScreen(n) {
+  if (currentMode === 'customer') {
+    _showCustomerScreen(n);
+  } else {
+    _showAdminScreen(n);
+  }
+}
+
+/* ── _showCustomerScreen ─────────────────────────────────────────────────── */
+function _showCustomerScreen(n) {
+  var screens = document.querySelectorAll('.cust-screen');
+  var total   = screens.length;
+  n = Math.max(0, Math.min(n, total - 1));
+  currentCustomerScreen = n;
+
+  screens.forEach(function(s, i) { s.classList.toggle('active', i === n); });
+
+  document.querySelectorAll('#screen-nav .snav-btn').forEach(function(b, i) {
+    b.classList.toggle('active', i === n);
+  });
+
+  updateProgressBar(n, total);
+  updateNotesPanel(customerScreenData[n]);
+
+  // Live countdown only on offer screen (index 4)
+  if (n === 4) {
+    startCountdown();
+  } else {
+    clearInterval(countdownInterval);
+    countdownInterval = null;
+  }
+}
+
+/* ── _showAdminScreen ────────────────────────────────────────────────────── */
+function _showAdminScreen(n) {
+  var screens = document.querySelectorAll('.admin-screen');
+  var total   = screens.length;
+  if (total === 0) return;
+  n = Math.max(0, Math.min(n, total - 1));
+  currentAdminScreen = n;
+
+  screens.forEach(function(s, i) { s.classList.toggle('active', i === n); });
+
+  document.querySelectorAll('#screen-nav .snav-btn').forEach(function(b, i) {
+    b.classList.toggle('active', i === n);
+  });
+
+  updateProgressBar(n, total);
+  updateNotesPanel(adminScreenData[n]);
+  updateAdminSidebar(n);
+}
+
+/* ── Keyboard navigation ─────────────────────────────────────────────────── */
+document.addEventListener('keydown', function(e) {
+  var tag = e.target.tagName;
+  if (tag === 'INPUT' || tag === 'TEXTAREA' || tag === 'SELECT') return;
+  if (e.key === 'ArrowLeft') {
+    showScreen(currentMode === 'customer' ? currentCustomerScreen - 1 : currentAdminScreen - 1);
+  } else if (e.key === 'ArrowRight') {
+    showScreen(currentMode === 'customer' ? currentCustomerScreen + 1 : currentAdminScreen + 1);
+  }
+});
+
+/* ── Init ───────────────────────────────────────────────────────────────── */
+document.getElementById('footer-year').textContent = new Date().getFullYear();
+renderNav(customerNavLabels, 0);
+updateProgressBar(0, customerScreenData.length);
+updateNotesPanel(customerScreenData[0]);
+
 </script>
 </body>
 </html>
+s
