@@ -320,25 +320,6 @@
   .decline-link:hover { color: var(--mid); }
   .no-commit { font-size: 11px; color: var(--muted); text-align: center; }
 
-  /* Details form */
-  .form-section { padding: 24px; }
-  .back-link {
-    display: flex; align-items: center; gap: 5px; font-size: 13px;
-    color: var(--muted); cursor: pointer; margin-bottom: 16px;
-    text-decoration: none; transition: color .12s;
-  }
-  .back-link:hover { color: var(--mid); }
-  .form-section-title { font-size: 18px; font-weight: 700; color: var(--dark); margin-bottom: 4px; }
-  .form-section-sub   { font-size: 13px; color: var(--mid); margin-bottom: 20px; }
-  .fl { font-size: 11px; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: .5px; margin-bottom: 5px; }
-  .fi {
-    width: 100%; padding: 10px 12px; border: 1.5px solid var(--border);
-    border-radius: var(--radius-sm); font-family: 'DM Sans', sans-serif;
-    font-size: 14px; color: var(--dark); background: var(--white);
-    margin-bottom: 14px; outline: none; transition: border-color .15s;
-  }
-  .fi:focus { border-color: var(--orange); }
-
   /* Confirmed */
   .conf-wrap { padding: 36px 24px; text-align: center; }
   .conf-circle {
@@ -360,6 +341,138 @@
   }
   .ns-title { font-size: 12px; font-weight: 700; color: var(--dark); margin-bottom: 3px; }
   .ns-body  { font-size: 11px; color: var(--mid); line-height: 1.5; }
+
+  /* ── LOGIN SCREEN ── */
+  .login-inner { padding: 32px 28px 28px; }
+  .login-title {
+    font-size: 26px;
+    font-weight: 700;
+    color: var(--dark);
+    margin-bottom: 8px;
+    line-height: 1.2;
+  }
+  .login-subtitle {
+    font-size: 13px;
+    color: var(--mid);
+    margin-bottom: 20px;
+    line-height: 1.5;
+  }
+  .condition-guide-btn {
+    display: inline-flex;
+    align-items: center;
+    padding: 10px 20px;
+    border: 2px solid var(--orange);
+    border-radius: var(--radius-sm);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--orange);
+    background: none;
+    cursor: pointer;
+    letter-spacing: .8px;
+    margin-bottom: 24px;
+    transition: all .15s;
+  }
+  .condition-guide-btn:hover { background: var(--orange); color: #fff; }
+  .login-field-label {
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--dark);
+    text-transform: uppercase;
+    letter-spacing: .5px;
+    margin-bottom: 6px;
+  }
+  .login-input {
+    width: 100%;
+    padding: 11px 14px;
+    border: 1.5px solid var(--border);
+    border-radius: var(--radius-sm);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 14px;
+    color: var(--dark);
+    background: var(--white);
+    margin-bottom: 16px;
+    outline: none;
+    transition: border-color .15s;
+  }
+  .login-input:focus { border-color: var(--orange); }
+  .remember-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 20px;
+  }
+  .remember-row input[type="checkbox"] {
+    width: 16px;
+    height: 16px;
+    border: 1.5px solid var(--border);
+    border-radius: 3px;
+    accent-color: var(--orange);
+    cursor: pointer;
+    flex-shrink: 0;
+  }
+  .remember-label {
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--dark);
+    text-transform: uppercase;
+    letter-spacing: .5px;
+    cursor: pointer;
+  }
+  .login-btn {
+    width: 100%;
+    padding: 15px;
+    background: var(--blue);
+    color: #fff;
+    border: none;
+    border-radius: var(--radius-sm);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: .5px;
+    cursor: pointer;
+    margin-bottom: 12px;
+    transition: background .15s, transform .1s;
+  }
+  .login-btn:hover { background: #1a5a99; transform: translateY(-1px); }
+  .login-btn:active { transform: translateY(0); }
+  .lost-password-link {
+    display: block;
+    text-align: left;
+    font-size: 13px;
+    color: var(--orange);
+    text-decoration: underline;
+    text-underline-offset: 2px;
+    cursor: pointer;
+    margin-bottom: 20px;
+  }
+  .lost-password-link:hover { color: var(--orange-dark); }
+  .login-divider {
+    height: 1px;
+    background: var(--border);
+    margin-bottom: 20px;
+  }
+  .new-to-cfc {
+    font-size: 13px;
+    color: var(--mid);
+    margin-bottom: 12px;
+  }
+  .create-account-btn {
+    width: 100%;
+    padding: 15px;
+    background: var(--orange);
+    color: #fff;
+    border: none;
+    border-radius: var(--radius-sm);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: .5px;
+    cursor: pointer;
+    transition: background .15s, transform .1s;
+  }
+  .create-account-btn:hover { background: var(--orange-dark); transform: translateY(-1px); }
+  .create-account-btn:active { transform: translateY(0); }
 
   /* ── MY QUOTES DASHBOARD ── */
   .dash-layout {
@@ -508,11 +621,11 @@
 
 <!-- SCREEN NAV -->
 <div class="screen-nav">
-  <button class="snav-btn active" onclick="showScreen(0)">1. Upload</button>
-  <button class="snav-btn" onclick="showScreen(1)">2. Photos added</button>
-  <button class="snav-btn" onclick="showScreen(2)">3. Valuing...</button>
-  <button class="snav-btn" onclick="showScreen(3)">4. Instant offer</button>
-  <button class="snav-btn" onclick="showScreen(4)">5. Your details</button>
+  <button class="snav-btn active" onclick="showScreen(0)">1. Log in</button>
+  <button class="snav-btn" onclick="showScreen(1)">2. Upload</button>
+  <button class="snav-btn" onclick="showScreen(2)">3. Photos added</button>
+  <button class="snav-btn" onclick="showScreen(3)">4. Valuing...</button>
+  <button class="snav-btn" onclick="showScreen(4)">5. Instant offer</button>
   <button class="snav-btn" onclick="showScreen(5)">6. Confirmed</button>
   <button class="snav-btn" onclick="showScreen(6)">7. My quotes</button>
 </div>
@@ -523,8 +636,36 @@
   <div>
     <div class="device-frame">
 
-      <!-- SCREEN 0: Empty upload -->
+      <!-- SCREEN 0: Login -->
       <div class="screen active" id="sc0">
+        <div class="login-inner">
+          <div class="login-title">LET'S GET SELLING...</div>
+          <div class="login-subtitle">Not sure about the condition of your clubs? Check our guide.</div>
+          <button class="condition-guide-btn">CONDITION GUIDE</button>
+
+          <div class="login-field-label">Username or Email Address</div>
+          <input class="login-input" type="text" placeholder="">
+
+          <div class="login-field-label">Password</div>
+          <input class="login-input" type="password" placeholder="">
+
+          <div class="remember-row">
+            <input type="checkbox" id="rememberMe">
+            <label class="remember-label" for="rememberMe">Remember Me</label>
+          </div>
+
+          <button class="login-btn" onclick="showScreen(1)">LOG IN</button>
+          <a class="lost-password-link">Lost your password?</a>
+
+          <div class="login-divider"></div>
+
+          <div class="new-to-cfc">New to Cash For Clubs?</div>
+          <button class="create-account-btn">CREATE YOUR ACCOUNT</button>
+        </div>
+      </div>
+
+      <!-- SCREEN 1: Empty upload -->
+      <div class="screen" id="sc1">
         <div class="form-inner">
           <div class="page-title">Let's get selling...</div>
           <div class="trust-bar">
@@ -566,8 +707,8 @@
         </div>
       </div>
 
-      <!-- SCREEN 1: Photos added -->
-      <div class="screen" id="sc1">
+      <!-- SCREEN 2: Photos added -->
+      <div class="screen" id="sc2">
         <div class="form-inner">
           <div class="page-title">Let's get selling...</div>
           <div class="trust-bar">
@@ -592,13 +733,13 @@
           <div class="desc-label">Tell us about your clubs (brand, model, condition, specs)</div>
           <textarea class="desc-box">callaway paradym driver good condition</textarea>
           <div class="char-count">38 / 300</div>
-          <button class="cta-btn" onclick="showScreen(2)">GET MY INSTANT OFFER →</button>
+          <button class="cta-btn" onclick="showScreen(3)">GET MY INSTANT OFFER →</button>
           <div class="cta-note">Free · No obligation · Offer valid for 24 hours</div>
         </div>
       </div>
 
-      <!-- SCREEN 2: Valuing -->
-      <div class="screen" id="sc2">
+      <!-- SCREEN 3: Valuing -->
+      <div class="screen" id="sc3">
         <div class="loading-wrap">
           <div class="spinner-ring"></div>
           <div class="load-title">Valuing your clubs...</div>
@@ -612,8 +753,8 @@
         </div>
       </div>
 
-      <!-- SCREEN 3: Offer -->
-      <div class="screen" id="sc3">
+      <!-- SCREEN 4: Offer -->
+      <div class="screen" id="sc4">
         <div class="offer-wrap">
           <div class="offer-price-big">£128</div>
           <div class="offer-club-line">
@@ -628,35 +769,9 @@
             <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="8" cy="8" r="7"/><path d="M8 4v4l2.5 2"/></svg>
             Offer expires in <span class="expiry-bold">23h 59m 55s</span>
           </div>
-          <button class="cta-btn" onclick="showScreen(4)">ACCEPT OFFER</button>
+          <button class="cta-btn" onclick="showScreen(5)">ACCEPT OFFER</button>
           <div class="decline-link">No thanks, I'll pass</div>
           <div class="no-commit">Accepting this offer is not a final commitment until collection is arranged.</div>
-        </div>
-      </div>
-
-      <!-- SCREEN 4: Details -->
-      <div class="screen" id="sc4">
-        <div class="form-section">
-          <a class="back-link" onclick="showScreen(3)">
-            <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M10 3L5 8l5 5"/></svg>
-            Back to offer
-          </a>
-          <div class="form-section-title">Your details</div>
-          <div class="form-section-sub">We need a few details to arrange your postage label.</div>
-          <div class="fl">Full name</div>
-          <input class="fi" type="text" placeholder="James Robertson">
-          <div class="fl">Email address</div>
-          <input class="fi" type="email" placeholder="james@email.co.uk">
-          <div class="fl">Phone number</div>
-          <input class="fi" type="tel" placeholder="07700 900123">
-          <div class="fl">How will you send the club?</div>
-          <select class="fi">
-            <option>DPD Drop Point (we'll send you a label)</option>
-            <option>DPD Collection from your address</option>
-            <option>Drop off in-store — Chippenham</option>
-          </select>
-          <button class="cta-btn" onclick="showScreen(5)">CONFIRM OFFER — £128</button>
-          <div class="cta-note" style="margin-top:8px">Free · No obligation · Offer valid for 24 hours</div>
         </div>
       </div>
 
@@ -794,17 +909,17 @@
   <div class="notes-panel">
     <div class="notes-card" id="notes-card">
       <div class="screen-label" id="note-screen-label">Screen 1 of 7</div>
-      <div style="font-size:16px;font-weight:700;color:var(--dark);margin-bottom:6px" id="note-title">Upload screen</div>
-      <div class="screen-desc" id="note-desc">Customer lands here. They upload up to 5 photos of their club and optionally add a description. The CTA button is disabled until at least one photo is added.</div>
+      <div style="font-size:16px;font-weight:700;color:var(--dark);margin-bottom:6px" id="note-title">Log in screen</div>
+      <div class="screen-desc" id="note-desc">Returning customers log in with their username or email and password. New customers can create an account. A "Condition Guide" link helps sellers assess their club's grade before getting started.</div>
       <div class="tag-row" id="note-tags">
-        <span class="tag">Photo upload</span>
-        <span class="tag">Drag & drop</span>
-        <span class="tag green">Trust signals</span>
+        <span class="tag">Login / Register</span>
+        <span class="tag green">Returning customers</span>
+        <span class="tag blue">Condition guide</span>
       </div>
     </div>
     <div class="notes-card">
       <div class="notes-title">About this mockup</div>
-      <div class="note-item"><div class="note-dot"></div><div class="note-text"><strong>7 screens</strong> covering the full sell flow from upload to payment tracking.</div></div>
+      <div class="note-item"><div class="note-dot"></div><div class="note-text"><strong>7 screens</strong> covering the full sell flow from login to payment tracking.</div></div>
       <div class="note-item"><div class="note-dot"></div><div class="note-text"><strong>GPT-4 Vision</strong> identifies the club from the photo — no manual entry needed.</div></div>
       <div class="note-item"><div class="note-dot"></div><div class="note-text"><strong>Instant offer</strong> shown in seconds with a 24-hour countdown timer.</div></div>
       <div class="note-item"><div class="note-dot"></div><div class="note-text"><strong>My Quotes</strong> dashboard integrates with the WooCommerce account area.</div></div>
@@ -820,11 +935,11 @@
 
 <script>
   var screenData = [
-    { label: 'Screen 1 of 7', title: 'Upload screen', desc: 'Customer lands here. They upload up to 5 photos of their club and optionally add a description. The CTA is disabled until at least one photo is added.', tags: [['Photo upload',''], ['Drag & drop',''], ['Trust signals','green']] },
-    { label: 'Screen 2 of 7', title: 'Photos added', desc: 'Once photos are uploaded, thumbnails appear inside the drop zone and the photo count is shown. The CTA button activates. Customer can also type a description for extra context.', tags: [['Photos confirmed','green'], ['CTA active','green'], ['Description field','']] },
-    { label: 'Screen 3 of 7', title: 'Valuing your clubs...', desc: 'Loading state shown while GPT-4 Vision analyses the photos and checks second-hand market prices. Step-by-step progress shown to keep the customer informed.', tags: [['AI analysis',''], ['Live market check',''], ['~10 seconds','blue']] },
-    { label: 'Screen 4 of 7', title: 'Instant offer revealed', desc: 'The buyback price is shown large and clear. Club name and condition confirmed. A 24-hour countdown creates urgency. Customer can accept or decline.', tags: [['Big price reveal',''], ['Countdown timer',''], ['Accept / Decline','green']] },
-    { label: 'Screen 5 of 7', title: 'Customer details', desc: 'Minimal form — name, email, phone and preferred shipping method. No account required. Confirm button shows the offer price for reassurance.', tags: [['Name & email',''], ['Shipping choice',''], ['No account needed','green']] },
+    { label: 'Screen 1 of 7', title: 'Log in screen', desc: 'Returning customers log in with their username or email and password. New customers can create an account. A "Condition Guide" link helps sellers assess their club\'s grade before getting started.', tags: [['Login / Register',''], ['Returning customers','green'], ['Condition guide','blue']] },
+    { label: 'Screen 2 of 7', title: 'Upload screen', desc: 'Customer lands here after logging in. They upload up to 5 photos of their club and optionally add a description. The CTA is disabled until at least one photo is added.', tags: [['Photo upload',''], ['Drag & drop',''], ['Trust signals','green']] },
+    { label: 'Screen 3 of 7', title: 'Photos added', desc: 'Once photos are uploaded, thumbnails appear inside the drop zone and the photo count is shown. The CTA button activates. Customer can also type a description for extra context.', tags: [['Photos confirmed','green'], ['CTA active','green'], ['Description field','']] },
+    { label: 'Screen 4 of 7', title: 'Valuing your clubs...', desc: 'Loading state shown while GPT-4 Vision analyses the photos and checks second-hand market prices. Step-by-step progress shown to keep the customer informed.', tags: [['AI analysis',''], ['Live market check',''], ['~10 seconds','blue']] },
+    { label: 'Screen 5 of 7', title: 'Instant offer revealed', desc: 'The buyback price is shown large and clear. Club name and condition confirmed. A 24-hour countdown creates urgency. Customer can accept or decline.', tags: [['Big price reveal',''], ['Countdown timer',''], ['Accept / Decline','green']] },
     { label: 'Screen 6 of 7', title: 'Offer confirmed', desc: 'Clear confirmation with the customer\'s email address shown. Three-step "what happens next" flow sets expectations. CTA leads to the My Quotes dashboard.', tags: [['Email confirmation','green'], ['Next steps',''], ['View My Quotes','blue']] },
     { label: 'Screen 7 of 7', title: 'My Quotes dashboard', desc: 'Integrated into the WooCommerce account sidebar. Each quote shows the club name, a 4-step progress tracker with dates, the offer price and a shipping instructions button.', tags: [['WooCommerce account',''], ['Progress tracker','green'], ['Quote history','blue']] },
   ];
