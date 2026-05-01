@@ -1,0 +1,1353 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cash Fore Clubs — Admin Mockup</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=DM+Serif+Display&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --orange: #E8491D;
+    --orange-dark: #c73d17;
+    --green: #2D5A27;
+    --dark: #1d2327;
+    --mid: #50575e;
+    --muted: #8c8f94;
+    --border: #dcdcde;
+    --surface: #f6f7f7;
+    --white: #FFFFFF;
+    --blue: #2271b1;
+    --blue-dark: #135e96;
+    --red: #d63638;
+    --radius: 4px;
+    --radius-sm: 3px;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: #f0f0f1;
+    color: var(--dark);
+    min-height: 100vh;
+    font-size: 13px;
+  }
+
+  /* ── TOPBAR (mockup chrome) ── */
+  .topbar {
+    background: var(--green);
+    padding: 12px 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: sticky;
+    top: 0;
+    z-index: 200;
+  }
+  .topbar-logo {
+    font-family: 'DM Serif Display', serif;
+    color: #fff;
+    font-size: 18px;
+    letter-spacing: 0.3px;
+  }
+  .topbar-logo span { color: #fbbf24; }
+  .topbar-note {
+    font-size: 12px;
+    color: rgba(255,255,255,0.65);
+    background: rgba(255,255,255,0.1);
+    padding: 4px 12px;
+    border-radius: 20px;
+  }
+
+  /* ── SCREEN NAV ── */
+  .screen-nav {
+    background: var(--white);
+    border-bottom: 1px solid var(--border);
+    padding: 0 24px;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+  .screen-nav::-webkit-scrollbar { display: none; }
+  .snav-btn {
+    flex-shrink: 0;
+    padding: 13px 16px;
+    border: none;
+    background: none;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--muted);
+    cursor: pointer;
+    border-bottom: 2.5px solid transparent;
+    transition: all .15s;
+    white-space: nowrap;
+  }
+  .snav-btn:hover { color: var(--mid); }
+  .snav-btn.active { color: var(--orange); border-bottom-color: var(--orange); }
+
+  /* ── OUTER LAYOUT ── */
+  .outer {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 32px 24px;
+    display: grid;
+    grid-template-columns: 1fr 300px;
+    gap: 28px;
+    align-items: start;
+  }
+
+  /* ── WP ADMIN FRAME ── */
+  .wp-frame {
+    background: var(--surface);
+    border-radius: 6px;
+    box-shadow: 0 2px 8px rgba(0,0,0,.1), 0 0 0 1px rgba(0,0,0,.06);
+    overflow: hidden;
+  }
+
+  /* ── WP ADMIN HEADER BAR ── */
+  .wp-adminbar {
+    background: #1d2327;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    padding: 0 12px;
+    gap: 16px;
+  }
+  .wp-adminbar-item {
+    font-size: 11px;
+    color: #a7aaad;
+    cursor: pointer;
+  }
+  .wp-adminbar-item:hover { color: #fff; }
+  .wp-adminbar-sep { color: #3c434a; }
+
+  /* ── WP LAYOUT ── */
+  .wp-layout {
+    display: grid;
+    grid-template-columns: 160px 1fr;
+    min-height: 600px;
+  }
+
+  /* ── WP SIDEBAR ── */
+  .wp-sidebar {
+    background: #1e2327;
+    padding: 8px 0;
+  }
+  .wp-menu-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 9px 14px;
+    font-size: 12px;
+    color: #a7aaad;
+    cursor: pointer;
+    transition: background .1s, color .1s;
+  }
+  .wp-menu-item:hover { background: #2c3338; color: #fff; }
+  .wp-menu-item.active { background: var(--blue); color: #fff; }
+  .wp-menu-item svg { width: 14px; height: 14px; flex-shrink: 0; opacity: .7; }
+  .wp-menu-item.active svg { opacity: 1; }
+  .wp-menu-sep { height: 1px; background: #2c3338; margin: 6px 0; }
+  .wp-submenu-item {
+    display: block;
+    padding: 6px 14px 6px 36px;
+    font-size: 11px;
+    color: #72777c;
+    cursor: pointer;
+    transition: color .1s;
+  }
+  .wp-submenu-item:hover { color: #fff; }
+  .wp-submenu-item.active { color: #fff; }
+
+  /* ── WP MAIN CONTENT ── */
+  .wp-content { background: #f0f0f1; padding: 20px; }
+  .screen { display: none; }
+  .screen.active { display: block; }
+
+  /* ── PAGE HEADER ── */
+  .page-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 16px;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+  .page-title-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .page-h1 {
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--dark);
+    line-height: 1;
+  }
+  .wp-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    padding: 6px 12px;
+    border: 1px solid var(--blue);
+    border-radius: var(--radius);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--blue);
+    background: var(--white);
+    cursor: pointer;
+    transition: all .12s;
+  }
+  .wp-btn:hover { background: var(--blue); color: #fff; }
+  .wp-btn.primary {
+    background: var(--blue);
+    color: #fff;
+    border-color: var(--blue-dark);
+  }
+  .wp-btn.primary:hover { background: var(--blue-dark); }
+  .wp-btn.orange {
+    background: var(--orange);
+    color: #fff;
+    border-color: var(--orange-dark);
+  }
+  .wp-btn.orange:hover { background: var(--orange-dark); }
+
+  /* ── STAT CARDS ── */
+  .stat-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
+    margin-bottom: 20px;
+  }
+  .stat-card {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 16px;
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+  }
+  .stat-icon {
+    width: 36px;
+    height: 36px;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    color: var(--muted);
+  }
+  .stat-body {}
+  .stat-num { font-size: 22px; font-weight: 700; color: var(--dark); line-height: 1; margin-bottom: 2px; }
+  .stat-label { font-size: 10px; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: .5px; margin-bottom: 2px; }
+  .stat-sub { font-size: 11px; color: var(--muted); }
+
+  /* ── QUOTES TABLE LAYOUT ── */
+  .quotes-layout {
+    display: grid;
+    grid-template-columns: 180px 1fr;
+    gap: 16px;
+    align-items: start;
+  }
+
+  /* ── FILTER SIDEBAR ── */
+  .filter-sidebar {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 14px;
+  }
+  .filter-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 12px;
+  }
+  .filter-title { font-size: 13px; font-weight: 700; color: var(--dark); }
+  .filter-clear { font-size: 11px; color: var(--blue); cursor: pointer; text-decoration: underline; }
+  .filter-section-title {
+    font-size: 10px;
+    font-weight: 700;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: .6px;
+    margin-bottom: 8px;
+    margin-top: 14px;
+  }
+  .filter-section-title:first-of-type { margin-top: 0; }
+  .filter-check-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 6px;
+  }
+  .filter-check-left {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    font-size: 12px;
+    color: var(--mid);
+  }
+  .filter-check-left input[type="checkbox"] {
+    accent-color: var(--blue);
+    width: 13px; height: 13px;
+  }
+  .filter-count {
+    font-size: 10px;
+    background: #e0e0e0;
+    color: var(--mid);
+    padding: 1px 6px;
+    border-radius: 20px;
+    font-weight: 700;
+  }
+  .filter-date-label { font-size: 11px; color: var(--mid); margin-bottom: 4px; }
+  .filter-date-input {
+    width: 100%;
+    padding: 6px 8px;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 12px;
+    color: var(--dark);
+    margin-bottom: 8px;
+    outline: none;
+  }
+
+  /* ── TABLE AREA ── */
+  .table-area { background: var(--white); border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; }
+  .table-toolbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 14px;
+    border-bottom: 1px solid var(--border);
+    gap: 10px;
+  }
+  .table-toolbar-left { display: flex; align-items: center; gap: 8px; }
+  .table-toolbar-right { display: flex; align-items: center; gap: 8px; }
+  .bulk-select {
+    padding: 5px 8px;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 12px;
+    color: var(--mid);
+    background: var(--white);
+    cursor: pointer;
+  }
+  .search-input {
+    padding: 5px 10px;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 12px;
+    color: var(--dark);
+    outline: none;
+    width: 160px;
+  }
+  .item-count { font-size: 12px; color: var(--muted); align-self: center; }
+  .tbl { width: 100%; border-collapse: collapse; font-size: 12px; }
+  .tbl th {
+    background: #f6f7f7;
+    border-bottom: 1px solid var(--border);
+    padding: 9px 10px;
+    text-align: left;
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--mid);
+    white-space: nowrap;
+  }
+  .tbl th.sortable { color: var(--blue); cursor: pointer; }
+  .tbl th.sortable:hover { text-decoration: underline; }
+  .tbl td {
+    padding: 10px 10px;
+    border-bottom: 1px solid #f0f0f1;
+    color: var(--mid);
+    vertical-align: middle;
+  }
+  .tbl tr:last-child td { border-bottom: none; }
+  .tbl tr:hover td { background: #f9f9f9; }
+  .ref-link { color: var(--blue); font-weight: 700; cursor: pointer; text-decoration: underline; }
+  .ref-sub { font-size: 10px; color: var(--muted); margin-top: 1px; }
+  .customer-name { color: var(--blue); cursor: pointer; font-weight: 500; }
+  .customer-email { font-size: 10px; color: var(--muted); margin-top: 1px; }
+  .conf-badge { font-weight: 700; }
+  .conf-badge.high { color: #1a7a1a; }
+  .conf-badge.zero { color: var(--muted); }
+
+  .status-pill {
+    display: inline-block;
+    padding: 3px 10px;
+    border-radius: 20px;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: .2px;
+    white-space: nowrap;
+  }
+  .status-pill.accepted { background: #e6f1fb; color: var(--blue); border: 1px solid #b3d1ef; }
+  .status-pill.review   { background: #fff3cd; color: #856404; border: 1px solid #ffc107; }
+  .status-pill.paid     { background: #e8f4e9; color: var(--green); border: 1px solid #a3d1a6; }
+  .status-pill.transit  { background: #fff0eb; color: var(--orange); border: 1px solid #f5c6b3; }
+
+  .action-btn {
+    padding: 5px 10px;
+    border-radius: var(--radius-sm);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 11px;
+    font-weight: 700;
+    cursor: pointer;
+    border: none;
+    letter-spacing: .2px;
+    white-space: nowrap;
+  }
+  .action-btn.received { background: var(--orange); color: #fff; }
+  .action-btn.received:hover { background: var(--orange-dark); }
+  .action-btn.send { background: var(--blue); color: #fff; }
+  .action-btn.send:hover { background: var(--blue-dark); }
+
+  /* ── SETTINGS PAGE ── */
+  .settings-wrap { display: flex; flex-direction: column; gap: 16px; }
+  .settings-section {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    overflow: hidden;
+  }
+  .settings-section-header {
+    padding: 14px 18px;
+    border-bottom: 1px solid var(--border);
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--dark);
+  }
+  .settings-section-body { padding: 18px; }
+  .settings-tabs {
+    display: flex;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 18px;
+    gap: 0;
+  }
+  .stab {
+    padding: 9px 16px;
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--mid);
+    cursor: pointer;
+    border-bottom: 2px solid transparent;
+    margin-bottom: -1px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    transition: all .12s;
+  }
+  .stab:hover { color: var(--dark); }
+  .stab.active { color: var(--orange); border-bottom-color: var(--orange); }
+  .stab-count {
+    background: #ccc;
+    color: #fff;
+    font-size: 10px;
+    font-weight: 700;
+    padding: 1px 6px;
+    border-radius: 20px;
+  }
+  .settings-row {
+    display: grid;
+    grid-template-columns: 200px 1fr;
+    gap: 16px;
+    align-items: start;
+    margin-bottom: 18px;
+    padding-bottom: 18px;
+    border-bottom: 1px solid #f0f0f1;
+  }
+  .settings-row:last-child { margin-bottom: 0; padding-bottom: 0; border-bottom: none; }
+  .settings-label { font-size: 13px; font-weight: 700; color: var(--dark); padding-top: 6px; }
+  .settings-field input[type="text"],
+  .settings-field input[type="email"],
+  .settings-field input[type="number"],
+  .settings-field input[type="password"] {
+    padding: 7px 10px;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 13px;
+    color: var(--dark);
+    background: var(--white);
+    outline: none;
+    transition: border-color .12s;
+    width: 100%;
+    max-width: 380px;
+  }
+  .settings-field input:focus { border-color: var(--blue); }
+  .settings-desc { font-size: 12px; color: var(--muted); margin-top: 5px; line-height: 1.5; }
+  .settings-check-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 8px;
+    font-size: 13px;
+    color: var(--mid);
+  }
+  .settings-check-row input[type="checkbox"] {
+    accent-color: var(--blue);
+    width: 14px;
+    height: 14px;
+  }
+
+  /* Slider */
+  .slider-row { display: flex; align-items: center; gap: 10px; margin-bottom: 6px; }
+  .slider-num {
+    padding: 6px 8px;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--dark);
+    width: 60px;
+    text-align: center;
+  }
+  .slider-unit { font-size: 13px; color: var(--mid); }
+  input[type="range"] {
+    -webkit-appearance: none;
+    height: 4px;
+    border-radius: 2px;
+    background: linear-gradient(to right, var(--blue) 40%, #dcdcde 40%);
+    outline: none;
+    cursor: pointer;
+    width: 200px;
+  }
+  input[type="range"].conf {
+    background: linear-gradient(to right, var(--blue) 72%, #dcdcde 72%);
+  }
+  input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background: var(--blue);
+    border: 2px solid var(--white);
+    box-shadow: 0 0 0 1px var(--blue);
+    cursor: pointer;
+  }
+  .example-box {
+    display: inline-block;
+    background: #e8f4e9;
+    border: 1px solid #a3d1a6;
+    border-radius: var(--radius);
+    padding: 8px 14px;
+    font-size: 13px;
+    color: var(--green);
+    margin-top: 8px;
+  }
+  .shortcode-row { display: flex; align-items: center; gap: 8px; }
+  .shortcode-box {
+    padding: 7px 10px;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    font-family: monospace;
+    font-size: 12px;
+    color: var(--dark);
+    background: var(--surface);
+  }
+  .merge-tags { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 14px; }
+  .merge-tag {
+    padding: 3px 9px;
+    background: #f0f0f1;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    font-family: monospace;
+    font-size: 11px;
+    color: var(--blue);
+    cursor: pointer;
+  }
+  .merge-tag:hover { background: #e6f1fb; }
+  .email-template-row {
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    overflow: hidden;
+    margin-bottom: 8px;
+  }
+  .email-template-header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 14px;
+    background: var(--surface);
+    cursor: pointer;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--dark);
+  }
+  .email-template-header svg { color: var(--muted); }
+  .email-template-header:hover { background: #ebebeb; }
+
+  /* ── PAYOUTS PAGE ── */
+  .payouts-filter-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 14px;
+    margin-bottom: 14px;
+    flex-wrap: wrap;
+  }
+  .filter-group { display: flex; flex-direction: column; gap: 3px; }
+  .filter-group-label { font-size: 10px; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: .5px; }
+  .filter-group input[type="date"],
+  .filter-group select {
+    padding: 6px 8px;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 12px;
+    color: var(--dark);
+    background: var(--white);
+    outline: none;
+  }
+  .payouts-spacer { flex: 1; }
+  .export-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 7px 14px;
+    background: var(--orange);
+    color: #fff;
+    border: none;
+    border-radius: var(--radius);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 12px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background .12s;
+  }
+  .export-btn:hover { background: var(--orange-dark); }
+  .empty-state {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 60px 24px;
+    text-align: center;
+  }
+  .empty-icon { color: var(--muted); margin-bottom: 12px; }
+  .empty-text { font-size: 13px; color: var(--muted); }
+
+  /* ── NOTES PANEL ── */
+  .notes-panel { position: sticky; top: 68px; }
+  .notes-card {
+    background: var(--white);
+    border-radius: 6px;
+    border: 1px solid var(--border);
+    padding: 18px;
+    margin-bottom: 14px;
+  }
+  .notes-title { font-size: 13px; font-weight: 700; color: var(--dark); margin-bottom: 10px; }
+  .note-item { display: flex; gap: 10px; margin-bottom: 10px; align-items: flex-start; }
+  .note-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--orange); margin-top: 4px; flex-shrink: 0; }
+  .note-text { font-size: 12px; color: var(--mid); line-height: 1.5; }
+  .note-text strong { color: var(--dark); font-weight: 700; }
+  .screen-label { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: .8px; color: var(--muted); margin-bottom: 6px; }
+  .screen-desc { font-size: 12px; color: var(--mid); line-height: 1.6; margin-bottom: 12px; }
+  .tag-row { display: flex; gap: 5px; flex-wrap: wrap; }
+  .tag { padding: 3px 9px; border-radius: 20px; font-size: 11px; font-weight: 700; background: #fff0eb; color: var(--orange); }
+  .tag.green { background: #e8f4e9; color: var(--green); }
+  .tag.blue  { background: #e6f1fb; color: var(--blue); }
+
+  /* Footer */
+  .mockup-footer { text-align: center; padding: 20px; font-size: 12px; color: var(--muted); }
+  .mockup-footer strong { color: var(--mid); }
+
+  /* ── QUOTE DETAIL SCREEN ── */
+  .qd-grid { display: grid; grid-template-columns: 1fr 260px; gap: 14px; align-items: start; }
+  .qd-card {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 16px;
+    margin-bottom: 14px;
+  }
+  .qd-card-title { font-size: 13px; font-weight: 700; color: var(--dark); margin-bottom: 12px; border-bottom: 1px solid var(--border); padding-bottom: 8px; }
+  .qd-row { display: flex; justify-content: space-between; align-items: center; padding: 6px 0; border-bottom: 1px solid #f6f7f7; font-size: 12px; }
+  .qd-row:last-child { border-bottom: none; }
+  .qd-key { color: var(--muted); font-weight: 500; }
+  .qd-val { color: var(--dark); font-weight: 600; }
+  .qd-photos { display: flex; gap: 8px; flex-wrap: wrap; }
+  .qd-photo {
+    width: 80px; height: 64px;
+    border-radius: var(--radius);
+    border: 1px solid var(--border);
+    background: #dde4ec;
+  }
+  .qd-photo:nth-child(1) { background: #c4d1de; }
+  .qd-photo:nth-child(2) { background: #b4c1ce; }
+  .qd-photo:nth-child(3) { background: #a4b1be; }
+  .qd-photo:nth-child(4) { background: #94a1ae; }
+  .qd-ai-tag { display: inline-block; padding: 2px 8px; border-radius: 3px; font-size: 11px; font-weight: 700; }
+  .qd-ai-tag.green { background: #e8f4e9; color: var(--green); }
+  .qd-timeline { padding: 0; list-style: none; }
+  .qd-tl-item { display: flex; gap: 10px; margin-bottom: 12px; }
+  .qd-tl-dot { width: 10px; height: 10px; border-radius: 50%; background: var(--orange); flex-shrink: 0; margin-top: 3px; }
+  .qd-tl-dot.muted { background: var(--border); }
+  .qd-tl-body {}
+  .qd-tl-title { font-size: 12px; font-weight: 700; color: var(--dark); }
+  .qd-tl-date  { font-size: 11px; color: var(--muted); }
+  .offer-input-row { display: flex; align-items: center; gap: 8px; margin-bottom: 8px; }
+  .offer-input {
+    padding: 7px 10px;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--dark);
+    width: 100px;
+    outline: none;
+  }
+  .offer-input:focus { border-color: var(--blue); }
+
+  @media (max-width: 900px) {
+    .outer { grid-template-columns: 1fr; }
+    .notes-panel { position: static; }
+    .stat-grid { grid-template-columns: repeat(2,1fr); }
+    .quotes-layout { grid-template-columns: 1fr; }
+    .filter-sidebar { display: none; }
+    .wp-layout { grid-template-columns: 1fr; }
+    .wp-sidebar { display: none; }
+    .settings-row { grid-template-columns: 1fr; }
+    .qd-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<!-- MOCKUP TOPBAR -->
+<div class="topbar">
+  <div class="topbar-logo">Cash <span>Fore</span> Clubs — <span style="font-family:'DM Sans';font-size:14px;font-weight:500;color:rgba(255,255,255,.8)">Admin Mockup</span></div>
+  <div class="topbar-note">UI Mockup — For Client Review</div>
+</div>
+
+<!-- SCREEN NAV -->
+<div class="screen-nav">
+  <button class="snav-btn active" onclick="showScreen(0)">1. All Quotes</button>
+  <button class="snav-btn" onclick="showScreen(1)">2. Quote Detail</button>
+  <button class="snav-btn" onclick="showScreen(2)">3. Settings — AI &amp; Pricing</button>
+  <button class="snav-btn" onclick="showScreen(3)">4. Settings — Notifications &amp; Email</button>
+  <button class="snav-btn" onclick="showScreen(4)">5. Payouts</button>
+</div>
+
+<div class="outer">
+
+  <!-- LEFT: WP Admin Frame -->
+  <div>
+    <div class="wp-frame">
+
+      <!-- WP admin bar -->
+      <div class="wp-adminbar">
+        <span class="wp-adminbar-item">&#9632; WordPress</span>
+        <span class="wp-adminbar-sep">|</span>
+        <span class="wp-adminbar-item">Cash Fore Clubs</span>
+        <span class="wp-adminbar-sep">|</span>
+        <span class="wp-adminbar-item">+ New</span>
+      </div>
+
+      <!-- WP body -->
+      <div class="wp-layout">
+
+        <!-- Sidebar -->
+        <div class="wp-sidebar">
+          <div class="wp-menu-item"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="1" y="1" width="6" height="6" rx="1"/><rect x="9" y="1" width="6" height="6" rx="1"/><rect x="1" y="9" width="6" height="6" rx="1"/><rect x="9" y="9" width="6" height="6" rx="1"/></svg>Dashboard</div>
+          <div class="wp-menu-item"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 3h12l-1.5 9H3.5L2 3z"/></svg>Posts</div>
+          <div class="wp-menu-item"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="1" y="3" width="14" height="11" rx="1.5"/><circle cx="6" cy="7" r="1.5"/><path d="M1 12l4-4 4 4 3-3 3 3"/></svg>Media</div>
+          <div class="wp-menu-item"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="8" cy="5" r="3"/><path d="M2 14c0-3 2.7-5 6-5s6 2 6 5"/></svg>Users</div>
+          <div class="wp-menu-item"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 3h12l-1.5 9H3.5L2 3z"/></svg>WooCommerce</div>
+          <div class="wp-menu-sep"></div>
+          <div class="wp-menu-item active" onclick="showScreen(0)"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="8" cy="8" r="6"/><path d="M8 5v3l2 2"/></svg>QuoteAI</div>
+          <div class="wp-submenu-item" onclick="showScreen(0)">All Quotes</div>
+          <div class="wp-submenu-item" onclick="showScreen(4)">Payouts</div>
+          <div class="wp-submenu-item" onclick="showScreen(2)">Settings</div>
+          <div class="wp-menu-sep"></div>
+          <div class="wp-menu-item"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="8" cy="8" r="6"/><path d="M6 8h4M8 6v4"/></svg>Plugins</div>
+          <div class="wp-menu-item"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="8" cy="8" r="6"/><path d="M8 5v3l2 2"/></svg>Settings</div>
+        </div>
+
+        <!-- Main content -->
+        <div class="wp-content">
+
+          <!-- SCREEN 0: All Quotes -->
+          <div class="screen active" id="sc0">
+            <div class="page-header">
+              <div class="page-title-row">
+                <div class="page-h1">QuoteAI — All Quotes</div>
+                <button class="wp-btn" onclick="showScreen(2)">Settings</button>
+              </div>
+            </div>
+
+            <!-- Stat cards -->
+            <div class="stat-grid">
+              <div class="stat-card">
+                <div class="stat-icon"><svg width="18" height="18" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 2h10a1 1 0 011 1v11a1 1 0 01-1 1H3a1 1 0 01-1-1V3a1 1 0 011-1z"/><path d="M5 6h6M5 9h6M5 12h3"/></svg></div>
+                <div class="stat-body">
+                  <div class="stat-num">2</div>
+                  <div class="stat-label">Quotes Today</div>
+                  <div class="stat-sub">vs 0 yesterday</div>
+                </div>
+              </div>
+              <div class="stat-card">
+                <div class="stat-icon"><svg width="18" height="18" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="8" cy="8" r="6"/><path d="M8 5v3l2 2"/></svg></div>
+                <div class="stat-body">
+                  <div class="stat-num">0</div>
+                  <div class="stat-label">Awaiting Response</div>
+                  <div class="stat-sub">None expiring soon</div>
+                </div>
+              </div>
+              <div class="stat-card">
+                <div class="stat-icon"><svg width="18" height="18" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M8 2v9M5 8l3 3 3-3"/><path d="M2 13h12"/></svg></div>
+                <div class="stat-body">
+                  <div class="stat-num">3</div>
+                  <div class="stat-label">Items in Transit</div>
+                  <div class="stat-sub">1 days oldest</div>
+                </div>
+              </div>
+              <div class="stat-card">
+                <div class="stat-icon"><svg width="18" height="18" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="8" cy="8" r="6"/><path d="M8 5v1.5l1.5 1.5"/><path d="M5 8h1"/></svg></div>
+                <div class="stat-body">
+                  <div class="stat-num">£0</div>
+                  <div class="stat-label">Paid This Week</div>
+                  <div class="stat-sub">Last 7 days</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Table + filters -->
+            <div class="quotes-layout">
+              <!-- Filter sidebar -->
+              <div class="filter-sidebar">
+                <div class="filter-header">
+                  <span class="filter-title">Filters</span>
+                  <span class="filter-clear">Clear all</span>
+                </div>
+                <div class="filter-section-title">Status</div>
+                <div class="filter-check-row"><div class="filter-check-left"><input type="checkbox"> Awaiting Response</div></div>
+                <div class="filter-check-row"><div class="filter-check-left"><input type="checkbox"> Accepted</div><span class="filter-count">3</span></div>
+                <div class="filter-check-row"><div class="filter-check-left"><input type="checkbox"> Item Received</div></div>
+                <div class="filter-check-row"><div class="filter-check-left"><input type="checkbox"> Inspected</div></div>
+                <div class="filter-check-row"><div class="filter-check-left"><input type="checkbox"> Revised Offer</div></div>
+                <div class="filter-check-row"><div class="filter-check-left"><input type="checkbox"> Payment Sent</div></div>
+                <div class="filter-check-row"><div class="filter-check-left"><input type="checkbox"> Payment Made</div></div>
+                <div class="filter-check-row"><div class="filter-check-left"><input type="checkbox"> Complete</div></div>
+                <div class="filter-check-row"><div class="filter-check-left"><input type="checkbox"> Under Review</div><span class="filter-count">1</span></div>
+                <div class="filter-check-row"><div class="filter-check-left"><input type="checkbox"> Declined</div></div>
+                <div class="filter-check-row"><div class="filter-check-left"><input type="checkbox"> Expired</div></div>
+                <div class="filter-section-title">Date Range</div>
+                <div class="filter-date-label">From</div>
+                <input type="date" class="filter-date-input">
+                <div class="filter-date-label">To</div>
+                <input type="date" class="filter-date-input">
+              </div>
+
+              <!-- Table -->
+              <div>
+                <div class="table-area">
+                  <div class="table-toolbar">
+                    <div class="table-toolbar-left">
+                      <select class="bulk-select"><option>Bulk actions</option><option>Mark Received</option><option>Mark Paid</option><option>Delete</option></select>
+                      <button class="wp-btn" style="padding:5px 10px;font-size:12px">Apply</button>
+                    </div>
+                    <div class="table-toolbar-right">
+                      <input class="search-input" type="text" placeholder="Search quotes...">
+                      <button class="wp-btn primary" style="padding:5px 12px;font-size:12px">Search Quotes</button>
+                      <span class="item-count">4 items</span>
+                    </div>
+                  </div>
+                  <table class="tbl">
+                    <thead>
+                      <tr>
+                        <th style="width:28px"><input type="checkbox"></th>
+                        <th class="sortable">Ref ↕</th>
+                        <th>Customer</th>
+                        <th>Club Identified</th>
+                        <th class="sortable" style="color:var(--blue)">Confidence ↕</th>
+                        <th>Market Mid</th>
+                        <th class="sortable" style="color:var(--blue)">Our Offer ↕</th>
+                        <th class="sortable" style="color:var(--blue)">Status ↕</th>
+                        <th class="sortable" style="color:var(--blue)">Age ↕</th>
+                        <th>Last Activity</th>
+                        <th>Quick Action</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr style="cursor:pointer" onclick="showScreen(1)">
+                        <td><input type="checkbox"></td>
+                        <td><div class="ref-link">#4</div><div class="ref-sub">8fec9b29...</div></td>
+                        <td><div class="customer-name">yarmalik007</div><div class="customer-email">aasyed2@gmail.com</div></td>
+                        <td><div style="font-size:12px;font-weight:600;color:var(--dark)">Callaway Paradym</div><div style="font-size:10px;color:var(--muted)">Driver · 2023</div></td>
+                        <td><span class="conf-badge high">99%</span></td>
+                        <td>£213</td>
+                        <td>£128</td>
+                        <td><span class="status-pill accepted">Accepted</span></td>
+                        <td>0h ago</td>
+                        <td>—</td>
+                        <td><button class="action-btn received">Mark Received</button></td>
+                      </tr>
+                      <tr>
+                        <td><input type="checkbox"></td>
+                        <td><div class="ref-link">#3</div><div class="ref-sub">b487542b...</div></td>
+                        <td><div class="customer-name">yarmalik007</div><div class="customer-email">aasyed2@gmail.com</div></td>
+                        <td><div style="font-size:12px;font-weight:600;color:var(--dark)">Unidentifiable Unknown</div><div style="font-size:10px;color:var(--muted)">Other · Unknown</div></td>
+                        <td><span class="conf-badge zero">0%</span></td>
+                        <td>—</td>
+                        <td>—</td>
+                        <td><span class="status-pill review">Under Review</span></td>
+                        <td>0h ago</td>
+                        <td>—</td>
+                        <td><button class="action-btn send">Send Quote</button></td>
+                      </tr>
+                      <tr>
+                        <td><input type="checkbox"></td>
+                        <td><div class="ref-link">#2</div><div class="ref-sub">CFC-EDA0...</div></td>
+                        <td><div class="customer-name">yarmalik007</div><div class="customer-email">aasyed2@gmail.com</div></td>
+                        <td>—</td>
+                        <td><span class="conf-badge zero">0%</span></td>
+                        <td>—</td>
+                        <td>£37</td>
+                        <td><span class="status-pill accepted">Accepted</span></td>
+                        <td>2d ago</td>
+                        <td>—</td>
+                        <td><button class="action-btn received">Mark Received</button></td>
+                      </tr>
+                      <tr>
+                        <td><input type="checkbox"></td>
+                        <td><div class="ref-link">#1</div><div class="ref-sub">CFC-7554...</div></td>
+                        <td><div class="customer-name">yarmalik007</div><div class="customer-email">aasyed2@gmail.com</div></td>
+                        <td>—</td>
+                        <td><span class="conf-badge zero">0%</span></td>
+                        <td>—</td>
+                        <td>—</td>
+                        <td><span class="status-pill accepted">Accepted</span></td>
+                        <td>2d ago</td>
+                        <td>—</td>
+                        <td><button class="action-btn received">Mark Received</button></td>
+                      </tr>
+                    </tbody>
+                    <tfoot>
+                      <tr>
+                        <th style="width:28px"><input type="checkbox"></th>
+                        <th class="sortable">Ref ↕</th>
+                        <th>Customer</th>
+                        <th>Club Identified</th>
+                        <th class="sortable" style="color:var(--blue)">Confidence ↕</th>
+                        <th>Market Mid</th>
+                        <th class="sortable" style="color:var(--blue)">Our Offer ↕</th>
+                        <th class="sortable" style="color:var(--blue)">Status ↕</th>
+                        <th class="sortable" style="color:var(--blue)">Age ↕</th>
+                        <th>Last Activity</th>
+                        <th>Quick Action</th>
+                      </tr>
+                    </tfoot>
+                  </table>
+                  <div style="padding:8px 14px;font-size:12px;color:var(--muted);text-align:right;border-top:1px solid var(--border)">4 items</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- SCREEN 1: Quote Detail -->
+          <div class="screen" id="sc1">
+            <div class="page-header">
+              <div class="page-title-row">
+                <button class="wp-btn" onclick="showScreen(0)">← All Quotes</button>
+                <div class="page-h1">Quote #4 — Callaway Paradym</div>
+              </div>
+              <span class="status-pill accepted" style="font-size:13px;padding:5px 14px">Accepted</span>
+            </div>
+
+            <div class="qd-grid">
+              <div>
+                <!-- Club info -->
+                <div class="qd-card">
+                  <div class="qd-card-title">Club Details</div>
+                  <div class="qd-row"><span class="qd-key">Brand</span><span class="qd-val">Callaway</span></div>
+                  <div class="qd-row"><span class="qd-key">Model</span><span class="qd-val">Paradym Driver</span></div>
+                  <div class="qd-row"><span class="qd-key">Year</span><span class="qd-val">2023</span></div>
+                  <div class="qd-row"><span class="qd-key">Condition</span><span class="qd-val">Good</span></div>
+                  <div class="qd-row"><span class="qd-key">AI Confidence</span><span class="qd-val"><span class="qd-ai-tag green">99% — High</span></span></div>
+                  <div class="qd-row"><span class="qd-key">Market Mid</span><span class="qd-val">£213</span></div>
+                  <div class="qd-row"><span class="qd-key">Customer Note</span><span class="qd-val" style="font-size:11px;color:var(--mid)">callaway paradym driver good condition</span></div>
+                </div>
+
+                <!-- Photos -->
+                <div class="qd-card">
+                  <div class="qd-card-title">Submitted Photos</div>
+                  <div class="qd-photos">
+                    <div class="qd-photo"></div>
+                    <div class="qd-photo"></div>
+                    <div class="qd-photo"></div>
+                    <div class="qd-photo"></div>
+                  </div>
+                </div>
+
+                <!-- Customer -->
+                <div class="qd-card">
+                  <div class="qd-card-title">Customer</div>
+                  <div class="qd-row"><span class="qd-key">Name</span><span class="qd-val">yarmalik007</span></div>
+                  <div class="qd-row"><span class="qd-key">Email</span><span class="qd-val">aasyed2@gmail.com</span></div>
+                  <div class="qd-row"><span class="qd-key">Reference</span><span class="qd-val" style="font-family:monospace;font-size:11px">8fec9b29-6c76-479b-a0b5-518a070e9e71</span></div>
+                  <div class="qd-row"><span class="qd-key">Submitted</span><span class="qd-val">2 May 2026, 09:14</span></div>
+                </div>
+              </div>
+
+              <!-- Right column -->
+              <div>
+                <!-- Offer management -->
+                <div class="qd-card">
+                  <div class="qd-card-title">Offer Management</div>
+                  <div style="font-size:11px;color:var(--muted);margin-bottom:6px">AI Offer</div>
+                  <div class="offer-input-row">
+                    <span style="font-size:18px;font-weight:700;color:var(--dark)">£</span>
+                    <input class="offer-input" type="text" value="128">
+                  </div>
+                  <div style="font-size:11px;color:var(--muted);margin-bottom:12px">Adjust and send a revised offer if needed.</div>
+                  <button class="wp-btn primary" style="width:100%;justify-content:center;margin-bottom:8px;padding:9px">Send Revised Offer</button>
+                  <button class="wp-btn orange" style="width:100%;justify-content:center;margin-bottom:8px;padding:9px">Mark Item Received</button>
+                  <button class="wp-btn" style="width:100%;justify-content:center;padding:8px;border-color:var(--red);color:var(--red)">Decline Quote</button>
+                </div>
+
+                <!-- Timeline -->
+                <div class="qd-card">
+                  <div class="qd-card-title">Timeline</div>
+                  <ul class="qd-timeline">
+                    <li class="qd-tl-item">
+                      <div class="qd-tl-dot"></div>
+                      <div class="qd-tl-body"><div class="qd-tl-title">Offer Accepted</div><div class="qd-tl-date">2 May 2026, 09:22</div></div>
+                    </li>
+                    <li class="qd-tl-item">
+                      <div class="qd-tl-dot"></div>
+                      <div class="qd-tl-body"><div class="qd-tl-title">Quote Generated</div><div class="qd-tl-date">2 May 2026, 09:14</div></div>
+                    </li>
+                    <li class="qd-tl-item">
+                      <div class="qd-tl-dot muted"></div>
+                      <div class="qd-tl-body"><div class="qd-tl-title" style="color:var(--muted)">Item Received</div><div class="qd-tl-date" style="color:var(--muted)">Awaiting</div></div>
+                    </li>
+                    <li class="qd-tl-item">
+                      <div class="qd-tl-dot muted"></div>
+                      <div class="qd-tl-body"><div class="qd-tl-title" style="color:var(--muted)">Inspected</div><div class="qd-tl-date" style="color:var(--muted)">Awaiting</div></div>
+                    </li>
+                    <li class="qd-tl-item">
+                      <div class="qd-tl-dot muted"></div>
+                      <div class="qd-tl-body"><div class="qd-tl-title" style="color:var(--muted)">Payment Sent</div><div class="qd-tl-date" style="color:var(--muted)">Awaiting</div></div>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- SCREEN 2: Settings — AI & Pricing -->
+          <div class="screen" id="sc2">
+            <div class="page-header">
+              <div class="page-title-row">
+                <div class="page-h1">QuoteAI Settings</div>
+              </div>
+              <button class="wp-btn primary">Save Changes</button>
+            </div>
+
+            <div class="settings-wrap">
+
+              <!-- AI Configuration -->
+              <div class="settings-section">
+                <div class="settings-section-header">AI Configuration</div>
+                <div class="settings-section-body">
+                  <div class="settings-tabs">
+                    <div class="stab active">API Key</div>
+                    <div class="stab">OCR / Vision Model <span class="stab-count">49</span></div>
+                    <div class="stab">Price Research Model <span class="stab-count">49</span></div>
+                  </div>
+                  <div class="settings-row">
+                    <div class="settings-label">OpenAI API Key</div>
+                    <div class="settings-field">
+                      <input type="password" value="sk-proj-xxxxxxxxxxxxxxxxxxxxxxxx" style="max-width:340px;font-family:monospace">
+                      <div class="settings-desc">Used for vision analysis and market pricing. Leave blank to keep the existing key.</div>
+                      <button class="wp-btn" style="margin-top:10px">Test API Connection</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Pricing Configuration -->
+              <div class="settings-section">
+                <div class="settings-section-header">Pricing Configuration</div>
+                <div class="settings-section-body">
+                  <div class="settings-row">
+                    <div class="settings-label">Buy-Back Margin %</div>
+                    <div class="settings-field">
+                      <div class="slider-row">
+                        <div class="slider-num">40</div>
+                        <span class="slider-unit">%</span>
+                        <input type="range" min="0" max="100" value="40">
+                      </div>
+                      <div class="settings-desc">The percentage QuoteAI retains. At 40%, if market value is £100, you offer £60.</div>
+                      <div class="example-box">Example: £100 market value → You offer <strong>£60</strong></div>
+                    </div>
+                  </div>
+                  <div class="settings-row">
+                    <div class="settings-label">Minimum Offer (£)</div>
+                    <div class="settings-field">
+                      <input type="number" value="5.00" style="max-width:120px">
+                      <div class="settings-desc">No offer will be lower than this amount.</div>
+                    </div>
+                  </div>
+                  <div class="settings-row">
+                    <div class="settings-label">Confidence Threshold</div>
+                    <div class="settings-field">
+                      <div class="slider-row">
+                        <input type="range" class="conf" min="0" max="100" value="72">
+                        <span class="slider-unit" style="font-weight:700;color:var(--dark)">72%</span>
+                      </div>
+                      <div class="settings-desc">Quotes below this confidence score go to manual review.</div>
+                    </div>
+                  </div>
+                  <div class="settings-row">
+                    <div class="settings-label">Quote Expiry (hours)</div>
+                    <div class="settings-field">
+                      <input type="number" value="24" style="max-width:120px">
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+
+          <!-- SCREEN 3: Settings — Notifications & Email -->
+          <div class="screen" id="sc3">
+            <div class="page-header">
+              <div class="page-title-row">
+                <div class="page-h1">QuoteAI Settings</div>
+              </div>
+              <button class="wp-btn primary">Save Changes</button>
+            </div>
+
+            <div class="settings-wrap">
+
+              <!-- Notifications -->
+              <div class="settings-section">
+                <div class="settings-section-header">Notifications</div>
+                <div class="settings-section-body">
+                  <div class="settings-row">
+                    <div class="settings-label">Admin Notification Email</div>
+                    <div class="settings-field">
+                      <input type="email" value="aasyed2@gmail.com" style="max-width:320px">
+                    </div>
+                  </div>
+                  <div class="settings-row">
+                    <div class="settings-label">Notifications</div>
+                    <div class="settings-field">
+                      <div class="settings-check-row"><input type="checkbox" checked> Email admin when a new instant quote is generated</div>
+                      <div class="settings-check-row"><input type="checkbox" checked> Email admin when a quote requires manual review</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Front-End Settings -->
+              <div class="settings-section">
+                <div class="settings-section-header">Front-End Settings</div>
+                <div class="settings-section-body">
+                  <div class="settings-row">
+                    <div class="settings-label">Valuation Shortcode</div>
+                    <div class="settings-field">
+                      <div class="shortcode-row">
+                        <span class="shortcode-box">[cashforeclubs_valuation]</span>
+                        <button class="wp-btn">Copy</button>
+                      </div>
+                      <div class="settings-desc">Paste this shortcode into any page or post to embed the QuoteAI valuation form. The page you place it on becomes the valuation URL used in customer emails.</div>
+                    </div>
+                  </div>
+                  <div class="settings-row">
+                    <div class="settings-label">Condition Guide URL <span style="font-size:11px;color:var(--muted)">(optional)</span></div>
+                    <div class="settings-field">
+                      <input type="text" placeholder="https://" style="max-width:320px">
+                      <div class="settings-desc">If set, the Condition Guide button links here for non-JS users. Leave blank to use modal only.</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Email Templates -->
+              <div class="settings-section">
+                <div class="settings-section-header">Email Templates</div>
+                <div class="settings-section-body">
+                  <div style="font-size:12px;color:var(--mid);margin-bottom:10px">Available merge tags:</div>
+                  <div class="merge-tags">
+                    <span class="merge-tag">{customer_name}</span>
+                    <span class="merge-tag">{quote_ref}</span>
+                    <span class="merge-tag">{final_price}</span>
+                    <span class="merge-tag">{club_brand}</span>
+                    <span class="merge-tag">{club_model}</span>
+                    <span class="merge-tag">{club_condition}</span>
+                    <span class="merge-tag">{expires_at}</span>
+                    <span class="merge-tag">{order_number}</span>
+                    <span class="merge-tag">{site_name}</span>
+                  </div>
+                  <div class="email-template-row">
+                    <div class="email-template-header">
+                      <svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 5l3 3 3-3"/></svg>
+                      New Quote Email (to customer)
+                    </div>
+                  </div>
+                  <div class="email-template-row">
+                    <div class="email-template-header">
+                      <svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 5l3 3 3-3"/></svg>
+                      Quote Accepted Email (to customer)
+                    </div>
+                  </div>
+                  <div class="email-template-row">
+                    <div class="email-template-header">
+                      <svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 5l3 3 3-3"/></svg>
+                      Manual Review Email (to customer)
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+
+          <!-- SCREEN 4: Payouts -->
+          <div class="screen" id="sc4">
+            <div class="page-header">
+              <div class="page-title-row">
+                <button class="wp-btn" onclick="showScreen(0)">← All Quotes</button>
+                <div class="page-h1">Payouts</div>
+              </div>
+            </div>
+
+            <!-- Stat cards -->
+            <div class="stat-grid" style="margin-bottom:16px">
+              <div class="stat-card">
+                <div class="stat-icon"><svg width="18" height="18" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="1" y="4" width="14" height="10" rx="1.5"/><path d="M1 8h14M5 12h2"/></svg></div>
+                <div class="stat-body">
+                  <div class="stat-num">£0</div>
+                  <div class="stat-label">Total Paid Out</div>
+                </div>
+              </div>
+              <div class="stat-card">
+                <div class="stat-icon"><svg width="18" height="18" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="8" cy="8" r="6"/><path d="M8 5v3l2 2"/></svg></div>
+                <div class="stat-body">
+                  <div class="stat-num">0</div>
+                  <div class="stat-label">Number of Sales</div>
+                </div>
+              </div>
+              <div class="stat-card">
+                <div class="stat-icon"><svg width="18" height="18" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 2h10a1 1 0 011 1v11a1 1 0 01-1 1H3a1 1 0 01-1-1V3a1 1 0 011-1z"/></svg></div>
+                <div class="stat-body">
+                  <div class="stat-num">£0</div>
+                  <div class="stat-label">Avg Payout</div>
+                </div>
+              </div>
+              <div class="stat-card">
+                <div class="stat-icon"><svg width="18" height="18" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="8" cy="8" r="6"/><path d="M8 5v3"/></svg></div>
+                <div class="stat-body">
+                  <div class="stat-num">0</div>
+                  <div class="stat-label">Pending Payment</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Filter row -->
+            <div class="payouts-filter-row">
+              <div class="filter-group">
+                <div class="filter-group-label">From</div>
+                <input type="date">
+              </div>
+              <div class="filter-group">
+                <div class="filter-group-label">To</div>
+                <input type="date">
+              </div>
+              <div class="filter-group">
+                <div class="filter-group-label">Status</div>
+                <select><option>All statuses</option><option>Pending</option><option>Paid</option><option>Cancelled</option></select>
+              </div>
+              <button class="wp-btn" style="align-self:flex-end;border-color:var(--orange);color:var(--orange);padding:7px 14px">Filter</button>
+              <div class="payouts-spacer"></div>
+              <button class="export-btn">
+                <svg width="13" height="13" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M8 2v9M5 8l3 3 3-3"/><path d="M2 13h12"/></svg>
+                Export CSV
+              </button>
+            </div>
+
+            <!-- Empty state -->
+            <div class="empty-state">
+              <div class="empty-icon">
+                <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14,2 14,8 20,8"/></svg>
+              </div>
+              <div class="empty-text">No payouts match the current filters.</div>
+            </div>
+          </div>
+
+        </div><!-- /wp-content -->
+      </div><!-- /wp-layout -->
+    </div><!-- /wp-frame -->
+  </div>
+
+  <!-- RIGHT: Notes panel -->
+  <div class="notes-panel">
+    <div class="notes-card">
+      <div class="screen-label" id="note-screen-label">Screen 1 of 5</div>
+      <div style="font-size:15px;font-weight:700;color:var(--dark);margin-bottom:6px" id="note-title">All Quotes</div>
+      <div class="screen-desc" id="note-desc">The main admin hub. Shows live stats at a glance — quotes today, items in transit, and weekly payout. The table is filterable by status and date, with quick-action buttons to move quotes through the workflow without opening each one.</div>
+      <div class="tag-row" id="note-tags">
+        <span class="tag">Live stats</span>
+        <span class="tag green">Status filters</span>
+        <span class="tag blue">Quick actions</span>
+      </div>
+    </div>
+    <div class="notes-card">
+      <div class="notes-title">About this admin mockup</div>
+      <div class="note-item"><div class="note-dot"></div><div class="note-text"><strong>5 screens</strong> covering the full admin workflow inside the WordPress dashboard.</div></div>
+      <div class="note-item"><div class="note-dot"></div><div class="note-text"><strong>All Quotes</strong> table with filters, sorting, bulk actions and quick-action buttons.</div></div>
+      <div class="note-item"><div class="note-dot"></div><div class="note-text"><strong>Quote Detail</strong> shows AI analysis, photos, customer info, offer editor and timeline.</div></div>
+      <div class="note-item"><div class="note-dot"></div><div class="note-text"><strong>Settings</strong> cover AI keys, buy-back margin, confidence threshold, notifications and email templates.</div></div>
+      <div class="note-item"><div class="note-dot"></div><div class="note-text"><strong>Payouts</strong> tracks all payments with CSV export for accounting.</div></div>
+      <div class="note-item"><div class="note-dot"></div><div class="note-text">Built by <strong>AI Agency Plus</strong> for Cash Fore Clubs.</div></div>
+    </div>
+  </div>
+
+</div>
+
+<div class="mockup-footer">
+  Prepared by <strong>AI Agency Plus</strong> for Cash Fore Clubs &nbsp;·&nbsp; Confidential
+</div>
+
+<script>
+  var screenData = [
+    { label: 'Screen 1 of 5', title: 'All Quotes', desc: 'The main admin hub. Shows live stats at a glance — quotes today, items in transit, and weekly payout. The table is filterable by status and date, with quick-action buttons to move quotes through the workflow without opening each one.', tags: [['Live stats',''], ['Status filters','green'], ['Quick actions','blue']] },
+    { label: 'Screen 2 of 5', title: 'Quote Detail', desc: 'Full detail view for a single quote. Shows AI-identified club info, confidence score, market mid price, submitted photos, customer details, and a timeline. Admin can adjust the offer price and send a revised quote.', tags: [['AI analysis',''], ['Offer editor','green'], ['Timeline','blue']] },
+    { label: 'Screen 3 of 5', title: 'Settings — AI & Pricing', desc: 'Configure the OpenAI API key, buy-back margin percentage, minimum offer floor, AI confidence threshold, and quote expiry. The live example updates to show the customer offer based on the current margin setting.', tags: [['API key',''], ['Margin slider','green'], ['Confidence threshold','blue']] },
+    { label: 'Screen 4 of 5', title: 'Settings — Notifications & Email', desc: 'Set the admin notification email, choose which events trigger alerts, embed the valuation form via shortcode, and customise the three customer email templates using merge tags.', tags: [['Notifications',''], ['Shortcode','green'], ['Email templates','blue']] },
+    { label: 'Screen 5 of 5', title: 'Payouts', desc: 'A dedicated payouts ledger showing total paid out, number of sales, average payout and pending payments. Filter by date range and status, then export to CSV for your accounts team.', tags: [['Payment tracking',''], ['CSV export','green'], ['Date filter','blue']] },
+  ];
+
+  function showScreen(n) {
+    document.querySelectorAll('.screen').forEach(function(s,i){ s.classList.toggle('active', i===n); });
+    document.querySelectorAll('.snav-btn').forEach(function(b,i){ b.classList.toggle('active', i===n); });
+    var d = screenData[n];
+    document.getElementById('note-screen-label').textContent = d.label;
+    document.getElementById('note-title').textContent = d.title;
+    document.getElementById('note-desc').textContent = d.desc;
+    var tagRow = document.getElementById('note-tags');
+    tagRow.innerHTML = d.tags.map(function(t){ return '<span class="tag ' + t[1] + '">' + t[0] + '</span>'; }).join('');
+  }
+</script>
+</body>
+</html>
