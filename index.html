@@ -1750,50 +1750,14 @@ input[type="range"]::-webkit-slider-thumb {
           </div>
         </div>
 
-        <!-- PGA SCREEN 1: Enter Customer Details -->
+        <!-- PGA SCREEN 1: Upload Photos -->
         <div class="pga-screen" id="psc1">
-          <div class="pro-account-bar">
-            <div class="pro-account-bar-left">
-              <span class="pro-badge-pill">
-                <svg width="10" height="10" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 1l2 5h5l-4 3 1.5 5L8 11l-4.5 3L5 9 1 6h5z"/></svg>
-                PGA Pro
-              </span>
-              <span class="pro-account-name">J. McAllister — Chippenham Golf Club</span>
-            </div>
-            <span class="pro-rate-tag">Trade Rate: 25% margin</span>
-          </div>
-          <div class="cust-details-wrap">
-            <div class="cust-details-title">Enter your customer's details</div>
-            <div class="cust-details-sub">You're quoting on behalf of a customer. Their details will appear on the quote and the offer email will go directly to them.</div>
-            <div class="cust-details-notice">
-              <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="8" cy="8" r="7"/><path d="M8 7v4M8 5h.01"/></svg>
-              The customer will receive the offer email and can accept or decline directly. You'll see all quotes in your Pro dashboard.
-            </div>
-            <div class="fl">Customer Full Name</div>
-            <input class="fi" type="text" value="James Robertson">
-            <div class="fl">Customer Email Address</div>
-            <input class="fi" type="email" value="james.robertson@email.co.uk">
-            <div class="fl">Customer Phone (optional)</div>
-            <input class="fi" type="tel" placeholder="07700 900123">
-            <div class="fl">Their Golf Club (optional)</div>
-            <input class="fi" type="text" placeholder="e.g. Chippenham Golf Club">
-            <button class="cta-btn" onclick="showScreen(2)">CONTINUE — UPLOAD PHOTOS →</button>
-            <div class="cta-note">The quote will be sent to james.robertson@email.co.uk</div>
-          </div>
-        </div>
-
-        <!-- PGA SCREEN 2: Upload Photos -->
-        <div class="pga-screen" id="psc2">
           <div class="pro-account-bar">
             <div class="pro-account-bar-left">
               <span class="pro-badge-pill"><svg width="10" height="10" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 1l2 5h5l-4 3 1.5 5L8 11l-4.5 3L5 9 1 6h5z"/></svg>PGA Pro</span>
               <span class="pro-account-name">J. McAllister — Chippenham Golf Club</span>
             </div>
             <span class="pro-rate-tag">Trade Rate: 25% margin</span>
-          </div>
-          <div class="quoting-for-bar">
-            <span>Quoting for: <strong>James Robertson</strong> &nbsp;·&nbsp; james.robertson@email.co.uk</span>
-            <span class="change-link" onclick="showScreen(1)">Change</span>
           </div>
           <div class="form-inner" style="padding-top:16px">
             <div class="page-title" style="font-size:18px">Upload club photos</div>
@@ -1821,22 +1785,19 @@ input[type="range"]::-webkit-slider-thumb {
             <div class="desc-label">Notes about the club (optional)</div>
             <textarea class="desc-box" placeholder="e.g. Callaway Paradym, 2023, very good condition, stiff shaft..."></textarea>
             <div class="char-count">0 / 300</div>
-            <button class="cta-btn" onclick="showScreen(3)">GET INSTANT TRADE OFFER →</button>
+            <button class="cta-btn" onclick="showScreen(2)">GET INSTANT TRADE OFFER →</button>
             <div class="cta-note">Trade rate applied — better value for your customer</div>
           </div>
         </div>
 
-        <!-- PGA SCREEN 3: Valuing -->
-        <div class="pga-screen" id="psc3">
+        <!-- PGA SCREEN 2: Valuing -->
+        <div class="pga-screen" id="psc2">
           <div class="pro-account-bar">
             <div class="pro-account-bar-left">
               <span class="pro-badge-pill"><svg width="10" height="10" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 1l2 5h5l-4 3 1.5 5L8 11l-4.5 3L5 9 1 6h5z"/></svg>PGA Pro</span>
               <span class="pro-account-name">J. McAllister — Chippenham Golf Club</span>
             </div>
             <span class="pro-rate-tag">Trade Rate: 25% margin</span>
-          </div>
-          <div class="quoting-for-bar">
-            <span>Quoting for: <strong>James Robertson</strong> &nbsp;·&nbsp; james.robertson@email.co.uk</span>
           </div>
           <div class="loading-wrap">
             <div class="spinner-ring"></div>
@@ -1851,17 +1812,14 @@ input[type="range"]::-webkit-slider-thumb {
           </div>
         </div>
 
-        <!-- PGA SCREEN 4: Offer (Pro Rate) -->
-        <div class="pga-screen" id="psc4">
+        <!-- PGA SCREEN 3: Offer (Pro Rate) -->
+        <div class="pga-screen" id="psc3">
           <div class="pro-account-bar">
             <div class="pro-account-bar-left">
               <span class="pro-badge-pill"><svg width="10" height="10" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 1l2 5h5l-4 3 1.5 5L8 11l-4.5 3L5 9 1 6h5z"/></svg>PGA Pro</span>
               <span class="pro-account-name">J. McAllister — Chippenham Golf Club</span>
             </div>
             <span class="pro-rate-tag">Trade Rate: 25% margin</span>
-          </div>
-          <div class="quoting-for-bar">
-            <span>Quoting for: <strong>James Robertson</strong> &nbsp;·&nbsp; james.robertson@email.co.uk</span>
           </div>
           <div class="offer-wrap" style="padding-top:24px">
             <div class="pro-offer-ribbon">
@@ -1882,13 +1840,45 @@ input[type="range"]::-webkit-slider-thumb {
               <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="8" cy="8" r="7"/><path d="M8 4v4l2.5 2"/></svg>
               Offer expires in <span class="expiry-bold">23h 59m 55s</span>
             </div>
-            <div class="pro-quote-recipient">
-              <svg width="13" height="13" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 4h12l-6 5-6-5z"/><path d="M2 4v8a1 1 0 001 1h10a1 1 0 001-1V4"/></svg>
-              Quote will be sent to <strong>james.robertson@email.co.uk</strong>
-            </div>
-            <button class="cta-btn" onclick="showScreen(5)" style="background:var(--blue)">SEND QUOTE TO CUSTOMER →</button>
+            <button class="cta-btn" onclick="showScreen(4)" style="background:var(--blue)">HAPPY WITH THE PRICE? SEND TO CUSTOMER →</button>
             <div class="decline-link">No thanks, cancel this quote</div>
-            <div class="no-commit">Your customer will receive the offer by email and can accept or decline at their convenience.</div>
+            <div class="no-commit">You'll enter your customer's details on the next step.</div>
+          </div>
+        </div>
+
+        <!-- PGA SCREEN 4: Enter Customer Details -->
+        <div class="pga-screen" id="psc4">
+          <div class="pro-account-bar">
+            <div class="pro-account-bar-left">
+              <span class="pro-badge-pill">
+                <svg width="10" height="10" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 1l2 5h5l-4 3 1.5 5L8 11l-4.5 3L5 9 1 6h5z"/></svg>
+                PGA Pro
+              </span>
+              <span class="pro-account-name">J. McAllister — Chippenham Golf Club</span>
+            </div>
+            <span class="pro-rate-tag">Trade Rate: 25% margin</span>
+          </div>
+          <div class="cust-details-wrap">
+            <div style="background:#e6f1fb;border:1px solid #b3d1ef;border-radius:var(--radius);padding:10px 14px;margin-bottom:16px;display:flex;align-items:center;justify-content:space-between">
+              <span style="font-size:13px;color:var(--mid)">Sending offer of</span>
+              <span style="font-size:20px;font-weight:700;color:var(--blue)">£159</span>
+            </div>
+            <div class="cust-details-title">Who is this quote for?</div>
+            <div class="cust-details-sub">Enter your customer's details below. The offer email will go directly to them.</div>
+            <div class="cust-details-notice">
+              <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="8" cy="8" r="7"/><path d="M8 7v4M8 5h.01"/></svg>
+              The customer will receive the offer by email and can accept or decline directly. You'll see the status in your Pro dashboard.
+            </div>
+            <div class="fl">Customer Full Name</div>
+            <input class="fi" type="text" value="James Robertson">
+            <div class="fl">Customer Email Address</div>
+            <input class="fi" type="email" value="james.robertson@email.co.uk">
+            <div class="fl">Customer Phone (optional)</div>
+            <input class="fi" type="tel" placeholder="07700 900123">
+            <div class="fl">Their Golf Club (optional)</div>
+            <input class="fi" type="text" placeholder="e.g. Chippenham Golf Club">
+            <button class="cta-btn" onclick="showScreen(5)" style="background:var(--blue)">SEND £159 OFFER TO CUSTOMER →</button>
+            <div class="cta-note">Quote will be sent to james.robertson@email.co.uk</div>
           </div>
         </div>
 
@@ -2966,12 +2956,12 @@ var customerScreenData = [
 ];
 
 var pgaScreenData = [
-  { label: 'Screen 1 of 6', title: 'PGA Pro Login',            desc: 'PGA Professionals log in via a dedicated Trade Account portal — visually distinct from the standard customer login. Non-partners can apply for a trade account from this screen.',                                                                        tags: [['Trade portal',''], ['Pro-only login','blue'], ['Apply link','green']] },
-  { label: 'Screen 2 of 6', title: 'Enter Customer Details',   desc: 'The key screen unique to the PGA Pro flow. The pro enters the end customer\'s name, email and phone before uploading any photos. The offer email will go directly to that customer, not to the PGA Pro.',                                                  tags: [['Customer name & email',''], ['On behalf of','blue'], ['Direct to customer','green']] },
-  { label: 'Screen 3 of 6', title: 'Upload Photos (Pro)',       desc: 'Identical to the standard upload flow but with the PGA Pro account bar pinned at the top and a "Quoting for: [name]" ribbon showing the customer. The trust bar shows "Trade rate applied" instead of the standard trust signals.',                       tags: [['Pro account bar','blue'], ['Quoting-for banner',''], ['Trade rate badge','green']] },
-  { label: 'Screen 4 of 6', title: 'Valuing... (Pro)',          desc: 'Same AI valuation process but the loading steps show the trade margin being applied. Helps the PGA Pro understand why their customers get a better rate.',                                                                                                   tags: [['AI analysis',''], ['Trade margin step','blue'], ['~10 seconds','green']] },
-  { label: 'Screen 5 of 6', title: 'Instant Offer (Pro Rate)', desc: 'The offer is calculated at the PGA Pro\'s trade margin (25% vs 40% global). The price is shown with a clear comparison — "£31 more for your customer vs standard rate." The button says "Send quote to customer" rather than "Accept offer."',             tags: [['Higher offer','green'], ['Rate comparison',''], ['Send to customer','blue']] },
-  { label: 'Screen 6 of 6', title: 'Confirmed — Quote Sent',   desc: 'The quote has been emailed to the end customer. The PGA Pro sees a summary card with the customer name, offer price, reference number and expiry. Next steps explain the customer\'s journey from their inbox to payment.',                                 tags: [['Quote summary',''], ['Sent to customer','green'], ['Pro reference','blue']] },
+  { label: 'Screen 1 of 6', title: 'PGA Pro Login',             desc: 'PGA Professionals log in via a dedicated Trade Account portal — visually distinct from the standard customer login. Non-partners can apply for a trade account from this screen.',                                                                                                     tags: [['Trade portal',''], ['Pro-only login','blue'], ['Apply link','green']] },
+  { label: 'Screen 2 of 6', title: 'Upload Photos (Pro)',        desc: 'The PGA Pro uploads photos of the club just like a standard customer. The trade rate badge is shown in the trust bar. No customer details needed yet — get the price first.',                                                                                                          tags: [['Pro account bar','blue'], ['Trade rate badge','green'], ['Photos first','']] },
+  { label: 'Screen 3 of 6', title: 'Valuing... (Pro)',           desc: 'Same AI valuation process but the loading steps show the trade margin being applied. Helps the PGA Pro understand why their customers get a better rate.',                                                                                                                              tags: [['AI analysis',''], ['Trade margin step','blue'], ['~10 seconds','green']] },
+  { label: 'Screen 4 of 6', title: 'Instant Offer (Pro Rate)',   desc: 'The quote arrives first — £159 vs £128 standard rate, with "£31 more for your customer" called out clearly. The PGA Pro decides whether the price is right before entering any customer details. Button reads "Happy with the price? Send to customer."',                              tags: [['Higher offer','green'], ['Rate comparison',''], ['Decide first','blue']] },
+  { label: 'Screen 5 of 6', title: 'Enter Customer Details',     desc: 'Only after accepting the price does the PGA Pro enter the customer\'s name and email. The offer amount (£159) is shown at the top as a reminder. The CTA reads "Send £159 offer to customer" so the value is clear at every step.',                                                   tags: [['Customer name & email',''], ['Offer visible','blue'], ['Direct to customer','green']] },
+  { label: 'Screen 6 of 6', title: 'Confirmed — Quote Sent',     desc: 'The quote has been emailed to the end customer. The PGA Pro sees a summary card with the customer name, offer price, reference number and expiry. Next steps explain the customer\'s journey from their inbox to payment.',                                                            tags: [['Quote summary',''], ['Sent to customer','green'], ['Pro reference','blue']] },
 ];
 
 var adminScreenData = [
@@ -2988,8 +2978,8 @@ var customerNavLabels = [
   '5. Instant offer', '6. Delivery', '7. Confirmed – Store', '8. Confirmed – Post', '9. My quotes'
 ];
 var pgaNavLabels = [
-  '1. Pro Login', '2. Customer Details', '3. Upload Photos',
-  '4. Valuing...', '5. Offer (Pro Rate)', '6. Quote Sent'
+  '1. Pro Login', '2. Upload Photos', '3. Valuing...',
+  '4. Offer (Pro Rate)', '5. Customer Details', '6. Quote Sent'
 ];
 var adminNavLabels = [
   '1. All Quotes', '2. Quote Detail',
