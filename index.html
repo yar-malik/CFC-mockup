@@ -1859,26 +1859,38 @@ input[type="range"]::-webkit-slider-thumb {
             <span class="pro-rate-tag">Trade Rate: 25% margin</span>
           </div>
           <div class="cust-details-wrap">
-            <div style="background:#e6f1fb;border:1px solid #b3d1ef;border-radius:var(--radius);padding:10px 14px;margin-bottom:16px;display:flex;align-items:center;justify-content:space-between">
-              <span style="font-size:13px;color:var(--mid)">Sending offer of</span>
-              <span style="font-size:20px;font-weight:700;color:var(--blue)">£159</span>
+
+            <!-- Offer reminder banner -->
+            <div style="background:#e6f1fb;border:1px solid #b3d1ef;border-radius:var(--radius);padding:12px 16px;margin-bottom:20px;display:flex;align-items:center;justify-content:space-between;">
+              <div>
+                <div style="font-size:10px;font-weight:700;color:var(--blue);text-transform:uppercase;letter-spacing:.5px;margin-bottom:2px">Trade offer ready</div>
+                <div style="font-size:12px;color:var(--mid)">Callaway Paradym Driver · Good condition</div>
+              </div>
+              <div style="font-size:26px;font-weight:700;color:var(--blue)">£159</div>
             </div>
+
             <div class="cust-details-title">Who is this quote for?</div>
-            <div class="cust-details-sub">Enter your customer's details below. The offer email will go directly to them.</div>
+            <div class="cust-details-sub">Enter your customer's details. The offer will be emailed directly to them.</div>
+
             <div class="cust-details-notice">
-              <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="8" cy="8" r="7"/><path d="M8 7v4M8 5h.01"/></svg>
-              The customer will receive the offer by email and can accept or decline directly. You'll see the status in your Pro dashboard.
+              <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" style="flex-shrink:0;margin-top:1px"><circle cx="8" cy="8" r="7"/><path d="M8 7v4M8 5h.01"/></svg>
+              The customer receives the offer by email and can accept or decline. You'll track the status in your Pro dashboard.
             </div>
-            <div class="fl">Customer Full Name</div>
-            <input class="fi" type="text" value="James Robertson">
-            <div class="fl">Customer Email Address</div>
-            <input class="fi" type="email" value="james.robertson@email.co.uk">
-            <div class="fl">Customer Phone (optional)</div>
-            <input class="fi" type="tel" placeholder="07700 900123">
-            <div class="fl">Their Golf Club (optional)</div>
-            <input class="fi" type="text" placeholder="e.g. Chippenham Golf Club">
+
+            <div class="login-field-label">Customer Full Name</div>
+            <input class="login-input" type="text" value="James Robertson" style="margin-bottom:14px">
+
+            <div class="login-field-label">Customer Email Address</div>
+            <input class="login-input" type="email" value="james.robertson@email.co.uk" style="margin-bottom:14px">
+
+            <div class="login-field-label">Customer Phone <span style="font-weight:400;text-transform:none;letter-spacing:0;color:var(--muted)">(optional)</span></div>
+            <input class="login-input" type="tel" placeholder="07700 900123" style="margin-bottom:14px">
+
+            <div class="login-field-label">Their Golf Club <span style="font-weight:400;text-transform:none;letter-spacing:0;color:var(--muted)">(optional)</span></div>
+            <input class="login-input" type="text" placeholder="e.g. Chippenham Golf Club" style="margin-bottom:20px">
+
             <button class="cta-btn" onclick="showScreen(5)" style="background:var(--blue)">SEND £159 OFFER TO CUSTOMER →</button>
-            <div class="cta-note">Quote will be sent to james.robertson@email.co.uk</div>
+            <div class="cta-note">Quote will be emailed to james.robertson@email.co.uk</div>
           </div>
         </div>
 
