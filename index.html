@@ -216,6 +216,402 @@ body {
 }
 
 /* ═══════════════════════════════════════════════════════════════════════════
+   VERSION PILL TOGGLE  (V1 / V2)
+═══════════════════════════════════════════════════════════════════════════ */
+.version-pill {
+  display: flex;
+  background: rgba(0,0,0,0.28);
+  border-radius: 24px;
+  padding: 3px;
+  gap: 2px;
+}
+.version-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 14px;
+  border: none;
+  border-radius: 20px;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 12px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background .2s, color .2s;
+  background: transparent;
+  color: rgba(255,255,255,0.55);
+  letter-spacing: 0.3px;
+  white-space: nowrap;
+}
+.version-btn.active {
+  background: #fbbf24;
+  color: #1d2327;
+  box-shadow: 0 1px 6px rgba(251,191,36,0.45);
+}
+.version-btn:hover:not(.active) { color: rgba(255,255,255,0.9); }
+.v2-corner-tag {
+  position: absolute;
+  top: 12px; right: 14px;
+  background: #fbbf24;
+  color: #1d2327;
+  font-size: 10px;
+  font-weight: 700;
+  padding: 3px 8px;
+  border-radius: 10px;
+  letter-spacing: 0.5px;
+  z-index: 5;
+  pointer-events: none;
+}
+.device-frame { position: relative; }
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   V2 — METHOD CHOICE (Upload vs Manual)
+═══════════════════════════════════════════════════════════════════════════ */
+.method-wrap { padding: 28px 24px; }
+.method-title { font-size: 22px; font-weight: 700; color: var(--dark); margin-bottom: 6px; }
+.method-sub { font-size: 13px; color: var(--mid); margin-bottom: 22px; }
+.method-cards { display: flex; flex-direction: column; gap: 12px; }
+.method-card {
+  border: 2px solid var(--border);
+  border-radius: var(--radius);
+  padding: 18px 18px 18px 60px;
+  cursor: pointer;
+  position: relative;
+  transition: border-color .15s, background .15s;
+  background: var(--white);
+}
+.method-card:hover { border-color: var(--orange); background: #fff9f7; }
+.method-card-icon {
+  position: absolute;
+  left: 14px; top: 18px;
+  width: 36px; height: 36px;
+  background: #fff0eb;
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+}
+.method-card-title { font-size: 15px; font-weight: 700; color: var(--dark); margin-bottom: 3px; }
+.method-card-desc { font-size: 12px; color: var(--mid); margin-bottom: 8px; }
+.method-card-pill {
+  display: inline-block;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: .3px;
+  padding: 3px 8px;
+  border-radius: 10px;
+  background: #f3f4f6;
+  color: var(--mid);
+}
+.method-card-pill.green { background: #e8f3e7; color: var(--green); }
+.method-card-pill.orange { background: #fdecd6; color: #b45309; }
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   V2 — STRUCTURED MANUAL FORM
+═══════════════════════════════════════════════════════════════════════════ */
+.manual-form-wrap { padding: 28px 24px; }
+.manual-tabs {
+  display: flex;
+  gap: 4px;
+  background: #f3f4f6;
+  border-radius: var(--radius);
+  padding: 4px;
+  margin-bottom: 18px;
+}
+.manual-tab {
+  flex: 1;
+  padding: 8px 12px;
+  border: none;
+  border-radius: 5px;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 12px;
+  font-weight: 700;
+  background: transparent;
+  color: var(--mid);
+  cursor: pointer;
+  transition: background .15s, color .15s;
+}
+.manual-tab.active { background: var(--white); color: var(--dark); box-shadow: 0 1px 3px rgba(0,0,0,.08); }
+.field-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 14px; }
+.field-row.single { grid-template-columns: 1fr; }
+.field-label-v2 {
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--mid);
+  text-transform: uppercase;
+  letter-spacing: .4px;
+  margin-bottom: 5px;
+  display: block;
+}
+.field-input-v2, .field-select-v2 {
+  width: 100%;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 9px 12px;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 13px;
+  color: var(--dark);
+  background: var(--white);
+  transition: border-color .15s;
+}
+.field-input-v2:focus, .field-select-v2:focus { border-color: var(--orange); outline: none; }
+.field-select-v2 {
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'%3E%3Cpath fill='%2350575e' d='M0 0l5 6 5-6z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 12px center;
+  padding-right: 32px;
+}
+.field-helper { font-size: 11px; color: var(--muted); margin-top: 4px; }
+.add-another-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  border: 1px dashed var(--border);
+  border-radius: var(--radius);
+  padding: 10px;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--orange);
+  cursor: pointer;
+  margin: 14px 0 18px;
+  background: transparent;
+  width: 100%;
+}
+.add-another-row:hover { background: #fff9f7; border-color: var(--orange); }
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   V2 — CONFIRM ITEM (low-confidence + multi-item-detected)
+═══════════════════════════════════════════════════════════════════════════ */
+.confirm-wrap { padding: 24px; }
+.confirm-banner {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 12px 14px;
+  border-radius: var(--radius);
+  margin-bottom: 18px;
+  font-size: 12px;
+}
+.confirm-banner.warn  { background: #fef7e6; border: 1px solid #f4d680; color: #92660b; }
+.confirm-banner.alert { background: #fef1f0; border: 1px solid #f5b6b3; color: #a4191a; }
+.confirm-banner strong { display: block; font-size: 13px; margin-bottom: 2px; }
+.confidence-meter {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 4px;
+}
+.confidence-bar {
+  flex: 1;
+  height: 6px;
+  border-radius: 3px;
+  background: #f3f4f6;
+  overflow: hidden;
+}
+.confidence-fill { height: 100%; border-radius: 3px; }
+.confidence-fill.low  { background: #d63638; }
+.confidence-fill.mid  { background: #f4a300; }
+.confidence-fill.high { background: var(--green); }
+.confidence-pct { font-size: 12px; font-weight: 700; color: var(--mid); min-width: 38px; text-align: right; }
+.ai-guess-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 14px;
+  margin-bottom: 16px;
+}
+.ai-guess-row {
+  display: flex;
+  justify-content: space-between;
+  padding: 6px 0;
+  font-size: 12px;
+  border-bottom: 1px dashed #e5e7eb;
+}
+.ai-guess-row:last-child { border-bottom: none; }
+.ai-guess-row span { color: var(--mid); }
+.ai-guess-row strong { color: var(--dark); }
+.mc-question-label {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--dark);
+  margin: 18px 0 10px;
+}
+.mc-options { display: flex; flex-direction: column; gap: 8px; margin-bottom: 16px; }
+.mc-option {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 14px;
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius);
+  cursor: pointer;
+  background: var(--white);
+  font-size: 13px;
+  color: var(--dark);
+  transition: border-color .15s, background .15s;
+}
+.mc-option:hover { border-color: var(--orange); background: #fff9f7; }
+.mc-option.selected { border-color: var(--orange); background: #fff9f7; box-shadow: 0 0 0 3px rgba(232,73,29,0.12); }
+.mc-radio {
+  width: 16px; height: 16px; border-radius: 50%;
+  border: 2px solid var(--border);
+  flex-shrink: 0;
+  position: relative;
+}
+.mc-option.selected .mc-radio { border-color: var(--orange); }
+.mc-option.selected .mc-radio::after {
+  content: '';
+  position: absolute; inset: 3px;
+  background: var(--orange);
+  border-radius: 50%;
+}
+.mc-option-label { flex: 1; }
+.mc-option-sub { font-size: 11px; color: var(--muted); margin-top: 2px; }
+.detected-items-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin-bottom: 16px;
+}
+.detected-item-card {
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius);
+  padding: 10px;
+  text-align: center;
+  background: var(--white);
+}
+.detected-item-thumb {
+  width: 100%; height: 80px;
+  background: linear-gradient(135deg, #f3f4f6, #e5e7eb);
+  border-radius: var(--radius-sm);
+  margin-bottom: 8px;
+}
+.detected-item-name { font-size: 12px; font-weight: 700; color: var(--dark); margin-bottom: 2px; }
+.detected-item-sub  { font-size: 11px; color: var(--muted); }
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   V2 — BATCH / MULTI-ITEM QUOTE LIST
+═══════════════════════════════════════════════════════════════════════════ */
+.batch-wrap { padding: 24px; }
+.batch-heading-row {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  margin-bottom: 14px;
+}
+.batch-heading { font-size: 20px; font-weight: 700; color: var(--dark); }
+.batch-count-pill {
+  background: var(--surface);
+  color: var(--mid);
+  font-size: 11px;
+  font-weight: 700;
+  padding: 3px 9px;
+  border-radius: 10px;
+  letter-spacing: .3px;
+}
+.batch-list { display: flex; flex-direction: column; gap: 10px; margin-bottom: 14px; }
+.batch-item {
+  display: grid;
+  grid-template-columns: 56px 1fr auto;
+  gap: 12px;
+  align-items: center;
+  padding: 12px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--white);
+}
+.batch-item-thumb {
+  width: 56px; height: 56px;
+  background: linear-gradient(135deg, #f3f4f6, #e5e7eb);
+  border-radius: var(--radius-sm);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--muted);
+  font-size: 11px;
+  font-weight: 700;
+}
+.batch-item-thumb.manual { background: #e0f2fe; color: #075985; }
+.batch-item-info { min-width: 0; }
+.batch-item-name {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--dark);
+  margin-bottom: 2px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.batch-item-meta { font-size: 11px; color: var(--muted); }
+.batch-item-meta .confidence-tag { color: var(--green); font-weight: 700; }
+.batch-item-meta .confidence-tag.warn { color: #b45309; }
+.batch-item-price { font-size: 16px; font-weight: 700; color: var(--dark); white-space: nowrap; }
+.batch-item-remove {
+  background: none;
+  border: none;
+  font-size: 16px;
+  color: var(--muted);
+  cursor: pointer;
+  padding: 0 0 0 8px;
+  line-height: 1;
+}
+.batch-item-remove:hover { color: var(--red); }
+.batch-total-card {
+  background: linear-gradient(135deg, #1e4a1a 0%, var(--green) 100%);
+  color: #fff;
+  border-radius: var(--radius);
+  padding: 14px 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 14px;
+}
+.batch-total-label {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: .5px;
+  opacity: .85;
+}
+.batch-total-amount { font-size: 28px; font-weight: 700; }
+.batch-total-sub { font-size: 11px; opacity: .9; }
+
+/* Offer screen — batch breakdown */
+.offer-batch-breakdown {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 12px 14px;
+  margin: 12px 0 18px;
+  text-align: left;
+}
+.offer-batch-breakdown-row {
+  display: flex;
+  justify-content: space-between;
+  font-size: 12px;
+  padding: 5px 0;
+  border-bottom: 1px dashed #e5e7eb;
+}
+.offer-batch-breakdown-row:last-child { border-bottom: none; }
+.offer-batch-breakdown-row span { color: var(--mid); }
+.offer-batch-breakdown-row strong { color: var(--dark); }
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   V2 — PGA STRUCTURED FALLBACK
+═══════════════════════════════════════════════════════════════════════════ */
+.pga-fallback-notice {
+  background: #fef7e6;
+  border: 1px solid #f4d680;
+  border-radius: var(--radius);
+  padding: 12px 14px;
+  margin-bottom: 16px;
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+  font-size: 12px;
+  color: #92660b;
+}
+.pga-fallback-notice strong { display: block; font-size: 13px; margin-bottom: 2px; }
+
+/* ═══════════════════════════════════════════════════════════════════════════
    MODE PANELS  (show/hide entire layout)
 ═══════════════════════════════════════════════════════════════════════════ */
 .mode-panel          { display: none; }
@@ -1344,17 +1740,21 @@ input[type="range"]::-webkit-slider-thumb {
   <div class="topbar-logo">Cash <span>Fore</span> Clubs</div>
   <div class="mode-pill">
     <button class="mode-btn active" id="mode-btn-customer" onclick="switchMode('customer')">
-      ● Customer Flow · 9 screens
+      ● Customer Flow
     </button>
     <button class="mode-btn" id="mode-btn-pga" onclick="switchMode('pga')">
-      ○ PGA Pro Flow · 6 screens
+      ○ PGA Pro Flow
     </button>
     <button class="mode-btn" id="mode-btn-admin" onclick="switchMode('admin')">
-      ○ Admin Panel · 6 screens
+      ○ Admin Panel
     </button>
   </div>
-  <div class="topbar-end">
-    <div class="topbar-badge">UI Mockup — For Client Review</div>
+  <div class="topbar-end" style="gap:10px;display:flex">
+    <div class="version-pill" role="group" aria-label="Mockup version">
+      <button class="version-btn active" id="version-btn-v1" onclick="switchVersion('v1')">V1</button>
+      <button class="version-btn"        id="version-btn-v2" onclick="switchVersion('v2')">V2 ✨</button>
+    </div>
+    <div class="topbar-badge">UI Mockup</div>
   </div>
 </div>
 
@@ -1741,7 +2141,615 @@ input[type="range"]::-webkit-slider-thumb {
         </div>
 
       </div><!-- /device-frame -->
-    </div>
+    </div><!-- /customer-panel -->
+
+    <!-- ══════════════════════════════════════════════════════════════════════
+         CUSTOMER PANEL — V2 (manual quote · batch · confidence · multi-item)
+    ══════════════════════════════════════════════════════════════════════ -->
+    <div class="mode-panel customer-panel" id="customer-panel-v2">
+      <div class="device-frame">
+        <div class="v2-corner-tag">V2</div>
+
+        <!-- V2-SC0: Login -->
+        <div class="cust-screen active" id="sc-v2-0">
+          <div class="login-inner">
+            <div class="login-title">LET'S GET SELLING...</div>
+            <div class="login-subtitle">Not sure about the condition of your clubs? Check our guide.</div>
+            <button class="condition-guide-btn">CONDITION GUIDE</button>
+
+            <div class="login-field-label">Username or Email Address</div>
+            <input class="login-input" type="text" placeholder="">
+
+            <div class="login-field-label">Password</div>
+            <input class="login-input" type="password" placeholder="">
+
+            <div class="remember-row">
+              <input type="checkbox" id="rememberMeV2">
+              <label class="remember-label" for="rememberMeV2">Remember Me</label>
+            </div>
+
+            <button class="login-btn" onclick="showScreen(1)">LOG IN</button>
+            <a class="lost-password-link">Lost your password?</a>
+
+            <div class="login-divider"></div>
+            <div class="new-to-cfc">New to Cash Fore Clubs? <span style="color:var(--orange);cursor:pointer;text-decoration:underline">Create an account →</span></div>
+          </div>
+        </div>
+
+        <!-- V2-SC1: Choose method -->
+        <div class="cust-screen" id="sc-v2-1">
+          <div class="method-wrap">
+            <div class="method-title">How would you like to start?</div>
+            <div class="method-sub">Two ways to get a quote — pick whichever is easier right now. You can mix both in one quote.</div>
+            <div class="method-cards">
+
+              <div class="method-card" onclick="showScreen(2)">
+                <div class="method-card-icon">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#E8491D" stroke-width="1.7"><rect x="2" y="4" width="20" height="16" rx="2"/><circle cx="8" cy="10" r="2"/><path d="M2 18l5-5 4 4 3-3 8 8"/></svg>
+                </div>
+                <div class="method-card-title">Upload Photos</div>
+                <div class="method-card-desc">Snap a few photos and we'll identify your club with AI. Fastest route — most accurate price.</div>
+                <span class="method-card-pill green">✓ Recommended</span>
+                <span class="method-card-pill" style="margin-left:6px">~10 seconds</span>
+              </div>
+
+              <div class="method-card" onclick="showScreen(3)">
+                <div class="method-card-icon">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#E8491D" stroke-width="1.7"><path d="M4 4h16v16H4z"/><path d="M8 9h8M8 13h8M8 17h5"/></svg>
+                </div>
+                <div class="method-card-title">Enter Details Manually</div>
+                <div class="method-card-desc">No photos handy? Pick the club type, brand and condition from a few dropdowns — same offer logic.</div>
+                <span class="method-card-pill orange">No photos needed</span>
+                <span class="method-card-pill" style="margin-left:6px">Structured form</span>
+              </div>
+
+            </div>
+          </div>
+        </div>
+
+        <!-- V2-SC2: Upload Photos (multi-item aware) -->
+        <div class="cust-screen" id="sc-v2-2">
+          <div class="form-inner">
+            <div class="page-title">Upload photos</div>
+            <div class="trust-bar">
+              <div class="trust-item"><svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="1" y="5" width="14" height="9" rx="1.5"/><path d="M5 5V4a3 3 0 016 0v1"/></svg>Free tracked postage</div>
+              <div class="trust-item"><svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="1" y="4" width="14" height="10" rx="1.5"/><path d="M1 8h14M5 12h2"/></svg>Paid within 48 hours</div>
+              <div class="trust-item"><svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M8 1l1.8 3.7 4.2.6-3 3 .7 4.1L8 10.5l-3.7 1.9.7-4.1-3-3 4.2-.6z"/></svg>Multi-item quotes</div>
+            </div>
+
+            <div class="drop-zone" style="padding:18px">
+              <div class="dz-icon-wrap"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#E8491D" stroke-width="1.5"><rect x="2" y="4" width="20" height="16" rx="2"/><circle cx="8" cy="10" r="2"/><path d="M2 18l5-5 4 4 3-3 8 8"/></svg></div>
+              <div class="dz-title">Drop your club photos here</div>
+              <div class="dz-sub" style="margin-bottom:10px">or click to browse — up to 5 photos per item</div>
+              <button class="photo-lib-btn" style="margin-bottom:14px"><svg width="13" height="13" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="1" y="3" width="14" height="11" rx="1.5"/><circle cx="6" cy="7" r="1.5"/><path d="M1 12l4-4 4 4 3-3 3 3"/></svg>Photo Library</button>
+              <div class="photos-row">
+                <div class="photo-thumb"></div>
+                <div class="photo-thumb"></div>
+                <div class="photo-thumb"></div>
+              </div>
+            </div>
+            <div class="photos-count">✓ 3 photos added for this item</div>
+
+            <button class="add-another-row" onclick="showScreen(3)">
+              <svg width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 3v10M3 8h10"/></svg>
+              Add another club to this quote
+            </button>
+
+            <div class="desc-label">Notes (optional — brand, model, condition, specs)</div>
+            <textarea class="desc-box" placeholder="e.g. TaylorMade Stealth 2, 2023, good condition, stiff shaft..."></textarea>
+            <div class="char-count">0 / 300</div>
+            <button class="cta-btn" onclick="showScreen(4)">CONTINUE →</button>
+            <div class="cta-note">We'll ask you to confirm anything we're unsure about</div>
+          </div>
+        </div>
+
+        <!-- V2-SC3: Manual Entry (structured form, no image) -->
+        <div class="cust-screen" id="sc-v2-3">
+          <div class="manual-form-wrap">
+            <div class="page-title" style="margin-bottom:4px">Enter club details</div>
+            <div style="font-size:12px;color:var(--mid);margin-bottom:16px">Same offer logic — we look up live market prices from the make/model/condition you select.</div>
+
+            <div class="manual-tabs">
+              <button class="manual-tab" onclick="showScreen(2)">📷 Photos</button>
+              <button class="manual-tab active">📝 Manual entry</button>
+            </div>
+
+            <div class="field-row">
+              <div>
+                <label class="field-label-v2">Club type</label>
+                <select class="field-select-v2">
+                  <option>Driver</option>
+                  <option>Fairway wood</option>
+                  <option>Hybrid</option>
+                  <option>Iron set</option>
+                  <option>Single iron</option>
+                  <option>Wedge</option>
+                  <option>Putter</option>
+                  <option>Full set</option>
+                </select>
+              </div>
+              <div>
+                <label class="field-label-v2">Brand / Make</label>
+                <select class="field-select-v2">
+                  <option>TaylorMade</option>
+                  <option>Callaway</option>
+                  <option>Titleist</option>
+                  <option>Ping</option>
+                  <option>Cobra</option>
+                  <option>Mizuno</option>
+                  <option>Cleveland</option>
+                  <option>Wilson</option>
+                  <option>Other…</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="field-row">
+              <div>
+                <label class="field-label-v2">Model</label>
+                <select class="field-select-v2">
+                  <option>Stealth 2</option>
+                  <option>Stealth</option>
+                  <option>SIM 2</option>
+                  <option>SIM</option>
+                  <option>M6</option>
+                  <option>Other / Not sure</option>
+                </select>
+                <div class="field-helper">Pick "Not sure" and we'll do our best from the rest of the details.</div>
+              </div>
+              <div>
+                <label class="field-label-v2">Year / generation</label>
+                <select class="field-select-v2">
+                  <option>2024</option>
+                  <option selected>2023</option>
+                  <option>2022</option>
+                  <option>2021</option>
+                  <option>2020 or earlier</option>
+                  <option>Don't know</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="field-row">
+              <div>
+                <label class="field-label-v2">Condition</label>
+                <select class="field-select-v2">
+                  <option>Like new</option>
+                  <option selected>Very good</option>
+                  <option>Good</option>
+                  <option>Fair</option>
+                  <option>Poor / heavy wear</option>
+                </select>
+                <div class="field-helper">Not sure? <span style="color:var(--orange);cursor:pointer;text-decoration:underline">Open condition guide</span></div>
+              </div>
+              <div>
+                <label class="field-label-v2">Dexterity</label>
+                <select class="field-select-v2">
+                  <option>Right-handed</option>
+                  <option>Left-handed</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="field-row">
+              <div>
+                <label class="field-label-v2">Shaft</label>
+                <select class="field-select-v2">
+                  <option>Stiff</option>
+                  <option>Regular</option>
+                  <option>Senior</option>
+                  <option>Ladies</option>
+                  <option>Extra stiff</option>
+                  <option>Don't know</option>
+                </select>
+              </div>
+              <div>
+                <label class="field-label-v2">Loft / length</label>
+                <input class="field-input-v2" type="text" placeholder="e.g. 10.5° or 45.75″">
+              </div>
+            </div>
+
+            <button class="add-another-row" onclick="showScreen(5)">
+              <svg width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 3v10M3 8h10"/></svg>
+              Add another club to this quote
+            </button>
+
+            <button class="cta-btn" onclick="showScreen(4)">CONTINUE →</button>
+            <div class="cta-note">Free · No obligation · Offer valid for 24 hours</div>
+          </div>
+        </div>
+
+        <!-- V2-SC4: Confirm item (low-confidence + multi-item-detected combined) -->
+        <div class="cust-screen" id="sc-v2-4">
+          <div class="confirm-wrap">
+            <div class="page-title" style="font-size:20px;margin-bottom:10px">Quick check — is this right?</div>
+            <div style="font-size:12px;color:var(--mid);margin-bottom:16px">Pricing must be accurate, so we want to be sure before generating an offer.</div>
+
+            <!-- Multi-item detection banner -->
+            <div class="confirm-banner alert">
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.7" style="flex-shrink:0;margin-top:1px"><circle cx="8" cy="8" r="7"/><path d="M8 5v4M8 11h.01"/></svg>
+              <div>
+                <strong>We spotted two different clubs in your photos</strong>
+                Should we quote them as separate items, or are these all photos of one club?
+              </div>
+            </div>
+
+            <div class="detected-items-row">
+              <div class="detected-item-card">
+                <div class="detected-item-thumb"></div>
+                <div class="detected-item-name">Callaway Paradym</div>
+                <div class="detected-item-sub">Driver · photos 1, 2, 4</div>
+              </div>
+              <div class="detected-item-card">
+                <div class="detected-item-thumb"></div>
+                <div class="detected-item-name">TaylorMade P770</div>
+                <div class="detected-item-sub">Iron · photos 3, 5</div>
+              </div>
+            </div>
+
+            <div class="mc-options">
+              <div class="mc-option selected" onclick="this.classList.add('selected'); this.parentNode.querySelectorAll('.mc-option').forEach(function(o){if(o!==this){o.classList.remove('selected');}}.bind(this))">
+                <span class="mc-radio"></span>
+                <div class="mc-option-label">
+                  <strong>Quote them as 2 separate items</strong>
+                  <div class="mc-option-sub">Both will be added to this quote and totalled together.</div>
+                </div>
+              </div>
+              <div class="mc-option" onclick="this.classList.add('selected'); this.parentNode.querySelectorAll('.mc-option').forEach(function(o){if(o!==this){o.classList.remove('selected');}}.bind(this))">
+                <span class="mc-radio"></span>
+                <div class="mc-option-label">
+                  <strong>These are all photos of one club</strong>
+                  <div class="mc-option-sub">Use the first detected item only and ignore the rest.</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Low-confidence section -->
+            <div class="confirm-banner warn">
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.7" style="flex-shrink:0;margin-top:1px"><circle cx="8" cy="8" r="7"/><path d="M8 5v4M8 11h.01"/></svg>
+              <div>
+                <strong>We're 68% sure on the Callaway — pick the right model</strong>
+                Confidence is below our 90% threshold, so we want you to confirm.
+              </div>
+            </div>
+
+            <div class="confidence-meter">
+              <span style="font-size:11px;color:var(--mid);min-width:80px">AI confidence</span>
+              <div class="confidence-bar"><div class="confidence-fill mid" style="width:68%"></div></div>
+              <span class="confidence-pct">68%</span>
+            </div>
+
+            <div class="ai-guess-card">
+              <div class="ai-guess-row"><span>Best guess</span><strong>Callaway Paradym Driver</strong></div>
+              <div class="ai-guess-row"><span>Year</span><strong>2023</strong></div>
+              <div class="ai-guess-row"><span>Condition</span><strong>Good</strong></div>
+            </div>
+
+            <div class="mc-question-label">Which model is it?</div>
+            <div class="mc-options">
+              <div class="mc-option selected" onclick="this.classList.add('selected'); this.parentNode.querySelectorAll('.mc-option').forEach(function(o){if(o!==this){o.classList.remove('selected');}}.bind(this))">
+                <span class="mc-radio"></span>
+                <div class="mc-option-label">
+                  <strong>Callaway Paradym Driver</strong>
+                  <div class="mc-option-sub">2023 · most likely match</div>
+                </div>
+              </div>
+              <div class="mc-option" onclick="this.classList.add('selected'); this.parentNode.querySelectorAll('.mc-option').forEach(function(o){if(o!==this){o.classList.remove('selected');}}.bind(this))">
+                <span class="mc-radio"></span>
+                <div class="mc-option-label">
+                  <strong>Callaway Paradym X Driver</strong>
+                  <div class="mc-option-sub">2023 · slightly different head shape</div>
+                </div>
+              </div>
+              <div class="mc-option" onclick="this.classList.add('selected'); this.parentNode.querySelectorAll('.mc-option').forEach(function(o){if(o!==this){o.classList.remove('selected');}}.bind(this))">
+                <span class="mc-radio"></span>
+                <div class="mc-option-label">
+                  <strong>Callaway Rogue ST Max Driver</strong>
+                  <div class="mc-option-sub">2022 · similar look</div>
+                </div>
+              </div>
+              <div class="mc-option" onclick="this.classList.add('selected'); this.parentNode.querySelectorAll('.mc-option').forEach(function(o){if(o!==this){o.classList.remove('selected');}}.bind(this))">
+                <span class="mc-radio"></span>
+                <div class="mc-option-label">
+                  <strong>None of these — enter details manually</strong>
+                  <div class="mc-option-sub">Opens the structured form on the next step.</div>
+                </div>
+              </div>
+            </div>
+
+            <button class="cta-btn" onclick="showScreen(5)">CONFIRM &amp; CONTINUE →</button>
+            <div class="cta-note">We only finalise pricing when AI confidence is high — your input keeps the offer accurate.</div>
+          </div>
+        </div>
+
+        <!-- V2-SC5: Items in quote (batch summary + add another) -->
+        <div class="cust-screen" id="sc-v2-5">
+          <div class="batch-wrap">
+            <div class="batch-heading-row">
+              <div class="batch-heading">Items in your quote</div>
+              <span class="batch-count-pill">3 items</span>
+            </div>
+            <div style="font-size:12px;color:var(--mid);margin-bottom:14px">Add more clubs to bundle them in one quote, or continue to see your total.</div>
+
+            <div class="batch-list">
+              <div class="batch-item">
+                <div class="batch-item-thumb">IMG</div>
+                <div class="batch-item-info">
+                  <div class="batch-item-name">Callaway Paradym Driver</div>
+                  <div class="batch-item-meta">Good condition · 2023 · <span class="confidence-tag">✓ 94% confident</span></div>
+                </div>
+                <div>
+                  <div class="batch-item-price">£128</div>
+                  <button class="batch-item-remove" title="Remove">×</button>
+                </div>
+              </div>
+              <div class="batch-item">
+                <div class="batch-item-thumb">IMG</div>
+                <div class="batch-item-info">
+                  <div class="batch-item-name">TaylorMade P770 Irons (5-PW)</div>
+                  <div class="batch-item-meta">Very good condition · 2022 · <span class="confidence-tag">✓ 91% confident</span></div>
+                </div>
+                <div>
+                  <div class="batch-item-price">£345</div>
+                  <button class="batch-item-remove" title="Remove">×</button>
+                </div>
+              </div>
+              <div class="batch-item">
+                <div class="batch-item-thumb manual">FORM</div>
+                <div class="batch-item-info">
+                  <div class="batch-item-name">Odyssey White Hot OG #7 Putter</div>
+                  <div class="batch-item-meta">Good condition · entered manually</div>
+                </div>
+                <div>
+                  <div class="batch-item-price">£72</div>
+                  <button class="batch-item-remove" title="Remove">×</button>
+                </div>
+              </div>
+            </div>
+
+            <button class="add-another-row" onclick="showScreen(1)">
+              <svg width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 3v10M3 8h10"/></svg>
+              Add another club (photos or manual)
+            </button>
+
+            <div class="batch-total-card">
+              <div>
+                <div class="batch-total-label">Quote total</div>
+                <div class="batch-total-sub">3 items · all confidence ≥ 90%</div>
+              </div>
+              <div class="batch-total-amount">£545</div>
+            </div>
+
+            <button class="cta-btn" onclick="showScreen(6)">VALUE MY ITEMS →</button>
+            <div class="cta-note">Free · No obligation · Offer valid for 24 hours</div>
+          </div>
+        </div>
+
+        <!-- V2-SC6: Valuing -->
+        <div class="cust-screen" id="sc-v2-6">
+          <div class="loading-wrap">
+            <div class="spinner-ring"></div>
+            <div class="load-title">Valuing your 3 items...</div>
+            <div class="load-sub">Checking live market prices for each club.<br>This usually takes less than 60 seconds.</div>
+            <div class="load-steps">
+              <div class="load-step done-step"><div class="ldot done"></div>Identifying each item (3 of 3)</div>
+              <div class="load-step done-step"><div class="ldot done"></div>Confirming AI confidence ≥ 90%</div>
+              <div class="load-step active-step"><div class="ldot active"></div>Checking second-hand market value</div>
+              <div class="load-step"><div class="ldot"></div>Calculating your bundled offer</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- V2-SC7: Instant offer with batch breakdown -->
+        <div class="cust-screen" id="sc-v2-7">
+          <div class="offer-wrap">
+            <div class="offer-price-big">£545</div>
+            <div class="offer-club-line">
+              Our offer for your
+              <strong>3 items</strong>
+              <span class="club-dot">·</span>
+              All confidence ≥ 90%
+            </div>
+
+            <div class="offer-batch-breakdown">
+              <div class="offer-batch-breakdown-row"><span>Callaway Paradym Driver</span><strong>£128</strong></div>
+              <div class="offer-batch-breakdown-row"><span>TaylorMade P770 Irons (5-PW)</span><strong>£345</strong></div>
+              <div class="offer-batch-breakdown-row"><span>Odyssey White Hot OG #7 Putter</span><strong>£72</strong></div>
+              <div class="offer-batch-breakdown-row" style="padding-top:8px;border-top:1px solid var(--border);margin-top:4px"><span style="color:var(--dark);font-weight:700">Total</span><strong style="color:var(--green);font-size:14px">£545</strong></div>
+            </div>
+
+            <div class="expiry-row">
+              <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="8" cy="8" r="7"/><path d="M8 4v4l2.5 2"/></svg>
+              Offer expires in <span class="expiry-bold">23h 59m 59s</span>
+            </div>
+            <button class="cta-btn" onclick="showScreen(8)">ACCEPT OFFER</button>
+            <div class="decline-link">No thanks, I'll pass</div>
+            <div class="no-commit">Accepting this offer is not a final commitment until collection is arranged.</div>
+          </div>
+        </div>
+
+        <!-- V2-SC8: Delivery Choice -->
+        <div class="cust-screen" id="sc-v2-8">
+          <div class="delivery-wrap">
+            <div class="delivery-back" onclick="showScreen(7)">
+              <svg width="13" height="13" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M10 3L5 8l5 5"/></svg>
+              Back to offer
+            </div>
+            <div class="accepted-banner">
+              <div class="accepted-banner-icon">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5"><polyline points="4,12 10,18 20,6"/></svg>
+              </div>
+              <div>
+                <div class="accepted-banner-title">Offer accepted — £545</div>
+                <div class="accepted-banner-sub">3 items · Driver · Iron set · Putter</div>
+              </div>
+            </div>
+            <div class="delivery-heading">How would you like to send your clubs?</div>
+            <div class="delivery-sub">All 3 items go together — drop them at our store or post them as one parcel.</div>
+            <div class="delivery-cards">
+              <div class="delivery-card" onclick="showScreen(9)">
+                <div class="delivery-card-icon">
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#E8491D" stroke-width="1.5"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9,22 9,12 15,12 15,22"/></svg>
+                </div>
+                <div class="delivery-card-title">Drop In Store</div>
+                <div class="delivery-card-desc">Bring all 3 clubs to our Chippenham store. We'll check them while you wait.</div>
+                <div class="delivery-card-badge">Mon–Sat · 9am–5pm</div>
+              </div>
+              <div class="delivery-card" onclick="showScreen(10)">
+                <div class="delivery-card-icon">
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#E8491D" stroke-width="1.5"><rect x="1" y="3" width="15" height="13" rx="1"/><path d="M16 8h4l3 5v3h-7V8z"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>
+                </div>
+                <div class="delivery-card-title">Send by Post</div>
+                <div class="delivery-card-desc">Pack all 3 clubs in one parcel. We'll email a free prepaid DPD label.</div>
+                <div class="delivery-card-badge green">FREE · Tracked</div>
+              </div>
+            </div>
+            <div class="delivery-note">No final commitment until we receive and inspect your clubs.</div>
+          </div>
+        </div>
+
+        <!-- V2-SC9: Confirmed — In Store -->
+        <div class="cust-screen" id="sc-v2-9">
+          <div class="conf-wrap">
+            <div class="conf-circle">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#2D5A27" stroke-width="2.5"><polyline points="4,12 10,18 20,6"/></svg>
+            </div>
+            <div class="conf-title">See you in store!</div>
+            <div class="conf-sub">Bring all 3 clubs and your quote reference to our Chippenham store.</div>
+
+            <div class="instore-ref-box">
+              <div class="instore-ref-label">Your Quote Reference</div>
+              <div class="instore-ref-code">CFC-9K2X</div>
+              <div class="instore-ref-hint">3 items · £545 total · show this at the counter</div>
+            </div>
+
+            <div class="store-address-box">
+              <div class="store-address-icon">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+              </div>
+              <div>
+                <div class="store-address-title">Cash Fore Clubs — Chippenham</div>
+                <div class="store-address-text">
+                  Unit 4, Pewsham Way<br>
+                  Chippenham, Wiltshire<br>
+                  SN15 3RY
+                </div>
+                <div class="store-hours">Mon–Fri 9am–5pm &nbsp;·&nbsp; Sat 9am–4pm &nbsp;·&nbsp; Sun Closed</div>
+              </div>
+            </div>
+
+            <div style="font-size:15px;font-weight:700;color:var(--dark);margin-bottom:14px;text-align:left">What happens in store</div>
+            <div class="next-steps-row">
+              <div class="ns">
+                <div class="ns-num">1</div>
+                <div class="ns-title">Bring your 3 clubs</div>
+                <div class="ns-body">Show your reference at the counter and hand over the bundle.</div>
+              </div>
+              <div class="ns">
+                <div class="ns-num">2</div>
+                <div class="ns-title">Quick inspection</div>
+                <div class="ns-body">We check each club on the spot — usually a few minutes per item.</div>
+              </div>
+              <div class="ns">
+                <div class="ns-num">3</div>
+                <div class="ns-title">Get paid £545</div>
+                <div class="ns-body">Payment transferred to your account within 48 hours.</div>
+              </div>
+            </div>
+            <button class="cta-btn" onclick="showScreen(11)">VIEW MY QUOTES</button>
+          </div>
+        </div>
+
+        <!-- V2-SC10: Confirmed — Post -->
+        <div class="cust-screen" id="sc-v2-10">
+          <div class="conf-wrap">
+            <div class="conf-circle">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#2D5A27" stroke-width="2.5"><polyline points="4,12 10,18 20,6"/></svg>
+            </div>
+            <div class="conf-title">Label on its way!</div>
+            <div class="conf-sub">
+              We'll send your prepaid DPD label to <strong>james@email.co.uk</strong>.<br>
+              Pack all 3 clubs together in one parcel and drop it at any DPD point.
+            </div>
+            <div style="font-size:15px;font-weight:700;color:var(--dark);margin-bottom:14px;text-align:left">What happens next</div>
+            <div class="next-steps-row">
+              <div class="ns">
+                <div class="ns-num">1</div>
+                <div class="ns-title">Check your email</div>
+                <div class="ns-body">Your free prepaid DPD label will arrive within a few hours.</div>
+              </div>
+              <div class="ns">
+                <div class="ns-num">2</div>
+                <div class="ns-title">Pack &amp; post bundle</div>
+                <div class="ns-body">Wrap all 3 clubs together securely and drop the parcel at any DPD point.</div>
+              </div>
+              <div class="ns">
+                <div class="ns-num">3</div>
+                <div class="ns-title">Get paid £545</div>
+                <div class="ns-body">We transfer payment within 48 hours of inspection.</div>
+              </div>
+            </div>
+            <button class="cta-btn" onclick="showScreen(11)">VIEW MY QUOTES</button>
+          </div>
+        </div>
+
+        <!-- V2-SC11: My Quotes (with batch quote) -->
+        <div class="cust-screen" id="sc-v2-11">
+          <div class="dash-layout">
+            <div class="dash-sidebar">
+              <div class="dash-sidebar-item"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="1" y="1" width="6" height="6" rx="1"/><rect x="9" y="1" width="6" height="6" rx="1"/><rect x="1" y="9" width="6" height="6" rx="1"/><rect x="9" y="9" width="6" height="6" rx="1"/></svg>Dashboard</div>
+              <div class="dash-sidebar-item"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 3h12l-1.5 9H3.5L2 3z"/></svg>Orders</div>
+              <div class="dash-sidebar-item active"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 2h10a1 1 0 011 1v11a1 1 0 01-1 1H3a1 1 0 01-1-1V3a1 1 0 011-1z"/><path d="M5 6h6M5 9h6M5 12h3"/></svg>My Club Quotes</div>
+              <div class="dash-sidebar-item"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="8" cy="5" r="3"/><path d="M2 14c0-3 2.7-5 6-5s6 2 6 5"/></svg>Account details</div>
+              <div class="dash-sidebar-item"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M10 8H2M6 5l-3 3 3 3"/><path d="M10 3h3a1 1 0 011 1v8a1 1 0 01-1 1h-3"/></svg>Log out</div>
+            </div>
+            <div class="dash-main-area">
+              <div class="dash-heading">Your Club Quotes</div>
+              <div class="dash-sub">You have 3 quotes on file (including 1 multi-item bundle).</div>
+
+              <!-- Quote 1: Multi-item bundle -->
+              <div class="dash-quote-card">
+                <div class="dqc-top">
+                  <div class="dqc-name">3-item bundle · Driver · Irons · Putter</div>
+                  <span class="status-badge">Accepted</span>
+                </div>
+                <div class="dqc-meta">Multi-item · Today · CFC-9K2X</div>
+                <div class="offer-batch-breakdown" style="margin:8px 0 12px">
+                  <div class="offer-batch-breakdown-row"><span>Callaway Paradym Driver</span><strong>£128</strong></div>
+                  <div class="offer-batch-breakdown-row"><span>TaylorMade P770 Irons (5-PW)</span><strong>£345</strong></div>
+                  <div class="offer-batch-breakdown-row"><span>Odyssey White Hot OG #7 Putter</span><strong>£72</strong></div>
+                </div>
+                <div class="dqc-footer">
+                  <div>
+                    <div class="dqc-offer-label">Bundle total:</div>
+                    <div class="dqc-offer-price">£545</div>
+                  </div>
+                  <button class="ship-btn">VIEW SHIPPING INSTRUCTIONS</button>
+                </div>
+              </div>
+
+              <!-- Quote 2: Single -->
+              <div class="dash-quote-card">
+                <div class="dqc-top">
+                  <div class="dqc-name">TaylorMade Stealth 2 Driver</div>
+                  <span class="status-badge paid">Paid</span>
+                </div>
+                <div class="dqc-meta">Very good condition · 12 Apr · CFC-A1B2C3D4</div>
+                <div class="dqc-footer">
+                  <div>
+                    <div class="dqc-offer-label">Paid:</div>
+                    <div class="dqc-offer-price green">£95</div>
+                  </div>
+                  <span style="font-size:12px;color:var(--muted)">Completed ✓</span>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+
+      </div><!-- /device-frame -->
+    </div><!-- /customer-panel-v2 -->
 
     <!-- PGA PRO PANEL -->
     <div class="mode-panel pga-panel" id="pga-panel">
@@ -2062,6 +3070,464 @@ input[type="range"]::-webkit-slider-thumb {
 
       </div><!-- /device-frame -->
     </div><!-- /pga-panel -->
+
+    <!-- ══════════════════════════════════════════════════════════════════════
+         PGA PRO PANEL — V2 (structured dropdowns · batch list)
+    ══════════════════════════════════════════════════════════════════════ -->
+    <div class="mode-panel pga-panel" id="pga-panel-v2">
+      <div class="device-frame">
+        <div class="v2-corner-tag">V2</div>
+
+        <!-- V2-PSC0: Login -->
+        <div class="pga-screen active" id="psc-v2-0">
+          <div class="login-inner">
+            <div class="pga-login-header" style="background:linear-gradient(135deg,#1e4a1a 0%,var(--green) 100%)">
+              <div class="pga-login-header-badge">
+                <svg width="11" height="11" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 1l2 5h5l-4 3 1.5 5L8 11l-4.5 3L5 9 1 6h5z"/></svg>
+                PGA Professional Portal
+              </div>
+              <div class="pga-login-title">Trade Account Login</div>
+              <div class="pga-login-sub">Get instant trade-in values for your customers' clubs and deduct them from new purchase prices</div>
+            </div>
+
+            <div class="login-field-label">Username or Email Address</div>
+            <input class="login-input" type="text" placeholder="">
+
+            <div class="login-field-label">Password</div>
+            <input class="login-input" type="password" placeholder="">
+
+            <div class="remember-row">
+              <input type="checkbox" id="pgaRememberMeV2">
+              <label class="remember-label" for="pgaRememberMeV2">Remember Me</label>
+            </div>
+
+            <button class="login-btn" onclick="showScreen(1)" style="background:var(--green)">LOG IN TO PRO ACCOUNT</button>
+            <a class="lost-password-link" style="color:var(--orange)">Lost your password?</a>
+
+            <div class="login-divider"></div>
+            <div class="new-to-cfc" style="font-size:12px;color:var(--muted)">Not yet a trade partner? <span style="color:var(--orange);cursor:pointer;text-decoration:underline">Apply for a PGA Pro account →</span></div>
+          </div>
+        </div>
+
+        <!-- V2-PSC1: Upload Photos + structured details -->
+        <div class="pga-screen" id="psc-v2-1">
+          <div class="pro-account-bar">
+            <div class="pro-account-bar-left">
+              <span class="pro-badge-pill"><svg width="10" height="10" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 1l2 5h5l-4 3 1.5 5L8 11l-4.5 3L5 9 1 6h5z"/></svg>PGA Pro</span>
+              <span class="pro-account-name">J. McAllister — Chippenham Golf Club</span>
+            </div>
+            <span class="pro-rate-tag">Trade Rate: 25% margin</span>
+          </div>
+          <div class="form-inner" style="padding-top:16px">
+            <div class="page-title" style="font-size:18px">Add a club to trade-in</div>
+
+            <div class="manual-tabs">
+              <button class="manual-tab active">📷 Photos + AI</button>
+              <button class="manual-tab" onclick="showScreen(2)">📝 Structured entry</button>
+            </div>
+
+            <div class="drop-zone" style="padding:18px">
+              <div class="dz-icon-wrap"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#E8491D" stroke-width="1.5"><rect x="2" y="4" width="20" height="16" rx="2"/><circle cx="8" cy="10" r="2"/><path d="M2 18l5-5 4 4 3-3 8 8"/></svg></div>
+              <div class="dz-title">Drop club photos here</div>
+              <div class="dz-sub">or click to browse — up to 5 photos</div>
+              <button class="photo-lib-btn" style="margin-top:10px"><svg width="13" height="13" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="1" y="3" width="14" height="11" rx="1.5"/><circle cx="6" cy="7" r="1.5"/><path d="M1 12l4-4 4 4 3-3 3 3"/></svg>Photo Library</button>
+            </div>
+
+            <div style="font-size:11px;color:var(--mid);margin:6px 0 14px;text-align:center">
+              Tip: If photos aren't clear, switch to <span style="color:var(--orange);cursor:pointer;text-decoration:underline" onclick="showScreen(2)">structured entry</span> for guaranteed accuracy.
+            </div>
+
+            <button class="add-another-row" onclick="showScreen(5)">
+              <svg width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 3v10M3 8h10"/></svg>
+              Add another club to this trade-in
+            </button>
+
+            <button class="cta-btn" onclick="showScreen(3)">GET INSTANT TRADE-IN VALUE →</button>
+            <div class="cta-note">Trade-in value to deduct from customer's new purchase price</div>
+          </div>
+        </div>
+
+        <!-- V2-PSC2: Structured entry (AI fallback) -->
+        <div class="pga-screen" id="psc-v2-2">
+          <div class="pro-account-bar">
+            <div class="pro-account-bar-left">
+              <span class="pro-badge-pill"><svg width="10" height="10" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 1l2 5h5l-4 3 1.5 5L8 11l-4.5 3L5 9 1 6h5z"/></svg>PGA Pro</span>
+              <span class="pro-account-name">J. McAllister — Chippenham Golf Club</span>
+            </div>
+            <span class="pro-rate-tag">Trade Rate: 25% margin</span>
+          </div>
+          <div class="manual-form-wrap">
+            <div class="page-title" style="font-size:18px;margin-bottom:6px">Structured club details</div>
+
+            <div class="pga-fallback-notice">
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.7" style="flex-shrink:0;margin-top:1px"><circle cx="8" cy="8" r="7"/><path d="M8 5v4M8 11h.01"/></svg>
+              <div>
+                <strong>AI couldn't identify the club confidently</strong>
+                Use the dropdowns below to lock in exact specs — guarantees an accurate trade-in value at your margin.
+              </div>
+            </div>
+
+            <div class="manual-tabs">
+              <button class="manual-tab" onclick="showScreen(1)">📷 Photos + AI</button>
+              <button class="manual-tab active">📝 Structured entry</button>
+            </div>
+
+            <div class="field-row">
+              <div>
+                <label class="field-label-v2">Club type</label>
+                <select class="field-select-v2">
+                  <option>Driver</option>
+                  <option>Fairway wood</option>
+                  <option>Hybrid</option>
+                  <option>Iron set</option>
+                  <option>Wedge</option>
+                  <option>Putter</option>
+                </select>
+              </div>
+              <div>
+                <label class="field-label-v2">Brand / Make</label>
+                <select class="field-select-v2">
+                  <option>Callaway</option>
+                  <option>TaylorMade</option>
+                  <option>Titleist</option>
+                  <option>Ping</option>
+                  <option>Cobra</option>
+                  <option>Mizuno</option>
+                  <option>Wilson</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="field-row">
+              <div>
+                <label class="field-label-v2">Model</label>
+                <select class="field-select-v2">
+                  <option>Paradym</option>
+                  <option>Paradym X</option>
+                  <option>Rogue ST Max</option>
+                  <option>Epic Speed</option>
+                  <option>Other</option>
+                </select>
+              </div>
+              <div>
+                <label class="field-label-v2">Year</label>
+                <select class="field-select-v2">
+                  <option>2024</option>
+                  <option selected>2023</option>
+                  <option>2022</option>
+                  <option>2021</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="field-row">
+              <div>
+                <label class="field-label-v2">Condition</label>
+                <select class="field-select-v2">
+                  <option>Like new</option>
+                  <option>Very good</option>
+                  <option selected>Good</option>
+                  <option>Fair</option>
+                </select>
+              </div>
+              <div>
+                <label class="field-label-v2">Dexterity</label>
+                <select class="field-select-v2">
+                  <option>Right-handed</option>
+                  <option>Left-handed</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="field-row">
+              <div>
+                <label class="field-label-v2">Shaft flex</label>
+                <select class="field-select-v2">
+                  <option>Stiff</option>
+                  <option>Regular</option>
+                  <option>Senior</option>
+                  <option>Ladies</option>
+                </select>
+              </div>
+              <div>
+                <label class="field-label-v2">Loft / length</label>
+                <input class="field-input-v2" type="text" placeholder="e.g. 10.5°">
+              </div>
+            </div>
+
+            <button class="add-another-row" onclick="showScreen(5)">
+              <svg width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 3v10M3 8h10"/></svg>
+              Add another club to this trade-in
+            </button>
+
+            <button class="cta-btn" onclick="showScreen(3)" style="background:var(--green)">GET INSTANT TRADE-IN VALUE →</button>
+            <div class="cta-note">No AI guessing — uses your dropdown selections directly</div>
+          </div>
+        </div>
+
+        <!-- V2-PSC3: Valuing -->
+        <div class="pga-screen" id="psc-v2-3">
+          <div class="pro-account-bar">
+            <div class="pro-account-bar-left">
+              <span class="pro-badge-pill"><svg width="10" height="10" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 1l2 5h5l-4 3 1.5 5L8 11l-4.5 3L5 9 1 6h5z"/></svg>PGA Pro</span>
+              <span class="pro-account-name">J. McAllister — Chippenham Golf Club</span>
+            </div>
+            <span class="pro-rate-tag">Trade Rate: 25% margin</span>
+          </div>
+          <div class="loading-wrap">
+            <div class="spinner-ring"></div>
+            <div class="load-title">Valuing the clubs...</div>
+            <div class="load-sub">Checking live market prices at your trade rate.<br>This usually takes less than 60 seconds.</div>
+            <div class="load-steps">
+              <div class="load-step done-step"><div class="ldot done"></div>Reading club details (structured + AI)</div>
+              <div class="load-step done-step"><div class="ldot done"></div>Identifying each item</div>
+              <div class="load-step active-step"><div class="ldot active"></div>Checking second-hand market value</div>
+              <div class="load-step"><div class="ldot"></div>Calculating trade-in at your rate (25%)</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- V2-PSC4: Trade-in Value -->
+        <div class="pga-screen" id="psc-v2-4">
+          <div class="pro-account-bar">
+            <div class="pro-account-bar-left">
+              <span class="pro-badge-pill"><svg width="10" height="10" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 1l2 5h5l-4 3 1.5 5L8 11l-4.5 3L5 9 1 6h5z"/></svg>PGA Pro</span>
+              <span class="pro-account-name">J. McAllister — Chippenham Golf Club</span>
+            </div>
+            <span class="pro-rate-tag">Trade Rate: 25% margin</span>
+          </div>
+          <div class="offer-wrap" style="padding-top:24px">
+            <div class="pro-offer-ribbon">
+              <svg width="11" height="11" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 1l2 5h5l-4 3 1.5 5L8 11l-4.5 3L5 9 1 6h5z"/></svg>
+              PGA Pro Rate Applied
+            </div>
+            <div class="offer-price-big">£159</div>
+            <div style="font-size:11px;color:var(--muted);margin-bottom:6px">vs £128 standard rate — <strong style="color:var(--green)">offer £31 extra off their new purchase</strong></div>
+            <div class="offer-club-line">
+              Trade-in value for
+              <strong>Callaway</strong>
+              <span class="club-dot">·</span>
+              <strong>Paradym Driver</strong>
+              <span class="club-dot">·</span>
+              Good condition
+            </div>
+            <div class="expiry-row">
+              <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="8" cy="8" r="7"/><path d="M8 4v4l2.5 2"/></svg>
+              Value valid for <span class="expiry-bold">23h 59m 55s</span>
+            </div>
+            <button class="cta-btn" onclick="showScreen(5)" style="background:var(--green)">USE THIS TRADE-IN VALUE →</button>
+            <div class="decline-link">No thanks, cancel this trade-in</div>
+            <div class="no-commit">Add more clubs on the next step, or proceed to record the trade-in.</div>
+          </div>
+        </div>
+
+        <!-- V2-PSC5: Trade-in batch (multiple clubs for this customer) -->
+        <div class="pga-screen" id="psc-v2-5">
+          <div class="pro-account-bar">
+            <div class="pro-account-bar-left">
+              <span class="pro-badge-pill"><svg width="10" height="10" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 1l2 5h5l-4 3 1.5 5L8 11l-4.5 3L5 9 1 6h5z"/></svg>PGA Pro</span>
+              <span class="pro-account-name">J. McAllister — Chippenham Golf Club</span>
+            </div>
+            <span class="pro-rate-tag">Trade Rate: 25% margin</span>
+          </div>
+          <div class="batch-wrap">
+            <div class="batch-heading-row">
+              <div class="batch-heading">Trade-in items</div>
+              <span class="batch-count-pill">2 clubs</span>
+            </div>
+            <div style="font-size:12px;color:var(--mid);margin-bottom:14px">Bundle multiple clubs from the same customer — totalled together for one trade-in deduction.</div>
+
+            <div class="batch-list">
+              <div class="batch-item">
+                <div class="batch-item-thumb">IMG</div>
+                <div class="batch-item-info">
+                  <div class="batch-item-name">Callaway Paradym Driver</div>
+                  <div class="batch-item-meta">Good · 2023 · <span class="confidence-tag">✓ AI 94%</span></div>
+                </div>
+                <div>
+                  <div class="batch-item-price">£159</div>
+                  <button class="batch-item-remove">×</button>
+                </div>
+              </div>
+              <div class="batch-item">
+                <div class="batch-item-thumb manual">FORM</div>
+                <div class="batch-item-info">
+                  <div class="batch-item-name">Ping G430 Hybrid</div>
+                  <div class="batch-item-meta">Very good · 2023 · <span class="confidence-tag warn">⚑ Manual entry</span></div>
+                </div>
+                <div>
+                  <div class="batch-item-price">£94</div>
+                  <button class="batch-item-remove">×</button>
+                </div>
+              </div>
+            </div>
+
+            <button class="add-another-row" onclick="showScreen(1)">
+              <svg width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 3v10M3 8h10"/></svg>
+              Add another club (photos or structured)
+            </button>
+
+            <div class="batch-total-card">
+              <div>
+                <div class="batch-total-label">Trade-in total</div>
+                <div class="batch-total-sub">2 clubs · 25% pro margin applied</div>
+              </div>
+              <div class="batch-total-amount">£253</div>
+            </div>
+
+            <button class="cta-btn" onclick="showScreen(6)" style="background:var(--green)">CONTINUE — RECORD TRADE-IN →</button>
+            <div class="cta-note">Customer pays £253 less on their new purchase</div>
+          </div>
+        </div>
+
+        <!-- V2-PSC6: Record Trade-in -->
+        <div class="pga-screen" id="psc-v2-6">
+          <div class="pro-account-bar">
+            <div class="pro-account-bar-left">
+              <span class="pro-badge-pill">
+                <svg width="10" height="10" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 1l2 5h5l-4 3 1.5 5L8 11l-4.5 3L5 9 1 6h5z"/></svg>
+                PGA Pro
+              </span>
+              <span class="pro-account-name">J. McAllister — Chippenham Golf Club</span>
+            </div>
+            <span class="pro-rate-tag">Trade Rate: 25% margin</span>
+          </div>
+          <div class="cust-details-wrap">
+
+            <div style="background:#e8f3e7;border:1px solid #a8cda5;border-radius:var(--radius);padding:12px 16px;margin-bottom:20px;display:flex;align-items:center;justify-content:space-between;">
+              <div>
+                <div style="font-size:10px;font-weight:700;color:var(--green);text-transform:uppercase;letter-spacing:.5px;margin-bottom:2px">Trade-in total confirmed</div>
+                <div style="font-size:12px;color:var(--mid)">2 clubs · Driver + Hybrid</div>
+              </div>
+              <div style="font-size:26px;font-weight:700;color:var(--green)">£253</div>
+            </div>
+
+            <div class="cust-details-title">Record the trade-in</div>
+            <div class="cust-details-sub">For your records only — no email is sent to your customer. You handle the sale and deduct £253 from their purchase price.</div>
+
+            <div class="cust-details-notice">
+              <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" style="flex-shrink:0;margin-top:1px"><circle cx="8" cy="8" r="7"/><path d="M8 7v4M8 5h.01"/></svg>
+              Cash Fore Clubs pays <strong>you</strong> directly — not your customer. You collect the clubs and send them to CFC. Payment is settled in your monthly batch.
+            </div>
+
+            <div class="login-field-label">Customer Full Name</div>
+            <input class="login-input" type="text" value="James Robertson" style="margin-bottom:14px">
+
+            <div class="login-field-label">Customer Email <span style="font-weight:400;text-transform:none;letter-spacing:0;color:var(--muted)">(your reference — not contacted by CFC)</span></div>
+            <input class="login-input" type="email" value="james.robertson@email.co.uk" style="margin-bottom:14px">
+
+            <div class="login-field-label">Customer Phone <span style="font-weight:400;text-transform:none;letter-spacing:0;color:var(--muted)">(optional)</span></div>
+            <input class="login-input" type="tel" placeholder="07700 900123" style="margin-bottom:20px">
+
+            <button class="cta-btn" onclick="showScreen(7)" style="background:var(--green)">CONFIRM TRADE-IN — ADD TO BATCH →</button>
+            <div class="cta-note">No email sent to customer — CFC pays you directly</div>
+          </div>
+        </div>
+
+        <!-- V2-PSC7: Send to CFC -->
+        <div class="pga-screen" id="psc-v2-7">
+          <div class="pro-account-bar">
+            <div class="pro-account-bar-left">
+              <span class="pro-badge-pill"><svg width="10" height="10" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 1l2 5h5l-4 3 1.5 5L8 11l-4.5 3L5 9 1 6h5z"/></svg>PGA Pro</span>
+              <span class="pro-account-name">J. McAllister — Chippenham Golf Club</span>
+            </div>
+            <span class="pro-rate-tag">Trade Rate: 25% margin</span>
+          </div>
+          <div class="delivery-wrap">
+            <div style="background:#e8f3e7;border:1px solid #a8cda5;border-radius:var(--radius);padding:10px 16px;margin-bottom:20px;display:flex;align-items:center;justify-content:space-between;">
+              <div>
+                <div style="font-size:10px;font-weight:700;color:var(--green);text-transform:uppercase;letter-spacing:.5px;margin-bottom:2px">Trade-in recorded — £253</div>
+                <div style="font-size:12px;color:var(--mid)">James Robertson · 2 clubs</div>
+              </div>
+              <div style="font-size:22px;font-weight:700;color:var(--green)">£253</div>
+            </div>
+            <div class="delivery-title">How will you send these to CFC?</div>
+            <div class="delivery-sub">You collect the clubs from your customer. Choose how you'll get them to Cash Fore Clubs.</div>
+            <div class="delivery-card" onclick="showScreen(8)">
+              <div class="dc-icon"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="var(--green)" stroke-width="1.5"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/><path d="M2 10h20"/></svg></div>
+              <div class="dc-body">
+                <div class="dc-title">Add to My Next Batch</div>
+                <div class="dc-sub">Accumulate clubs and send them together. CFC settles payment for the full batch on receipt.</div>
+              </div>
+              <svg class="dc-arrow" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--green)" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+            </div>
+            <div class="delivery-card" onclick="showScreen(9)">
+              <div class="dc-icon"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="var(--orange)" stroke-width="1.5"><rect x="1" y="3" width="15" height="13" rx="2"/><path d="M16 8h4l3 5v4h-7V8z"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg></div>
+              <div class="dc-body">
+                <div class="dc-title">Post These Clubs Now</div>
+                <div class="dc-sub">Get a free tracked label emailed to you. Post both clubs straight to CFC.</div>
+              </div>
+              <svg class="dc-arrow" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--orange)" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+            </div>
+          </div>
+        </div>
+
+        <!-- V2-PSC8: Confirmed — Batch -->
+        <div class="pga-screen" id="psc-v2-8">
+          <div class="pro-account-bar">
+            <div class="pro-account-bar-left">
+              <span class="pro-badge-pill"><svg width="10" height="10" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 1l2 5h5l-4 3 1.5 5L8 11l-4.5 3L5 9 1 6h5z"/></svg>PGA Pro</span>
+              <span class="pro-account-name">J. McAllister — Chippenham Golf Club</span>
+            </div>
+            <span class="pro-rate-tag">Trade Rate: 25% margin</span>
+          </div>
+          <div class="conf-wrap">
+            <div class="conf-circle" style="border-color:var(--green)">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--green)" stroke-width="2.5"><polyline points="4,12 10,18 20,6"/></svg>
+            </div>
+            <div class="conf-title">2 clubs added to your batch!</div>
+            <div class="conf-sub" style="margin-bottom:14px">Both clubs from James Robertson have been recorded. Bundle them with your other clubs when ready.</div>
+
+            <div class="conf-detail-box">
+              <div class="conf-detail-label">Trade-in details</div>
+              <div class="conf-detail-grid">
+                <span>Customer</span><strong>James Robertson</strong>
+                <span>Clubs</span><strong>Paradym Driver + G430 Hybrid</strong>
+                <span>Sending</span><strong>📦 Added to batch</strong>
+                <span>Trade-in</span><strong style="color:var(--green)">£253 (pro rate)</strong>
+                <span>Reference</span><strong style="font-family:monospace">CFC-PRO-9A4F</strong>
+              </div>
+            </div>
+
+            <button class="cta-btn" onclick="showScreen(1)" style="background:var(--green)">QUOTE ANOTHER CLUB →</button>
+            <div class="cta-note" style="margin-top:6px"><span style="cursor:pointer;color:var(--orange);text-decoration:underline">View Pro Dashboard</span></div>
+          </div>
+        </div>
+
+        <!-- V2-PSC9: Confirmed — Post Now -->
+        <div class="pga-screen" id="psc-v2-9">
+          <div class="pro-account-bar">
+            <div class="pro-account-bar-left">
+              <span class="pro-badge-pill"><svg width="10" height="10" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 1l2 5h5l-4 3 1.5 5L8 11l-4.5 3L5 9 1 6h5z"/></svg>PGA Pro</span>
+              <span class="pro-account-name">J. McAllister — Chippenham Golf Club</span>
+            </div>
+            <span class="pro-rate-tag">Trade Rate: 25% margin</span>
+          </div>
+          <div class="conf-wrap">
+            <div class="conf-circle" style="border-color:var(--orange)">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--orange)" stroke-width="2.5"><polyline points="4,12 10,18 20,6"/></svg>
+            </div>
+            <div class="conf-title">Postage label sent to you!</div>
+            <div class="conf-sub" style="margin-bottom:14px">A free tracked label has been emailed to j.mcallister@chippenhamgc.co.uk. Pack and post both clubs.</div>
+
+            <div class="conf-detail-box">
+              <div class="conf-detail-label">Trade-in details</div>
+              <div class="conf-detail-grid">
+                <span>Customer</span><strong>James Robertson</strong>
+                <span>Clubs</span><strong>Paradym Driver + G430 Hybrid</strong>
+                <span>Sending</span><strong>🚚 Post now — label emailed to you</strong>
+                <span>Trade-in</span><strong style="color:var(--green)">£253 (pro rate)</strong>
+                <span>Reference</span><strong style="font-family:monospace">CFC-PRO-9A4F</strong>
+              </div>
+            </div>
+
+            <button class="cta-btn" onclick="showScreen(1)" style="background:var(--green)">QUOTE ANOTHER CLUB →</button>
+            <div class="cta-note" style="margin-top:6px"><span style="cursor:pointer;color:var(--orange);text-decoration:underline">View Pro Dashboard</span></div>
+          </div>
+        </div>
+
+      </div><!-- /device-frame -->
+    </div><!-- /pga-panel-v2 -->
 
     <!-- ADMIN PANEL -->
     <div class="mode-panel admin-panel" id="admin-panel">
@@ -3023,6 +4489,23 @@ input[type="range"]::-webkit-slider-thumb {
         <div class="note-item"><div class="note-dot" style="background:var(--blue)"></div><div class="note-text">Built by <strong>AI Agency Plus</strong> for Cash Fore Clubs.</div></div>
       </div>
 
+      <!-- About: Customer V2 (shown in customer + v2) -->
+      <div class="notes-card" id="about-customer-v2" style="display:none">
+        <div class="notes-title">About V2 (Customer)</div>
+        <div class="note-item"><div class="note-dot" style="background:#fbbf24"></div><div class="note-text"><strong>Manual / text-only quote</strong> — structured dropdowns when the seller has no photos.</div></div>
+        <div class="note-item"><div class="note-dot" style="background:#fbbf24"></div><div class="note-text"><strong>Multi-item / batch quoting</strong> — bundle several clubs in one quote with a running total.</div></div>
+        <div class="note-item"><div class="note-dot" style="background:#fbbf24"></div><div class="note-text"><strong>Confidence handling</strong> — AI confidence below the threshold prompts a multiple-choice confirmation.</div></div>
+        <div class="note-item"><div class="note-dot" style="background:#fbbf24"></div><div class="note-text"><strong>Multi-item image detection</strong> — when photos show two different clubs, the user is asked to split or merge.</div></div>
+      </div>
+
+      <!-- About: PGA V2 (shown in pga + v2) -->
+      <div class="notes-card" id="about-pga-v2" style="display:none">
+        <div class="notes-title">About V2 (PGA Pro)</div>
+        <div class="note-item"><div class="note-dot" style="background:#fbbf24"></div><div class="note-text"><strong>Structured dropdowns</strong> — club type, brand, model, year, condition, shaft as a fallback when AI can't identify confidently.</div></div>
+        <div class="note-item"><div class="note-dot" style="background:#fbbf24"></div><div class="note-text"><strong>Batch trade-in</strong> — record multiple clubs for the same customer and deduct one combined total.</div></div>
+        <div class="note-item"><div class="note-dot" style="background:#fbbf24"></div><div class="note-text"><strong>Photos + structured</strong> live side-by-side via a tab, so the pro picks whichever route works for the specific item.</div></div>
+      </div>
+
       <!-- About: Admin (shown in admin mode) -->
       <div class="notes-card" id="about-admin" style="display:none">
         <div class="notes-title">About this admin mockup</div>
@@ -3064,6 +4547,7 @@ input[type="range"]::-webkit-slider-thumb {
 
 /* ── State ─────────────────────────────────────────────────────────────── */
 var currentMode           = 'customer';
+var currentVersion        = 'v1';      // 'v1' | 'v2'
 var currentCustomerScreen = 0;
 var currentAdminScreen    = 0;
 var currentPgaScreen      = 0;
@@ -3114,6 +4598,46 @@ var pgaNavLabels = [
 var adminNavLabels = [
   '1. All Quotes', '2. Quote Detail',
   '3. Settings — AI &amp; Pricing', '4. Settings — Notifications &amp; Email', '5. Payouts', '6. PGA Pro Accounts'
+];
+
+/* ── V2 screen metadata ────────────────────────────────────────────────── */
+var customerScreenDataV2 = [
+  { label: 'V2 · Screen 1 of 12',  title: 'Log in screen',                desc: 'Same login as V1 — customers sign in to a single account that holds both photo-based and manual quotes.',                                                                                                                              tags: [['Login',''], ['Same as V1','']] },
+  { label: 'V2 · Screen 2 of 12',  title: 'Choose method',                desc: 'NEW — customer picks how to start a quote: upload photos (AI route) or enter details manually via structured dropdowns. Both routes use the same offer logic.',                                                                       tags: [['NEW screen','orange'], ['Two routes','green'], ['Structured fallback','blue']] },
+  { label: 'V2 · Screen 3 of 12',  title: 'Upload photos (multi-item)',   desc: 'Upload route — drop zone now hints at multi-item quotes. "Add another club to this quote" button bundles more items in the same offer. Tabs let the user flip to manual entry if they prefer.',                                       tags: [['Photo upload',''], ['Multi-item bundle','green'], ['Method tabs','blue']] },
+  { label: 'V2 · Screen 4 of 12',  title: 'Manual entry (structured)',    desc: 'NEW — no-photo route. Structured dropdowns: club type, brand, model, year, condition, dexterity, shaft, loft/length. Mirrors the existing form logic — never a free-text box.',                                                       tags: [['NEW screen','orange'], ['Structured form','green'], ['No photos needed','blue']] },
+  { label: 'V2 · Screen 5 of 12',  title: 'Confirm item(s)',              desc: 'NEW — combined confidence + multi-item handling. If AI confidence is below the threshold, we ask the user to pick the right model from multiple-choice. If two different clubs are detected in the photos, we ask whether to quote them as separate items or merge.', tags: [['NEW screen','orange'], ['Confidence check','green'], ['Multi-item detect','blue']] },
+  { label: 'V2 · Screen 6 of 12',  title: 'Valuing your items...',        desc: 'Loading state — same as V1 but valuing multiple items at once. Step 2 explicitly mentions confirming AI confidence ≥ 90%.',                                                                                                          tags: [['AI analysis',''], ['Multi-item batch','green']] },
+  { label: 'V2 · Screen 7 of 12',  title: 'Items in your quote',          desc: 'NEW — batch summary. Shows each item with its price, a live running total, and a button to add more. Mirrors the batch-style flow used in PGA. Users can review and remove items before accepting.',                                  tags: [['NEW screen','orange'], ['Batch quoting','green'], ['Running total','blue']] },
+  { label: 'V2 · Screen 8 of 12',  title: 'Instant offer (bundled)',      desc: 'The offer reveal now includes a per-item breakdown above the total. Same big-price hero and countdown timer as V1.',                                                                                                                  tags: [['Bundle total',''], ['Breakdown','green'], ['Countdown','blue']] },
+  { label: 'V2 · Screen 9 of 12',  title: 'Delivery choice',              desc: 'Same as V1 but worded for multi-item quotes — clubs travel together in one parcel or one in-store visit.',                                                                                                                            tags: [['Drop in store',''], ['Send by post','green']] },
+  { label: 'V2 · Screen 10 of 12', title: 'Confirmed — In Store',         desc: 'In-store confirmation. Reference code, store address, and a 3-step walkthrough — adapted for the multi-item bundle.',                                                                                                                tags: [['Reference code','orange'], ['Store address',''], ['Multi-item','blue']] },
+  { label: 'V2 · Screen 11 of 12', title: 'Confirmed — Post',             desc: 'Post confirmation. Customer packs all items into one parcel and uses the prepaid DPD label.',                                                                                                                                          tags: [['DPD label',''], ['One parcel','green']] },
+  { label: 'V2 · Screen 12 of 12', title: 'My Quotes (with bundles)',     desc: 'Dashboard now shows multi-item bundles as a single quote with an expandable per-item breakdown.',                                                                                                                                      tags: [['Bundle quotes','green'], ['WooCommerce account',''], ['History','blue']] }
+];
+
+var pgaScreenDataV2 = [
+  { label: 'V2 · Screen 1 of 10',  title: 'PGA Pro Login',                desc: 'Same login as V1 — the pro authenticates into their trade portal.',                                                                                                                                                                    tags: [['Trade portal',''], ['Same as V1','']] },
+  { label: 'V2 · Screen 2 of 10',  title: 'Add a club (Photos + AI)',      desc: 'Upload route — same as V1, but a tab now lets the pro switch to structured entry for any club where photos aren\'t clear. Multi-item button bundles several clubs into one trade-in.',                                                tags: [['Photos + AI',''], ['Method tabs','green'], ['Multi-item','blue']] },
+  { label: 'V2 · Screen 3 of 10',  title: 'Structured entry (dropdowns)', desc: 'NEW — drop-downs for club type, brand, model, year, condition, dexterity, shaft, loft. The fallback when AI can\'t confidently identify the club. No guessing — locks in exact specs at the pro margin.',                              tags: [['NEW screen','orange'], ['Dropdowns','green'], ['AI fallback','blue']] },
+  { label: 'V2 · Screen 4 of 10',  title: 'Valuing... (Pro)',             desc: 'Same loading state — first step now reads "Reading club details (structured + AI)" to reflect the dual-input model.',                                                                                                                  tags: [['AI analysis',''], ['Trade margin','green']] },
+  { label: 'V2 · Screen 5 of 10',  title: 'Trade-in Value',               desc: 'Same big-price reveal at the pro margin. The CTA leads to the batch list (instead of straight to customer details) so the pro can add more clubs.',                                                                                   tags: [['Trade-in value','green'], ['Pro margin','orange']] },
+  { label: 'V2 · Screen 6 of 10',  title: 'Trade-in batch list',          desc: 'NEW — list of clubs being traded for this single customer. Each row shows whether the club came from photos (AI %) or structured entry. Running trade-in total includes the pro margin.',                                              tags: [['NEW screen','orange'], ['Batch trade-in','green'], ['Mixed sources','blue']] },
+  { label: 'V2 · Screen 7 of 10',  title: 'Record Trade-in',              desc: 'Same as V1 — internal record only, CFC pays the pro directly. Confirms the bundled trade-in amount.',                                                                                                                                  tags: [['Pro records only',''], ['CFC pays pro','green']] },
+  { label: 'V2 · Screen 8 of 10',  title: 'Send to CFC',                  desc: 'Choose batch or post-now for the whole bundle.',                                                                                                                                                                                       tags: [['Batch option','green'], ['Post now','orange']] },
+  { label: 'V2 · Screen 9 of 10',  title: 'Confirmed — Batch',            desc: '"2 clubs added to your batch" — confirmation reflects the bundle. Same 3-step what-next walkthrough.',                                                                                                                                tags: [['Batch model','green'], ['Bundle','']] },
+  { label: 'V2 · Screen 10 of 10', title: 'Confirmed — Post Now',         desc: 'Postage label emailed to the pro for the bundle. Same flow as V1, multi-club wording.',                                                                                                                                                tags: [['Label to pro','orange'], ['Bundle dispatch','green']] }
+];
+
+var customerNavLabelsV2 = [
+  '1. Log in', '2. Choose method', '3. Upload photos', '4. Manual entry',
+  '5. Confirm items', '6. Valuing…', '7. Items in quote', '8. Instant offer',
+  '9. Delivery', '10. Confirmed – Store', '11. Confirmed – Post', '12. My quotes'
+];
+var pgaNavLabelsV2 = [
+  '1. Pro Login', '2. Photos + AI', '3. Structured entry',
+  '4. Valuing…', '5. Trade-in Value', '6. Items in trade-in',
+  '7. Record Trade-in', '8. Send to CFC', '9. Confirmed – Batch', '10. Confirmed – Post Now'
 ];
 
 /* ── renderNav ───────────────────────────────────────────────────────────── */
@@ -3188,6 +4712,21 @@ function updateAdminSidebar(n) {
   }
 }
 
+/* ── Active-panel lookup (version-aware) ─────────────────────────────────── */
+function _activeCustomerPanelId() { return currentVersion === 'v2' ? 'customer-panel-v2' : 'customer-panel'; }
+function _activePgaPanelId()      { return currentVersion === 'v2' ? 'pga-panel-v2'      : 'pga-panel';      }
+function _activeAdminPanelId()    { return 'admin-panel'; /* admin shared across versions */ }
+
+/* ── switchVersion ───────────────────────────────────────────────────────── */
+function switchVersion(v) {
+  if (v === currentVersion) return;
+  currentVersion = v;
+  document.getElementById('version-btn-v1').classList.toggle('active', v === 'v1');
+  document.getElementById('version-btn-v2').classList.toggle('active', v === 'v2');
+  // Re-apply current mode so the V2 panels show
+  switchMode(currentMode);
+}
+
 /* ── switchMode ──────────────────────────────────────────────────────────── */
 function switchMode(mode) {
   clearInterval(countdownInterval);
@@ -3197,19 +4736,39 @@ function switchMode(mode) {
   document.getElementById('mode-btn-customer').classList.toggle('active', mode === 'customer');
   document.getElementById('mode-btn-pga').classList.toggle('active',      mode === 'pga');
   document.getElementById('mode-btn-admin').classList.toggle('active',    mode === 'admin');
-  document.getElementById('customer-panel').classList.toggle('active', mode === 'customer');
-  document.getElementById('pga-panel').classList.toggle('active',      mode === 'pga');
-  document.getElementById('admin-panel').classList.toggle('active',    mode === 'admin');
-  document.getElementById('about-customer').style.display = mode === 'customer' ? '' : 'none';
-  document.getElementById('about-pga').style.display      = mode === 'pga'      ? '' : 'none';
-  document.getElementById('about-admin').style.display    = mode === 'admin'    ? '' : 'none';
-  document.querySelector('.page-layout').classList.toggle('admin-mode', mode === 'admin');
+
+  // Hide ALL customer / pga panels (both versions) first
+  document.getElementById('customer-panel').classList.remove('active');
+  document.getElementById('customer-panel-v2').classList.remove('active');
+  document.getElementById('pga-panel').classList.remove('active');
+  document.getElementById('pga-panel-v2').classList.remove('active');
+  document.getElementById('admin-panel').classList.remove('active');
+
+  // Activate only the panel matching the current mode + version
   if (mode === 'customer') {
-    renderNav(customerNavLabels, 0);
+    document.getElementById(_activeCustomerPanelId()).classList.add('active');
+  } else if (mode === 'pga') {
+    document.getElementById(_activePgaPanelId()).classList.add('active');
+  } else {
+    document.getElementById(_activeAdminPanelId()).classList.add('active');
+  }
+
+  // Notes "About" cards — version aware
+  var isV2 = currentVersion === 'v2';
+  document.getElementById('about-customer').style.display    = (!isV2 && mode === 'customer') ? '' : 'none';
+  document.getElementById('about-pga').style.display         = (!isV2 && mode === 'pga')      ? '' : 'none';
+  document.getElementById('about-customer-v2').style.display = ( isV2 && mode === 'customer') ? '' : 'none';
+  document.getElementById('about-pga-v2').style.display      = ( isV2 && mode === 'pga')      ? '' : 'none';
+  document.getElementById('about-admin').style.display       = (mode === 'admin')             ? '' : 'none';
+
+  document.querySelector('.page-layout').classList.toggle('admin-mode', mode === 'admin');
+
+  if (mode === 'customer') {
+    renderNav(isV2 ? customerNavLabelsV2 : customerNavLabels, 0);
     currentCustomerScreen = 0;
     _showCustomerScreen(0);
   } else if (mode === 'pga') {
-    renderNav(pgaNavLabels, 0);
+    renderNav(isV2 ? pgaNavLabelsV2 : pgaNavLabels, 0);
     currentPgaScreen = 0;
     _showPgaScreen(0);
   } else {
@@ -3232,7 +4791,8 @@ function showScreen(n) {
 
 /* ── _showCustomerScreen ─────────────────────────────────────────────────── */
 function _showCustomerScreen(n) {
-  var screens = document.querySelectorAll('.cust-screen');
+  var panel   = document.getElementById(_activeCustomerPanelId());
+  var screens = panel.querySelectorAll('.cust-screen');
   var total   = screens.length;
   n = Math.max(0, Math.min(n, total - 1));
   currentCustomerScreen = n;
@@ -3244,10 +4804,12 @@ function _showCustomerScreen(n) {
   });
 
   updateProgressBar(n, total);
-  updateNotesPanel(customerScreenData[n]);
+  var data = currentVersion === 'v2' ? customerScreenDataV2 : customerScreenData;
+  updateNotesPanel(data[n]);
 
-  // Live countdown only on offer screen (index 4)
-  if (n === 4) {
+  // Live countdown only on the offer screen (V1 idx 4, V2 idx 7)
+  var offerIdx = currentVersion === 'v2' ? 7 : 4;
+  if (n === offerIdx) {
     startCountdown();
   } else {
     clearInterval(countdownInterval);
@@ -3257,7 +4819,8 @@ function _showCustomerScreen(n) {
 
 /* ── _showPgaScreen ──────────────────────────────────────────────────────── */
 function _showPgaScreen(n) {
-  var screens = document.querySelectorAll('.pga-screen');
+  var panel   = document.getElementById(_activePgaPanelId());
+  var screens = panel.querySelectorAll('.pga-screen');
   var total   = screens.length;
   n = Math.max(0, Math.min(n, total - 1));
   currentPgaScreen = n;
@@ -3269,7 +4832,8 @@ function _showPgaScreen(n) {
   });
 
   updateProgressBar(n, total);
-  updateNotesPanel(pgaScreenData[n]);
+  var data = currentVersion === 'v2' ? pgaScreenDataV2 : pgaScreenData;
+  updateNotesPanel(data[n]);
 }
 
 /* ── _showAdminScreen ────────────────────────────────────────────────────── */
@@ -3311,4 +4875,3 @@ updateNotesPanel(customerScreenData[0]);
 </script>
 </body>
 </html>
-s
