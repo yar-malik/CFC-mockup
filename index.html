@@ -595,6 +595,122 @@ body {
 .offer-batch-breakdown-row strong { color: var(--dark); }
 
 /* ═══════════════════════════════════════════════════════════════════════════
+   V2 — PAYMENT METHOD (Cash vs Store Credit + bank details)
+═══════════════════════════════════════════════════════════════════════════ */
+.payment-wrap { padding: 24px; }
+.payment-heading { font-size: 20px; font-weight: 700; color: var(--dark); margin-bottom: 4px; }
+.payment-sub { font-size: 12px; color: var(--mid); margin-bottom: 18px; }
+.payment-cards { display: flex; flex-direction: column; gap: 12px; margin-bottom: 18px; }
+.payment-card {
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius);
+  padding: 16px;
+  cursor: pointer;
+  background: var(--white);
+  transition: border-color .15s, background .15s, box-shadow .15s;
+}
+.payment-card:hover { border-color: var(--orange); }
+.payment-card.selected {
+  border-color: var(--orange);
+  background: #fff9f7;
+  box-shadow: 0 0 0 3px rgba(232,73,29,0.10);
+}
+.payment-card-top {
+  display: grid;
+  grid-template-columns: 22px 1fr auto;
+  gap: 12px;
+  align-items: flex-start;
+}
+.payment-card-radio {
+  width: 18px; height: 18px;
+  border: 2px solid var(--border);
+  border-radius: 50%;
+  flex-shrink: 0;
+  position: relative;
+  margin-top: 2px;
+}
+.payment-card.selected .payment-card-radio { border-color: var(--orange); }
+.payment-card.selected .payment-card-radio::after {
+  content: '';
+  position: absolute; inset: 3px;
+  background: var(--orange);
+  border-radius: 50%;
+}
+.payment-card-title {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--dark);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 4px;
+}
+.payment-card-pill {
+  font-size: 10px;
+  font-weight: 700;
+  padding: 2px 8px;
+  border-radius: 10px;
+  letter-spacing: .3px;
+  background: #e8f3e7;
+  color: var(--green);
+}
+.payment-card-pill.bonus { background: #fdecd6; color: #b45309; }
+.payment-card-pill.neutral { background: #f3f4f6; color: var(--mid); }
+.payment-card-desc {
+  font-size: 12px;
+  color: var(--mid);
+  line-height: 1.45;
+}
+.payment-card-amount-wrap { text-align: right; min-width: 78px; }
+.payment-card-amount { font-size: 22px; font-weight: 700; color: var(--dark); white-space: nowrap; line-height: 1.1; }
+.payment-card-amount.credit { color: var(--green); }
+.payment-card-amount-sub { font-size: 10px; color: var(--muted); margin-top: 2px; }
+.payment-card-bank-form {
+  display: none;
+  margin-top: 14px;
+  padding-top: 14px;
+  border-top: 1px dashed var(--border);
+}
+.payment-card.selected.cash .payment-card-bank-form { display: block; }
+.payment-card-credit-detail {
+  display: none;
+  margin-top: 12px;
+  padding-top: 12px;
+  border-top: 1px dashed var(--border);
+  font-size: 11px;
+  color: var(--mid);
+  line-height: 1.5;
+}
+.payment-card.selected.credit .payment-card-credit-detail { display: block; }
+.bank-secure-note {
+  display: flex;
+  gap: 8px;
+  align-items: flex-start;
+  font-size: 11px;
+  color: var(--mid);
+  margin-top: 10px;
+  background: var(--surface);
+  padding: 9px 11px;
+  border-radius: var(--radius-sm);
+}
+.bank-secure-note strong { color: var(--dark); font-weight: 700; }
+
+/* Accepted banner — extended for payment+delivery confirmation screens */
+.payment-summary-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #e8f3e7;
+  border: 1px solid #a8cda5;
+  border-radius: var(--radius);
+  padding: 10px 14px;
+  margin-bottom: 14px;
+  font-size: 12px;
+  color: var(--mid);
+}
+.payment-summary-row strong { color: var(--green); font-weight: 700; }
+
+/* ═══════════════════════════════════════════════════════════════════════════
    V2 — PGA STRUCTURED FALLBACK
 ═══════════════════════════════════════════════════════════════════════════ */
 .pga-fallback-notice {
@@ -2568,9 +2684,9 @@ input[type="range"]::-webkit-slider-thumb {
           </div>
         </div>
 
-        <!-- V2-SC8: Delivery Choice -->
+        <!-- V2-SC8: Payment method (Cash vs Store Credit) -->
         <div class="cust-screen" id="sc-v2-8">
-          <div class="delivery-wrap">
+          <div class="payment-wrap">
             <div class="delivery-back" onclick="showScreen(7)">
               <svg width="13" height="13" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M10 3L5 8l5 5"/></svg>
               Back to offer
@@ -2581,13 +2697,112 @@ input[type="range"]::-webkit-slider-thumb {
               </div>
               <div>
                 <div class="accepted-banner-title">Offer accepted — £545</div>
-                <div class="accepted-banner-sub">3 items · Driver · Iron set · Putter</div>
+                <div class="accepted-banner-sub">3 items · pick how you want to be paid</div>
               </div>
+            </div>
+
+            <div class="payment-heading">How would you like to be paid?</div>
+            <div class="payment-sub">Pick cash for a direct bank transfer, or boost your value by 10% with store credit.</div>
+
+            <div class="payment-cards" id="v2-payment-cards">
+
+              <!-- Cash option -->
+              <div class="payment-card cash selected" id="v2-pay-cash"
+                   onclick="v2SelectPayment('cash')">
+                <div class="payment-card-top">
+                  <span class="payment-card-radio"></span>
+                  <div>
+                    <div class="payment-card-title">
+                      Cash to my bank
+                      <span class="payment-card-pill">Recommended</span>
+                    </div>
+                    <div class="payment-card-desc">Full cash value transferred to your UK bank within 48 hours of inspection.</div>
+                  </div>
+                  <div class="payment-card-amount-wrap">
+                    <div class="payment-card-amount">£545</div>
+                    <div class="payment-card-amount-sub">to your bank</div>
+                  </div>
+                </div>
+
+                <!-- Bank account form (visible when Cash is selected) -->
+                <div class="payment-card-bank-form" onclick="event.stopPropagation()">
+                  <div class="field-row single">
+                    <div>
+                      <label class="field-label-v2">Account holder name</label>
+                      <input class="field-input-v2" type="text" placeholder="As shown on your bank statement">
+                    </div>
+                  </div>
+                  <div class="field-row">
+                    <div>
+                      <label class="field-label-v2">Sort code</label>
+                      <input class="field-input-v2" type="text" placeholder="00-00-00" maxlength="8">
+                    </div>
+                    <div>
+                      <label class="field-label-v2">Account number</label>
+                      <input class="field-input-v2" type="text" placeholder="00000000" maxlength="8">
+                    </div>
+                  </div>
+                  <div class="field-row single">
+                    <div>
+                      <label class="field-label-v2">Payment reference <span style="font-weight:400;text-transform:none;letter-spacing:0;color:var(--muted)">(optional)</span></label>
+                      <input class="field-input-v2" type="text" placeholder="e.g. CFC-9K2X (auto-filled)">
+                    </div>
+                  </div>
+                  <div class="bank-secure-note">
+                    <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" style="flex-shrink:0;margin-top:1px"><rect x="2" y="6" width="12" height="9" rx="1.5"/><path d="M5 6V4a3 3 0 016 0v2"/></svg>
+                    <div><strong>Secure storage.</strong> Bank details are encrypted and only used for this payout. You can manage saved details from your account.</div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Store Credit option -->
+              <div class="payment-card credit" id="v2-pay-credit"
+                   onclick="v2SelectPayment('credit')">
+                <div class="payment-card-top">
+                  <span class="payment-card-radio"></span>
+                  <div>
+                    <div class="payment-card-title">
+                      Store Credit
+                      <span class="payment-card-pill bonus">+10% bonus</span>
+                    </div>
+                    <div class="payment-card-desc">Get £600 to spend on new clubs, gear or lessons at Cash Fore Clubs — instore or online.</div>
+                  </div>
+                  <div class="payment-card-amount-wrap">
+                    <div class="payment-card-amount credit">£600</div>
+                    <div class="payment-card-amount-sub">store credit</div>
+                  </div>
+                </div>
+                <div class="payment-card-credit-detail">
+                  <strong style="color:var(--dark)">How store credit works:</strong>
+                  • Added to your CFC account once we receive &amp; inspect the clubs.<br>
+                  • Valid for 12 months from issue.<br>
+                  • Spend in any combination — full or part-payment on any product.<br>
+                  • No bank details needed.
+                </div>
+              </div>
+
+            </div>
+
+            <button class="cta-btn" onclick="showScreen(9)">CONTINUE — PICK DELIVERY →</button>
+            <div class="cta-note" style="text-align:center">You can change your payment method up until we receive your clubs.</div>
+          </div>
+        </div>
+
+        <!-- V2-SC9: Delivery Choice -->
+        <div class="cust-screen" id="sc-v2-9">
+          <div class="delivery-wrap">
+            <div class="delivery-back" onclick="showScreen(8)">
+              <svg width="13" height="13" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M10 3L5 8l5 5"/></svg>
+              Back to payment method
+            </div>
+            <div class="payment-summary-row" id="v2-payment-summary">
+              <div>Paid by <strong id="v2-pay-method-label">cash to bank</strong> · <span id="v2-pay-amount-label">£545</span></div>
+              <span style="color:var(--mid);font-size:11px;cursor:pointer;text-decoration:underline" onclick="showScreen(8)">change</span>
             </div>
             <div class="delivery-heading">How would you like to send your clubs?</div>
             <div class="delivery-sub">All 3 items go together — drop them at our store or post them as one parcel.</div>
             <div class="delivery-cards">
-              <div class="delivery-card" onclick="showScreen(9)">
+              <div class="delivery-card" onclick="showScreen(10)">
                 <div class="delivery-card-icon">
                   <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#E8491D" stroke-width="1.5"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9,22 9,12 15,12 15,22"/></svg>
                 </div>
@@ -2595,7 +2810,7 @@ input[type="range"]::-webkit-slider-thumb {
                 <div class="delivery-card-desc">Bring all 3 clubs to our Chippenham store. We'll check them while you wait.</div>
                 <div class="delivery-card-badge">Mon–Sat · 9am–5pm</div>
               </div>
-              <div class="delivery-card" onclick="showScreen(10)">
+              <div class="delivery-card" onclick="showScreen(11)">
                 <div class="delivery-card-icon">
                   <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#E8491D" stroke-width="1.5"><rect x="1" y="3" width="15" height="13" rx="1"/><path d="M16 8h4l3 5v3h-7V8z"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>
                 </div>
@@ -2608,14 +2823,19 @@ input[type="range"]::-webkit-slider-thumb {
           </div>
         </div>
 
-        <!-- V2-SC9: Confirmed — In Store -->
-        <div class="cust-screen" id="sc-v2-9">
+        <!-- V2-SC10: Confirmed — In Store -->
+        <div class="cust-screen" id="sc-v2-10">
           <div class="conf-wrap">
             <div class="conf-circle">
               <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#2D5A27" stroke-width="2.5"><polyline points="4,12 10,18 20,6"/></svg>
             </div>
             <div class="conf-title">See you in store!</div>
             <div class="conf-sub">Bring all 3 clubs and your quote reference to our Chippenham store.</div>
+
+            <div class="payment-summary-row">
+              <div>Paid by <strong id="v2-store-pay-label">cash to bank</strong> · <span id="v2-store-pay-amount">£545</span></div>
+              <span style="font-size:11px;color:var(--mid)">payment after inspection</span>
+            </div>
 
             <div class="instore-ref-box">
               <div class="instore-ref-label">Your Quote Reference</div>
@@ -2652,16 +2872,16 @@ input[type="range"]::-webkit-slider-thumb {
               </div>
               <div class="ns">
                 <div class="ns-num">3</div>
-                <div class="ns-title">Get paid £545</div>
-                <div class="ns-body">Payment transferred to your account within 48 hours.</div>
+                <div class="ns-title" id="v2-store-pay-step-title">Get paid £545</div>
+                <div class="ns-body" id="v2-store-pay-step-body">Cash transferred to your bank within 48 hours of inspection.</div>
               </div>
             </div>
-            <button class="cta-btn" onclick="showScreen(11)">VIEW MY QUOTES</button>
+            <button class="cta-btn" onclick="showScreen(12)">VIEW MY QUOTES</button>
           </div>
         </div>
 
-        <!-- V2-SC10: Confirmed — Post -->
-        <div class="cust-screen" id="sc-v2-10">
+        <!-- V2-SC11: Confirmed — Post -->
+        <div class="cust-screen" id="sc-v2-11">
           <div class="conf-wrap">
             <div class="conf-circle">
               <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#2D5A27" stroke-width="2.5"><polyline points="4,12 10,18 20,6"/></svg>
@@ -2671,6 +2891,12 @@ input[type="range"]::-webkit-slider-thumb {
               We'll send your prepaid DPD label to <strong>james@email.co.uk</strong>.<br>
               Pack all 3 clubs together in one parcel and drop it at any DPD point.
             </div>
+
+            <div class="payment-summary-row">
+              <div>Paid by <strong id="v2-post-pay-label">cash to bank</strong> · <span id="v2-post-pay-amount">£545</span></div>
+              <span style="font-size:11px;color:var(--mid)">payment after inspection</span>
+            </div>
+
             <div style="font-size:15px;font-weight:700;color:var(--dark);margin-bottom:14px;text-align:left">What happens next</div>
             <div class="next-steps-row">
               <div class="ns">
@@ -2685,16 +2911,16 @@ input[type="range"]::-webkit-slider-thumb {
               </div>
               <div class="ns">
                 <div class="ns-num">3</div>
-                <div class="ns-title">Get paid £545</div>
-                <div class="ns-body">We transfer payment within 48 hours of inspection.</div>
+                <div class="ns-title" id="v2-post-pay-step-title">Get paid £545</div>
+                <div class="ns-body" id="v2-post-pay-step-body">Cash transferred to your bank within 48 hours of inspection.</div>
               </div>
             </div>
-            <button class="cta-btn" onclick="showScreen(11)">VIEW MY QUOTES</button>
+            <button class="cta-btn" onclick="showScreen(12)">VIEW MY QUOTES</button>
           </div>
         </div>
 
-        <!-- V2-SC11: My Quotes (with batch quote) -->
-        <div class="cust-screen" id="sc-v2-11">
+        <!-- V2-SC12: My Quotes (with batch quote) -->
+        <div class="cust-screen" id="sc-v2-12">
           <div class="dash-layout">
             <div class="dash-sidebar">
               <div class="dash-sidebar-item"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="1" y="1" width="6" height="6" rx="1"/><rect x="9" y="1" width="6" height="6" rx="1"/><rect x="1" y="9" width="6" height="6" rx="1"/><rect x="9" y="9" width="6" height="6" rx="1"/></svg>Dashboard</div>
@@ -2713,7 +2939,7 @@ input[type="range"]::-webkit-slider-thumb {
                   <div class="dqc-name">3-item bundle · Driver · Irons · Putter</div>
                   <span class="status-badge">Accepted</span>
                 </div>
-                <div class="dqc-meta">Multi-item · Today · CFC-9K2X</div>
+                <div class="dqc-meta">Multi-item · Today · CFC-9K2X · <span id="v2-myquotes-pay-badge" style="color:var(--green);font-weight:700">Cash to bank ****1234</span></div>
                 <div class="offer-batch-breakdown" style="margin:8px 0 12px">
                   <div class="offer-batch-breakdown-row"><span>Callaway Paradym Driver</span><strong>£128</strong></div>
                   <div class="offer-batch-breakdown-row"><span>TaylorMade P770 Irons (5-PW)</span><strong>£345</strong></div>
@@ -4602,18 +4828,19 @@ var adminNavLabels = [
 
 /* ── V2 screen metadata ────────────────────────────────────────────────── */
 var customerScreenDataV2 = [
-  { label: 'V2 · Screen 1 of 12',  title: 'Log in screen',                desc: 'Same login as V1 — customers sign in to a single account that holds both photo-based and manual quotes.',                                                                                                                              tags: [['Login',''], ['Same as V1','']] },
-  { label: 'V2 · Screen 2 of 12',  title: 'Choose method',                desc: 'NEW — customer picks how to start a quote: upload photos (AI route) or enter details manually via structured dropdowns. Both routes use the same offer logic.',                                                                       tags: [['NEW screen','orange'], ['Two routes','green'], ['Structured fallback','blue']] },
-  { label: 'V2 · Screen 3 of 12',  title: 'Upload photos (multi-item)',   desc: 'Upload route — drop zone now hints at multi-item quotes. "Add another club to this quote" button bundles more items in the same offer. Tabs let the user flip to manual entry if they prefer.',                                       tags: [['Photo upload',''], ['Multi-item bundle','green'], ['Method tabs','blue']] },
-  { label: 'V2 · Screen 4 of 12',  title: 'Manual entry (structured)',    desc: 'NEW — no-photo route. Structured dropdowns: club type, brand, model, year, condition, dexterity, shaft, loft/length. Mirrors the existing form logic — never a free-text box.',                                                       tags: [['NEW screen','orange'], ['Structured form','green'], ['No photos needed','blue']] },
-  { label: 'V2 · Screen 5 of 12',  title: 'Confirm item(s)',              desc: 'NEW — combined confidence + multi-item handling. If AI confidence is below the threshold, we ask the user to pick the right model from multiple-choice. If two different clubs are detected in the photos, we ask whether to quote them as separate items or merge.', tags: [['NEW screen','orange'], ['Confidence check','green'], ['Multi-item detect','blue']] },
-  { label: 'V2 · Screen 6 of 12',  title: 'Valuing your items...',        desc: 'Loading state — same as V1 but valuing multiple items at once. Step 2 explicitly mentions confirming AI confidence ≥ 90%.',                                                                                                          tags: [['AI analysis',''], ['Multi-item batch','green']] },
-  { label: 'V2 · Screen 7 of 12',  title: 'Items in your quote',          desc: 'NEW — batch summary. Shows each item with its price, a live running total, and a button to add more. Mirrors the batch-style flow used in PGA. Users can review and remove items before accepting.',                                  tags: [['NEW screen','orange'], ['Batch quoting','green'], ['Running total','blue']] },
-  { label: 'V2 · Screen 8 of 12',  title: 'Instant offer (bundled)',      desc: 'The offer reveal now includes a per-item breakdown above the total. Same big-price hero and countdown timer as V1.',                                                                                                                  tags: [['Bundle total',''], ['Breakdown','green'], ['Countdown','blue']] },
-  { label: 'V2 · Screen 9 of 12',  title: 'Delivery choice',              desc: 'Same as V1 but worded for multi-item quotes — clubs travel together in one parcel or one in-store visit.',                                                                                                                            tags: [['Drop in store',''], ['Send by post','green']] },
-  { label: 'V2 · Screen 10 of 12', title: 'Confirmed — In Store',         desc: 'In-store confirmation. Reference code, store address, and a 3-step walkthrough — adapted for the multi-item bundle.',                                                                                                                tags: [['Reference code','orange'], ['Store address',''], ['Multi-item','blue']] },
-  { label: 'V2 · Screen 11 of 12', title: 'Confirmed — Post',             desc: 'Post confirmation. Customer packs all items into one parcel and uses the prepaid DPD label.',                                                                                                                                          tags: [['DPD label',''], ['One parcel','green']] },
-  { label: 'V2 · Screen 12 of 12', title: 'My Quotes (with bundles)',     desc: 'Dashboard now shows multi-item bundles as a single quote with an expandable per-item breakdown.',                                                                                                                                      tags: [['Bundle quotes','green'], ['WooCommerce account',''], ['History','blue']] }
+  { label: 'V2 · Screen 1 of 13',  title: 'Log in screen',                desc: 'Same login as V1 — customers sign in to a single account that holds both photo-based and manual quotes.',                                                                                                                              tags: [['Login',''], ['Same as V1','']] },
+  { label: 'V2 · Screen 2 of 13',  title: 'Choose method',                desc: 'NEW — customer picks how to start a quote: upload photos (AI route) or enter details manually via structured dropdowns. Both routes use the same offer logic.',                                                                       tags: [['NEW screen','orange'], ['Two routes','green'], ['Structured fallback','blue']] },
+  { label: 'V2 · Screen 3 of 13',  title: 'Upload photos (multi-item)',   desc: 'Upload route — drop zone now hints at multi-item quotes. "Add another club to this quote" button bundles more items in the same offer. Tabs let the user flip to manual entry if they prefer.',                                       tags: [['Photo upload',''], ['Multi-item bundle','green'], ['Method tabs','blue']] },
+  { label: 'V2 · Screen 4 of 13',  title: 'Manual entry (structured)',    desc: 'NEW — no-photo route. Structured dropdowns: club type, brand, model, year, condition, dexterity, shaft, loft/length. Mirrors the existing form logic — never a free-text box.',                                                       tags: [['NEW screen','orange'], ['Structured form','green'], ['No photos needed','blue']] },
+  { label: 'V2 · Screen 5 of 13',  title: 'Confirm item(s)',              desc: 'NEW — combined confidence + multi-item handling. If AI confidence is below the threshold, we ask the user to pick the right model from multiple-choice. If two different clubs are detected in the photos, we ask whether to quote them as separate items or merge.', tags: [['NEW screen','orange'], ['Confidence check','green'], ['Multi-item detect','blue']] },
+  { label: 'V2 · Screen 6 of 13',  title: 'Valuing your items...',        desc: 'Loading state — same as V1 but valuing multiple items at once. Step 2 explicitly mentions confirming AI confidence ≥ 90%.',                                                                                                          tags: [['AI analysis',''], ['Multi-item batch','green']] },
+  { label: 'V2 · Screen 7 of 13',  title: 'Items in your quote',          desc: 'NEW — batch summary. Shows each item with its price, a live running total, and a button to add more. Mirrors the batch-style flow used in PGA. Users can review and remove items before accepting.',                                  tags: [['NEW screen','orange'], ['Batch quoting','green'], ['Running total','blue']] },
+  { label: 'V2 · Screen 8 of 13',  title: 'Instant offer (bundled)',      desc: 'The offer reveal now includes a per-item breakdown above the total. Same big-price hero and countdown timer as V1.',                                                                                                                  tags: [['Bundle total',''], ['Breakdown','green'], ['Countdown','blue']] },
+  { label: 'V2 · Screen 9 of 13',  title: 'Payment method',               desc: 'NEW — customer chooses cash to bank (full value, requires sort code + account number) or store credit (+10% bonus, no bank details). The Cash card expands inline with a secure bank-details form. Store credit shows usage rules.',  tags: [['NEW screen','orange'], ['Cash to bank','green'], ['Store credit +10%','blue']] },
+  { label: 'V2 · Screen 10 of 13', title: 'Delivery choice',              desc: 'Same as V1 but worded for multi-item quotes — clubs travel together in one parcel or one in-store visit. Sticky summary row shows the payment method picked on the previous step.',                                                  tags: [['Drop in store',''], ['Send by post','green']] },
+  { label: 'V2 · Screen 11 of 13', title: 'Confirmed — In Store',         desc: 'In-store confirmation. Reference code, store address, payment-method summary, and a 3-step walkthrough that adapts wording to cash vs. store credit.',                                                                              tags: [['Reference code','orange'], ['Store address',''], ['Payment recap','blue']] },
+  { label: 'V2 · Screen 12 of 13', title: 'Confirmed — Post',             desc: 'Post confirmation. Customer packs all items into one parcel, payment-method recap shown, and the final step adapts to cash vs. store credit.',                                                                                       tags: [['DPD label',''], ['One parcel','green'], ['Payment recap','blue']] },
+  { label: 'V2 · Screen 13 of 13', title: 'My Quotes (with bundles)',     desc: 'Dashboard now shows multi-item bundles as a single quote with per-item breakdown and a payment-method badge (Cash / Store Credit).',                                                                                                  tags: [['Bundle quotes','green'], ['Payment badge','orange'], ['History','blue']] }
 ];
 
 var pgaScreenDataV2 = [
@@ -4632,7 +4859,7 @@ var pgaScreenDataV2 = [
 var customerNavLabelsV2 = [
   '1. Log in', '2. Choose method', '3. Upload photos', '4. Manual entry',
   '5. Confirm items', '6. Valuing…', '7. Items in quote', '8. Instant offer',
-  '9. Delivery', '10. Confirmed – Store', '11. Confirmed – Post', '12. My quotes'
+  '9. Payment method', '10. Delivery', '11. Confirmed – Store', '12. Confirmed – Post', '13. My quotes'
 ];
 var pgaNavLabelsV2 = [
   '1. Pro Login', '2. Photos + AI', '3. Structured entry',
@@ -4716,6 +4943,39 @@ function updateAdminSidebar(n) {
 function _activeCustomerPanelId() { return currentVersion === 'v2' ? 'customer-panel-v2' : 'customer-panel'; }
 function _activePgaPanelId()      { return currentVersion === 'v2' ? 'pga-panel-v2'      : 'pga-panel';      }
 function _activeAdminPanelId()    { return 'admin-panel'; /* admin shared across versions */ }
+
+/* ── V2 payment-method selection ─────────────────────────────────────────── */
+var v2PaymentMethod = 'cash';  // 'cash' | 'credit'
+
+function v2SelectPayment(method) {
+  v2PaymentMethod = method;
+  var cashCard   = document.getElementById('v2-pay-cash');
+  var creditCard = document.getElementById('v2-pay-credit');
+  if (cashCard)   cashCard.classList.toggle('selected',   method === 'cash');
+  if (creditCard) creditCard.classList.toggle('selected', method === 'credit');
+
+  // Propagate to downstream summary labels
+  var label  = method === 'cash' ? 'cash to bank'    : 'store credit';
+  var amount = method === 'cash' ? '£545'            : '£600 store credit';
+  var stepTitle = method === 'cash' ? 'Get paid £545' : 'Get £600 store credit';
+  var stepBody  = method === 'cash'
+    ? 'Cash transferred to your bank within 48 hours of inspection.'
+    : '£600 store credit added to your account once we receive & inspect the clubs. Valid 12 months.';
+  var badge = method === 'cash' ? 'Cash to bank ****1234' : 'Store credit · £600';
+
+  function _set(id, txt) { var el = document.getElementById(id); if (el) el.textContent = txt; }
+  _set('v2-pay-method-label',     label);
+  _set('v2-pay-amount-label',     amount);
+  _set('v2-store-pay-label',      label);
+  _set('v2-store-pay-amount',     amount);
+  _set('v2-store-pay-step-title', stepTitle);
+  _set('v2-store-pay-step-body',  stepBody);
+  _set('v2-post-pay-label',       label);
+  _set('v2-post-pay-amount',      amount);
+  _set('v2-post-pay-step-title',  stepTitle);
+  _set('v2-post-pay-step-body',   stepBody);
+  _set('v2-myquotes-pay-badge',   badge);
+}
 
 /* ── switchVersion ───────────────────────────────────────────────────────── */
 function switchVersion(v) {
