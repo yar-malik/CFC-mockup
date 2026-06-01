@@ -830,8 +830,11 @@ body {
   margin-top: 6px;
   line-height: 1.4;
 }
+/* SC-4 loading: keep centered content visually balanced when the bag is reserved on the right */
+.loading-wrap.entry-with-bag { padding-left: 232px !important; }
 @media (max-width: 760px) {
   .entry-with-bag { padding-right: 24px !important; }
+  .loading-wrap.entry-with-bag { padding-left: 28px !important; }
   .float-bag { position: static; width: 100%; margin-bottom: 16px; }
 }
 
@@ -3134,7 +3137,44 @@ input[type="range"]::-webkit-slider-thumb {
 
         <!-- V2-SC2: Confirm item (low-confidence + multi-item-detected combined) -->
         <div class="cust-screen" id="sc-v2-2">
-          <div class="confirm-wrap">
+          <div class="confirm-wrap entry-with-bag">
+
+            <aside class="float-bag" aria-label="Your quote so far">
+              <div class="float-bag-head">
+                <span class="float-bag-title">Your quote</span>
+                <span class="float-bag-count" data-v2-count="cust">3 items</span>
+              </div>
+              <div class="float-bag-items">
+                <div class="float-bag-item" data-v2-item="cust-paradym" data-v2-scope="cust" data-v2-price="128">
+                  <div class="float-bag-thumb driver">DR</div>
+                  <div class="float-bag-name">Paradym Driver</div>
+                  <div class="float-bag-price">£128</div>
+                  <button class="fb-remove" title="Remove" onclick="v2RemoveItem('cust-paradym')">×</button>
+                </div>
+                <div class="float-bag-item" data-v2-item="cust-p770" data-v2-scope="cust" data-v2-price="345">
+                  <div class="float-bag-thumb iron">IR</div>
+                  <div class="float-bag-name">P770 Irons</div>
+                  <div class="float-bag-price">£345</div>
+                  <button class="fb-remove" title="Remove" onclick="v2RemoveItem('cust-p770')">×</button>
+                </div>
+                <div class="float-bag-item" data-v2-item="cust-odyssey" data-v2-scope="cust" data-v2-price="72">
+                  <div class="float-bag-thumb putter">PT</div>
+                  <div class="float-bag-name">OG #7 Putter</div>
+                  <div class="float-bag-price">£72</div>
+                  <button class="fb-remove" title="Remove" onclick="v2RemoveItem('cust-odyssey')">×</button>
+                </div>
+              </div>
+              <div class="float-bag-total">
+                <span class="float-bag-total-label">Total</span>
+                <span class="float-bag-total-amount" data-v2-total="cust">£545</span>
+              </div>
+              <button class="float-bag-add" onclick="showScreen(3)">
+                <svg width="10" height="10" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M8 3v10M3 8h10"/></svg>
+                Add another club
+              </button>
+              <div class="float-bag-note">Or £600 as store credit (+10%)</div>
+            </aside>
+
             <div class="page-title" style="font-size:20px;margin-bottom:10px">Quick check — is this right?</div>
             <div style="font-size:12px;color:var(--mid);margin-bottom:16px">Pricing must be accurate, so we want to be sure before generating an offer.</div>
 
@@ -3177,61 +3217,8 @@ input[type="range"]::-webkit-slider-thumb {
               </div>
             </div>
 
-            <!-- Low-confidence section -->
-            <div class="confirm-banner warn">
-              <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.7" style="flex-shrink:0;margin-top:1px"><circle cx="8" cy="8" r="7"/><path d="M8 5v4M8 11h.01"/></svg>
-              <div>
-                <strong>We're 68% sure on the Callaway — pick the right model</strong>
-                Confidence is below our 90% threshold, so we want you to confirm.
-              </div>
-            </div>
-
-            <div class="confidence-meter">
-              <span style="font-size:11px;color:var(--mid);min-width:80px">AI confidence</span>
-              <div class="confidence-bar"><div class="confidence-fill mid" style="width:68%"></div></div>
-              <span class="confidence-pct">68%</span>
-            </div>
-
-            <div class="ai-guess-card">
-              <div class="ai-guess-row"><span>Best guess</span><strong>Callaway Paradym Driver</strong></div>
-              <div class="ai-guess-row"><span>Year</span><strong>2023</strong></div>
-              <div class="ai-guess-row"><span>Condition</span><strong>Good</strong></div>
-            </div>
-
-            <div class="mc-question-label">Which model is it?</div>
-            <div class="mc-options">
-              <div class="mc-option selected" onclick="this.classList.add('selected'); this.parentNode.querySelectorAll('.mc-option').forEach(function(o){if(o!==this){o.classList.remove('selected');}}.bind(this))">
-                <span class="mc-radio"></span>
-                <div class="mc-option-label">
-                  <strong>Callaway Paradym Driver</strong>
-                  <div class="mc-option-sub">2023 · most likely match</div>
-                </div>
-              </div>
-              <div class="mc-option" onclick="this.classList.add('selected'); this.parentNode.querySelectorAll('.mc-option').forEach(function(o){if(o!==this){o.classList.remove('selected');}}.bind(this))">
-                <span class="mc-radio"></span>
-                <div class="mc-option-label">
-                  <strong>Callaway Paradym X Driver</strong>
-                  <div class="mc-option-sub">2023 · slightly different head shape</div>
-                </div>
-              </div>
-              <div class="mc-option" onclick="this.classList.add('selected'); this.parentNode.querySelectorAll('.mc-option').forEach(function(o){if(o!==this){o.classList.remove('selected');}}.bind(this))">
-                <span class="mc-radio"></span>
-                <div class="mc-option-label">
-                  <strong>Callaway Rogue ST Max Driver</strong>
-                  <div class="mc-option-sub">2022 · similar look</div>
-                </div>
-              </div>
-              <div class="mc-option" onclick="this.classList.add('selected'); this.parentNode.querySelectorAll('.mc-option').forEach(function(o){if(o!==this){o.classList.remove('selected');}}.bind(this))">
-                <span class="mc-radio"></span>
-                <div class="mc-option-label">
-                  <strong>None of these — enter details manually</strong>
-                  <div class="mc-option-sub">Opens the structured form on the next step.</div>
-                </div>
-              </div>
-            </div>
-
             <button class="cta-btn" onclick="showScreen(3)">CONFIRM &amp; CONTINUE →</button>
-            <div class="cta-note">We only finalise pricing when AI confidence is high — your input keeps the offer accurate.</div>
+            <div class="cta-note">Confirming here keeps each item's quote accurate.</div>
           </div>
         </div>
 
@@ -3310,7 +3297,40 @@ input[type="range"]::-webkit-slider-thumb {
 
         <!-- V2-SC4: Valuing -->
         <div class="cust-screen" id="sc-v2-4">
-          <div class="loading-wrap">
+          <div class="loading-wrap entry-with-bag">
+
+            <aside class="float-bag" aria-label="Your quote so far" style="text-align:left">
+              <div class="float-bag-head">
+                <span class="float-bag-title">Your quote</span>
+                <span class="float-bag-count" data-v2-count="cust">3 items</span>
+              </div>
+              <div class="float-bag-items">
+                <div class="float-bag-item" data-v2-item="cust-paradym" data-v2-scope="cust" data-v2-price="128">
+                  <div class="float-bag-thumb driver">DR</div>
+                  <div class="float-bag-name">Paradym Driver</div>
+                  <div class="float-bag-price">£128</div>
+                  <button class="fb-remove" title="Remove" onclick="v2RemoveItem('cust-paradym')">×</button>
+                </div>
+                <div class="float-bag-item" data-v2-item="cust-p770" data-v2-scope="cust" data-v2-price="345">
+                  <div class="float-bag-thumb iron">IR</div>
+                  <div class="float-bag-name">P770 Irons</div>
+                  <div class="float-bag-price">£345</div>
+                  <button class="fb-remove" title="Remove" onclick="v2RemoveItem('cust-p770')">×</button>
+                </div>
+                <div class="float-bag-item" data-v2-item="cust-odyssey" data-v2-scope="cust" data-v2-price="72">
+                  <div class="float-bag-thumb putter">PT</div>
+                  <div class="float-bag-name">OG #7 Putter</div>
+                  <div class="float-bag-price">£72</div>
+                  <button class="fb-remove" title="Remove" onclick="v2RemoveItem('cust-odyssey')">×</button>
+                </div>
+              </div>
+              <div class="float-bag-total">
+                <span class="float-bag-total-label">Total</span>
+                <span class="float-bag-total-amount" data-v2-total="cust">£545</span>
+              </div>
+              <div class="float-bag-note">Or £600 as store credit (+10%)</div>
+            </aside>
+
             <div class="spinner-ring"></div>
             <div class="load-title">Valuing your 3 items...</div>
             <div class="load-sub">Checking competitor sold prices and applying our 40% buy-back margin.<br>This usually takes 10–20 seconds.</div>
@@ -3380,7 +3400,40 @@ input[type="range"]::-webkit-slider-thumb {
 
         <!-- V2-SC6: Payment method (Cash vs Store Credit) -->
         <div class="cust-screen" id="sc-v2-6">
-          <div class="payment-wrap">
+          <div class="payment-wrap entry-with-bag">
+
+            <aside class="float-bag" aria-label="Your quote so far">
+              <div class="float-bag-head">
+                <span class="float-bag-title">Your quote</span>
+                <span class="float-bag-count" data-v2-count="cust">3 items</span>
+              </div>
+              <div class="float-bag-items">
+                <div class="float-bag-item" data-v2-item="cust-paradym" data-v2-scope="cust" data-v2-price="128">
+                  <div class="float-bag-thumb driver">DR</div>
+                  <div class="float-bag-name">Paradym Driver</div>
+                  <div class="float-bag-price">£128</div>
+                  <button class="fb-remove" title="Remove" onclick="v2RemoveItem('cust-paradym')">×</button>
+                </div>
+                <div class="float-bag-item" data-v2-item="cust-p770" data-v2-scope="cust" data-v2-price="345">
+                  <div class="float-bag-thumb iron">IR</div>
+                  <div class="float-bag-name">P770 Irons</div>
+                  <div class="float-bag-price">£345</div>
+                  <button class="fb-remove" title="Remove" onclick="v2RemoveItem('cust-p770')">×</button>
+                </div>
+                <div class="float-bag-item" data-v2-item="cust-odyssey" data-v2-scope="cust" data-v2-price="72">
+                  <div class="float-bag-thumb putter">PT</div>
+                  <div class="float-bag-name">OG #7 Putter</div>
+                  <div class="float-bag-price">£72</div>
+                  <button class="fb-remove" title="Remove" onclick="v2RemoveItem('cust-odyssey')">×</button>
+                </div>
+              </div>
+              <div class="float-bag-total">
+                <span class="float-bag-total-label">Total</span>
+                <span class="float-bag-total-amount" data-v2-total="cust">£545</span>
+              </div>
+              <div class="float-bag-note">Or £600 as store credit (+10%)</div>
+            </aside>
+
             <div class="delivery-back" onclick="showScreen(5)">
               <svg width="13" height="13" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M10 3L5 8l5 5"/></svg>
               Back to offer
@@ -3470,7 +3523,40 @@ input[type="range"]::-webkit-slider-thumb {
 
         <!-- V2-SC7: Delivery Choice -->
         <div class="cust-screen" id="sc-v2-7">
-          <div class="delivery-wrap">
+          <div class="delivery-wrap entry-with-bag">
+
+            <aside class="float-bag" aria-label="Your quote so far">
+              <div class="float-bag-head">
+                <span class="float-bag-title">Your quote</span>
+                <span class="float-bag-count" data-v2-count="cust">3 items</span>
+              </div>
+              <div class="float-bag-items">
+                <div class="float-bag-item" data-v2-item="cust-paradym" data-v2-scope="cust" data-v2-price="128">
+                  <div class="float-bag-thumb driver">DR</div>
+                  <div class="float-bag-name">Paradym Driver</div>
+                  <div class="float-bag-price">£128</div>
+                  <button class="fb-remove" title="Remove" onclick="v2RemoveItem('cust-paradym')">×</button>
+                </div>
+                <div class="float-bag-item" data-v2-item="cust-p770" data-v2-scope="cust" data-v2-price="345">
+                  <div class="float-bag-thumb iron">IR</div>
+                  <div class="float-bag-name">P770 Irons</div>
+                  <div class="float-bag-price">£345</div>
+                  <button class="fb-remove" title="Remove" onclick="v2RemoveItem('cust-p770')">×</button>
+                </div>
+                <div class="float-bag-item" data-v2-item="cust-odyssey" data-v2-scope="cust" data-v2-price="72">
+                  <div class="float-bag-thumb putter">PT</div>
+                  <div class="float-bag-name">OG #7 Putter</div>
+                  <div class="float-bag-price">£72</div>
+                  <button class="fb-remove" title="Remove" onclick="v2RemoveItem('cust-odyssey')">×</button>
+                </div>
+              </div>
+              <div class="float-bag-total">
+                <span class="float-bag-total-label">Total</span>
+                <span class="float-bag-total-amount" data-v2-total="cust">£545</span>
+              </div>
+              <div class="float-bag-note">Or £600 as store credit (+10%)</div>
+            </aside>
+
             <div class="delivery-back" onclick="showScreen(6)">
               <svg width="13" height="13" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M10 3L5 8l5 5"/></svg>
               Back to payment method
@@ -3609,7 +3695,44 @@ input[type="range"]::-webkit-slider-thumb {
               <div class="dash-sidebar-item"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="8" cy="5" r="3"/><path d="M2 14c0-3 2.7-5 6-5s6 2 6 5"/></svg>Account details</div>
               <div class="dash-sidebar-item"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M10 8H2M6 5l-3 3 3 3"/><path d="M10 3h3a1 1 0 011 1v8a1 1 0 01-1 1h-3"/></svg>Log out</div>
             </div>
-            <div class="dash-main-area">
+            <div class="dash-main-area entry-with-bag">
+
+              <aside class="float-bag" aria-label="Your quote so far">
+                <div class="float-bag-head">
+                  <span class="float-bag-title">Your quote</span>
+                  <span class="float-bag-count" data-v2-count="cust">3 items</span>
+                </div>
+                <div class="float-bag-items">
+                  <div class="float-bag-item" data-v2-item="cust-paradym" data-v2-scope="cust" data-v2-price="128">
+                    <div class="float-bag-thumb driver">DR</div>
+                    <div class="float-bag-name">Paradym Driver</div>
+                    <div class="float-bag-price">£128</div>
+                    <button class="fb-remove" title="Remove" onclick="v2RemoveItem('cust-paradym')">×</button>
+                  </div>
+                  <div class="float-bag-item" data-v2-item="cust-p770" data-v2-scope="cust" data-v2-price="345">
+                    <div class="float-bag-thumb iron">IR</div>
+                    <div class="float-bag-name">P770 Irons</div>
+                    <div class="float-bag-price">£345</div>
+                    <button class="fb-remove" title="Remove" onclick="v2RemoveItem('cust-p770')">×</button>
+                  </div>
+                  <div class="float-bag-item" data-v2-item="cust-odyssey" data-v2-scope="cust" data-v2-price="72">
+                    <div class="float-bag-thumb putter">PT</div>
+                    <div class="float-bag-name">OG #7 Putter</div>
+                    <div class="float-bag-price">£72</div>
+                    <button class="fb-remove" title="Remove" onclick="v2RemoveItem('cust-odyssey')">×</button>
+                  </div>
+                </div>
+                <div class="float-bag-total">
+                  <span class="float-bag-total-label">Total</span>
+                  <span class="float-bag-total-amount" data-v2-total="cust">£545</span>
+                </div>
+                <button class="float-bag-add" onclick="showScreen(1)">
+                  <svg width="10" height="10" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M8 3v10M3 8h10"/></svg>
+                  Start a new quote
+                </button>
+                <div class="float-bag-note">Or £600 as store credit (+10%)</div>
+              </aside>
+
               <div class="dash-heading">Your Club Quotes</div>
               <div class="dash-sub">You have 3 quotes on file (including 1 multi-item bundle).</div>
 
@@ -4355,7 +4478,34 @@ input[type="range"]::-webkit-slider-thumb {
             </div>
             <span class="pro-rate-tag">Trade Rate: 25% margin</span>
           </div>
-          <div class="loading-wrap">
+          <div class="loading-wrap entry-with-bag">
+
+            <aside class="float-bag" aria-label="Trade-in bundle" style="text-align:left">
+              <div class="float-bag-head">
+                <span class="float-bag-title">Trade-in</span>
+                <span class="float-bag-count" data-v2-count="pga" data-v2-unit="club">2 clubs</span>
+              </div>
+              <div class="float-bag-items">
+                <div class="float-bag-item" data-v2-item="pga-paradym" data-v2-scope="pga" data-v2-price="159">
+                  <div class="float-bag-thumb driver">DR</div>
+                  <div class="float-bag-name">Paradym Driver</div>
+                  <div class="float-bag-price">£159</div>
+                  <button class="fb-remove" title="Remove" onclick="v2RemoveItem('pga-paradym')">×</button>
+                </div>
+                <div class="float-bag-item" data-v2-item="pga-g430" data-v2-scope="pga" data-v2-price="94">
+                  <div class="float-bag-thumb iron">HY</div>
+                  <div class="float-bag-name">G430 Hybrid</div>
+                  <div class="float-bag-price">£94</div>
+                  <button class="fb-remove" title="Remove" onclick="v2RemoveItem('pga-g430')">×</button>
+                </div>
+              </div>
+              <div class="float-bag-total">
+                <span class="float-bag-total-label">Total</span>
+                <span class="float-bag-total-amount" data-v2-total="pga">£253</span>
+              </div>
+              <div class="float-bag-note">Pro margin 25% · customer discount</div>
+            </aside>
+
             <div class="spinner-ring"></div>
             <div class="load-title">Valuing the clubs...</div>
             <div class="load-sub">Checking competitor sold prices and applying your 25% pro margin.<br>This usually takes 10–20 seconds.</div>
@@ -4496,7 +4646,37 @@ input[type="range"]::-webkit-slider-thumb {
             </div>
             <span class="pro-rate-tag">Trade Rate: 25% margin</span>
           </div>
-          <div class="cust-details-wrap">
+          <div class="cust-details-wrap entry-with-bag">
+
+            <aside class="float-bag" aria-label="Trade-in bundle">
+              <div class="float-bag-head">
+                <span class="float-bag-title">Trade-in</span>
+                <span class="float-bag-count" data-v2-count="pga" data-v2-unit="club">2 clubs</span>
+              </div>
+              <div class="float-bag-items">
+                <div class="float-bag-item" data-v2-item="pga-paradym" data-v2-scope="pga" data-v2-price="159">
+                  <div class="float-bag-thumb driver">DR</div>
+                  <div class="float-bag-name">Paradym Driver</div>
+                  <div class="float-bag-price">£159</div>
+                  <button class="fb-remove" title="Remove" onclick="v2RemoveItem('pga-paradym')">×</button>
+                </div>
+                <div class="float-bag-item" data-v2-item="pga-g430" data-v2-scope="pga" data-v2-price="94">
+                  <div class="float-bag-thumb iron">HY</div>
+                  <div class="float-bag-name">G430 Hybrid</div>
+                  <div class="float-bag-price">£94</div>
+                  <button class="fb-remove" title="Remove" onclick="v2RemoveItem('pga-g430')">×</button>
+                </div>
+              </div>
+              <div class="float-bag-total">
+                <span class="float-bag-total-label">Total</span>
+                <span class="float-bag-total-amount" data-v2-total="pga">£253</span>
+              </div>
+              <button class="float-bag-add" onclick="showScreen(4)">
+                <svg width="10" height="10" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M8 3v10M3 8h10"/></svg>
+                Add another club
+              </button>
+              <div class="float-bag-note">Pro margin 25% · customer discount</div>
+            </aside>
 
             <div style="background:#e8f3e7;border:1px solid #a8cda5;border-radius:var(--radius);padding:12px 16px;margin-bottom:20px;display:flex;align-items:center;justify-content:space-between;">
               <div>
@@ -4537,7 +4717,34 @@ input[type="range"]::-webkit-slider-thumb {
             </div>
             <span class="pro-rate-tag">Trade Rate: 25% margin</span>
           </div>
-          <div class="delivery-wrap">
+          <div class="delivery-wrap entry-with-bag">
+
+            <aside class="float-bag" aria-label="Trade-in bundle">
+              <div class="float-bag-head">
+                <span class="float-bag-title">Trade-in</span>
+                <span class="float-bag-count" data-v2-count="pga" data-v2-unit="club">2 clubs</span>
+              </div>
+              <div class="float-bag-items">
+                <div class="float-bag-item" data-v2-item="pga-paradym" data-v2-scope="pga" data-v2-price="159">
+                  <div class="float-bag-thumb driver">DR</div>
+                  <div class="float-bag-name">Paradym Driver</div>
+                  <div class="float-bag-price">£159</div>
+                  <button class="fb-remove" title="Remove" onclick="v2RemoveItem('pga-paradym')">×</button>
+                </div>
+                <div class="float-bag-item" data-v2-item="pga-g430" data-v2-scope="pga" data-v2-price="94">
+                  <div class="float-bag-thumb iron">HY</div>
+                  <div class="float-bag-name">G430 Hybrid</div>
+                  <div class="float-bag-price">£94</div>
+                  <button class="fb-remove" title="Remove" onclick="v2RemoveItem('pga-g430')">×</button>
+                </div>
+              </div>
+              <div class="float-bag-total">
+                <span class="float-bag-total-label">Total</span>
+                <span class="float-bag-total-amount" data-v2-total="pga">£253</span>
+              </div>
+              <div class="float-bag-note">Pro margin 25% · customer discount</div>
+            </aside>
+
             <div style="background:#e8f3e7;border:1px solid #a8cda5;border-radius:var(--radius);padding:10px 16px;margin-bottom:20px;display:flex;align-items:center;justify-content:space-between;">
               <div>
                 <div style="font-size:10px;font-weight:700;color:var(--green);text-transform:uppercase;letter-spacing:.5px;margin-bottom:2px">Trade-in recorded — £253</div>
@@ -5726,7 +5933,7 @@ var adminNavLabels = [
 var customerScreenDataV2 = [
   { label: 'V2 · Screen 1 of 12',  title: 'Log in screen',                desc: 'Same login as V1 — customers sign in to a single account that holds quotes from any data source (photos, dropdowns, both).',                                                                                                                                                                                                                                                       tags: [['Login',''], ['Same as V1','']] },
   { label: 'V2 · Screen 2 of 12',  title: 'Tell us about your club',      desc: 'UNIFIED entry — photos are optional. The seller drops in photos if they have them, then fills in as many structured fields as they can: Select a club, Select a brand, Model & year, an Additional Information block (handedness, headcover, clubs in set, flex, gender, loft, shaft material), condition slider, optional notes. More signal = sharper AI offer.', tags: [['Unified entry','green'], ['Photos optional','orange'], ['Additional info','blue']] },
-  { label: 'V2 · Screen 3 of 12',  title: 'Confirm item(s)',              desc: 'Combined confidence + multi-item handling. If AI confidence is below the threshold, we ask the user to pick the right model from multiple-choice. If two different clubs are detected in the photos, we ask whether to quote them as separate items or merge.',                                                                                                          tags: [['Confidence check','green'], ['Multi-item detect','blue']] },
+  { label: 'V2 · Screen 3 of 12',  title: 'Confirm item(s)',              desc: 'Multi-item handling only — model details already captured in the entry form. If two different clubs are detected in the photos, we ask whether to quote them as separate items or merge into one.',                                                                                                                                                            tags: [['Multi-item detect','blue']] },
   { label: 'V2 · Screen 4 of 12',  title: 'Items in your quote',          desc: 'Batch summary with running total, "add another", and a free-tracked-post progress bar (£50 threshold) that drives bundle-size up.',                                                                                                                                                                                                                                       tags: [['Batch quoting','green'], ['£50 free-post','orange'], ['Running total','blue']] },
   { label: 'V2 · Screen 5 of 12',  title: 'Valuing your items...',        desc: 'Loading copy names the data source explicitly (eBay UK sold prices, Golf Clubs for Cash, Golfbidder, re-playgolf) and the 40% buy-back margin. Featured product offers fill the 10–20s wait to drive engagement.',                                                                                                                                                         tags: [['Transparency','green'], ['Engagement offers','orange'], ['eBay benchmarks','blue']] },
   { label: 'V2 · Screen 6 of 12',  title: 'Instant offer (bundled)',      desc: 'Offer reveal with per-item breakdown above the total + a "How we priced this" link explaining the eBay-sold-comps + 40% margin logic.',                                                                                                                                                                                                                                   tags: [['Bundle total',''], ['Pricing transparency','green'], ['Countdown','blue']] },
@@ -5872,9 +6079,20 @@ function v2SetCondition(idx, panelId) {
 
 /* ── V2 remove-item (cascades across bag, batch list, offer breakdown) ───── */
 function v2RemoveItem(itemId) {
-  // Hide every DOM node tagged with this item id across every V2 screen
+  // Pull the item's display name from any visible node so the prompt is human-readable
   var nodes = document.querySelectorAll('[data-v2-item="' + itemId + '"]');
   if (!nodes.length) return;
+  var name = '';
+  for (var n = 0; n < nodes.length; n++) {
+    var nameEl = nodes[n].querySelector('.float-bag-name, .batch-item-name');
+    if (nameEl) { name = nameEl.textContent.trim(); break; }
+  }
+  var msg = name
+    ? 'Remove "' + name + '" from your quote?'
+    : 'Remove this item from your quote?';
+  if (!window.confirm(msg)) return;
+
+  // Hide every DOM node tagged with this item id across every V2 screen
   for (var i = 0; i < nodes.length; i++) {
     nodes[i].style.display = 'none';
   }
