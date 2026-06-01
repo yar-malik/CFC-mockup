@@ -3929,7 +3929,7 @@ input[type="range"]::-webkit-slider-thumb {
           </div>
         </div>
 
-        <!-- V2-PSC1: Upload Photos + structured details -->
+        <!-- V2-PSC1: Tell us about the club (unified — photos optional + structured + condition + extras) -->
         <div class="pga-screen" id="psc-v2-1">
           <div class="pro-account-bar">
             <div class="pro-account-bar-left">
@@ -3938,155 +3938,206 @@ input[type="range"]::-webkit-slider-thumb {
             </div>
             <span class="pro-rate-tag">Trade Rate: 25% margin</span>
           </div>
-          <div class="form-inner" style="padding-top:16px">
-            <div class="page-title" style="font-size:18px">Add a club to trade-in</div>
+          <div class="form-inner" style="padding:24px">
+            <div class="page-title" style="font-size:18px;margin-bottom:4px">Add a club to trade-in</div>
+            <div style="font-size:12px;color:var(--mid);margin-bottom:18px">Photos help most — but they're not required. Fill in what you can; everything you tell us sharpens the AI's trade-in value at your pro margin.</div>
 
-            <div class="manual-tabs">
-              <button class="manual-tab active">📷 Photos + AI</button>
-              <button class="manual-tab" onclick="showScreen(2)">📝 Structured entry</button>
-            </div>
-
-            <div class="drop-zone" style="padding:18px">
-              <div class="dz-icon-wrap"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#E8491D" stroke-width="1.5"><rect x="2" y="4" width="20" height="16" rx="2"/><circle cx="8" cy="10" r="2"/><path d="M2 18l5-5 4 4 3-3 8 8"/></svg></div>
-              <div class="dz-title">Drop club photos here</div>
-              <div class="dz-sub">or click to browse — up to 5 photos</div>
-              <button class="photo-lib-btn" style="margin-top:10px"><svg width="13" height="13" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="1" y="3" width="14" height="11" rx="1.5"/><circle cx="6" cy="7" r="1.5"/><path d="M1 12l4-4 4 4 3-3 3 3"/></svg>Photo Library</button>
-            </div>
-
-            <div style="font-size:11px;color:var(--mid);margin:6px 0 14px;text-align:center">
-              Tip: If photos aren't clear, switch to <span style="color:var(--orange);cursor:pointer;text-decoration:underline" onclick="showScreen(2)">structured entry</span> for guaranteed accuracy.
-            </div>
-
-            <button class="add-another-row" onclick="showScreen(5)">
-              <svg width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 3v10M3 8h10"/></svg>
-              Add another club to this trade-in
-            </button>
-
-            <button class="cta-btn" onclick="showScreen(3)">GET INSTANT TRADE-IN VALUE →</button>
-            <div class="cta-note">Trade-in value to deduct from customer's new purchase price</div>
-          </div>
-        </div>
-
-        <!-- V2-PSC2: Structured entry (AI fallback) -->
-        <div class="pga-screen" id="psc-v2-2">
-          <div class="pro-account-bar">
-            <div class="pro-account-bar-left">
-              <span class="pro-badge-pill"><svg width="10" height="10" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 1l2 5h5l-4 3 1.5 5L8 11l-4.5 3L5 9 1 6h5z"/></svg>PGA Pro</span>
-              <span class="pro-account-name">J. McAllister — Chippenham Golf Club</span>
-            </div>
-            <span class="pro-rate-tag">Trade Rate: 25% margin</span>
-          </div>
-          <div class="manual-form-wrap">
-            <div class="page-title" style="font-size:18px;margin-bottom:6px">Structured club details</div>
-
-            <div class="pga-fallback-notice">
-              <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.7" style="flex-shrink:0;margin-top:1px"><circle cx="8" cy="8" r="7"/><path d="M8 5v4M8 11h.01"/></svg>
-              <div>
-                <strong>AI couldn't identify the club confidently</strong>
-                Use the dropdowns below to lock in exact specs — guarantees an accurate trade-in value at your margin.
+            <!-- Compact drop zone -->
+            <div class="compact-drop-zone">
+              <div class="cdz-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#E8491D" stroke-width="1.7"><rect x="2" y="4" width="20" height="16" rx="2"/><circle cx="8" cy="10" r="2"/><path d="M2 18l5-5 4 4 3-3 8 8"/></svg></div>
+              <div class="cdz-body">
+                <div class="cdz-title">Add photos <span style="font-weight:400;color:var(--muted);font-size:11px">— optional but recommended</span></div>
+                <div class="cdz-sub">drag &amp; drop or click to browse · up to 5</div>
               </div>
+              <div class="cdz-thumbs">
+                <div class="cdz-thumb"></div>
+                <div class="cdz-thumb"></div>
+                <div class="cdz-thumb"></div>
+              </div>
+              <button class="cdz-btn">+ Add</button>
             </div>
+            <div style="font-size:11px;color:var(--green);font-weight:700;margin-bottom:14px">✓ 3 photos added</div>
 
-            <div class="manual-tabs">
-              <button class="manual-tab" onclick="showScreen(1)">📷 Photos + AI</button>
-              <button class="manual-tab active">📝 Structured entry</button>
-            </div>
-
+            <!-- Primary structured fields -->
             <div class="field-row">
               <div>
-                <label class="field-label-v2">Club type</label>
+                <label class="field-label-v2">Select a club</label>
                 <select class="field-select-v2">
+                  <option value="">— pick a category —</option>
                   <option>Driver</option>
                   <option>Fairway wood</option>
                   <option>Hybrid</option>
-                  <option>Iron set</option>
+                  <option>Individual iron</option>
+                  <option>Irons (set)</option>
                   <option>Wedge</option>
                   <option>Putter</option>
+                  <option>Package set</option>
+                  <option>Golf bags</option>
+                  <option>GPS / rangefinder</option>
+                  <option>Launch monitor</option>
                 </select>
               </div>
               <div>
-                <label class="field-label-v2">Brand / Make</label>
+                <label class="field-label-v2">Select a brand</label>
                 <select class="field-select-v2">
-                  <option>Callaway</option>
+                  <option value="">— pick a brand —</option>
                   <option>TaylorMade</option>
+                  <option>Callaway</option>
                   <option>Titleist</option>
                   <option>Ping</option>
                   <option>Cobra</option>
                   <option>Mizuno</option>
+                  <option>Cleveland</option>
                   <option>Wilson</option>
+                  <option>Srixon</option>
+                  <option>Odyssey</option>
+                  <option>Scotty Cameron</option>
+                  <option>PXG</option>
+                  <option>Honma</option>
+                  <option>Bridgestone</option>
+                  <option>Other / Not sure</option>
                 </select>
               </div>
             </div>
 
-            <div class="field-row">
+            <div class="field-row single">
               <div>
-                <label class="field-label-v2">Model</label>
-                <select class="field-select-v2">
-                  <option>Paradym</option>
-                  <option>Paradym X</option>
-                  <option>Rogue ST Max</option>
-                  <option>Epic Speed</option>
-                  <option>Other</option>
-                </select>
-              </div>
-              <div>
-                <label class="field-label-v2">Year</label>
-                <select class="field-select-v2">
-                  <option>2024</option>
-                  <option selected>2023</option>
-                  <option>2022</option>
-                  <option>2021</option>
-                </select>
+                <label class="field-label-v2">Model &amp; year <span style="font-weight:400;text-transform:none;letter-spacing:0;color:var(--muted)">(optional)</span></label>
+                <input class="field-input-v2" type="text" placeholder="e.g. Paradym 2023">
               </div>
             </div>
 
-            <div class="field-row">
-              <div>
-                <label class="field-label-v2">Condition</label>
-                <select class="field-select-v2">
-                  <option>Like new</option>
-                  <option>Very good</option>
-                  <option selected>Good</option>
-                  <option>Fair</option>
-                </select>
+            <!-- Condition slider -->
+            <div class="section-divider">
+              <div class="section-label-lite">Condition</div>
+            </div>
+            <div class="condition-slider-wrap lite">
+              <div class="condition-track-wrap">
+                <div class="condition-track"><div class="condition-track-fill" style="width:50%"></div></div>
+                <div class="condition-dots">
+                  <div class="condition-dot active-prior" onclick="v2SetCondition(0, 'psc-v2-1')"></div>
+                  <div class="condition-dot active-prior" onclick="v2SetCondition(1, 'psc-v2-1')"></div>
+                  <div class="condition-dot active"       onclick="v2SetCondition(2, 'psc-v2-1')"></div>
+                  <div class="condition-dot"              onclick="v2SetCondition(3, 'psc-v2-1')"></div>
+                  <div class="condition-dot"              onclick="v2SetCondition(4, 'psc-v2-1')"></div>
+                </div>
               </div>
-              <div>
-                <label class="field-label-v2">Dexterity</label>
-                <select class="field-select-v2">
-                  <option>Right-handed</option>
-                  <option>Left-handed</option>
-                </select>
+              <div class="condition-labels">
+                <div class="condition-label"        onclick="v2SetCondition(0, 'psc-v2-1')">Poor</div>
+                <div class="condition-label"        onclick="v2SetCondition(1, 'psc-v2-1')">Fair</div>
+                <div class="condition-label active" onclick="v2SetCondition(2, 'psc-v2-1')">Good</div>
+                <div class="condition-label"        onclick="v2SetCondition(3, 'psc-v2-1')">Excellent</div>
+                <div class="condition-label"        onclick="v2SetCondition(4, 'psc-v2-1')">As New</div>
+              </div>
+              <div class="condition-desc-card">
+                <strong>Good</strong> — Minimal / no marks to topline. Minimal cosmetic marks to head / crown. Usual play marks on the face and sole. Steel shafts may have slight cosmetic wear, no rust spots. Graphite shafts may show light scratching to graphics.
               </div>
             </div>
 
-            <div class="field-row">
-              <div>
-                <label class="field-label-v2">Shaft flex</label>
-                <select class="field-select-v2">
-                  <option>Stiff</option>
-                  <option>Regular</option>
-                  <option>Senior</option>
-                  <option>Ladies</option>
-                </select>
+            <!-- Additional information — collapsed by default, tinted panel -->
+            <div style="margin-top:18px"></div>
+            <div class="additional-toggle" onclick="v2ToggleAdditional('psc-v2-1')">
+              <div class="additional-toggle-left">
+                <span class="additional-toggle-plus">+</span>
+                <div class="additional-toggle-text">
+                  <div class="additional-toggle-title">Additional information</div>
+                  <div class="additional-toggle-hint">handedness, headcover, clubs in set, flex, gender, loft, shaft material</div>
+                </div>
               </div>
-              <div>
-                <label class="field-label-v2">Loft / length</label>
-                <input class="field-input-v2" type="text" placeholder="e.g. 10.5°">
+              <svg class="additional-toggle-chevron" width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 6l4 4 4-4"/></svg>
+            </div>
+            <div class="additional-panel">
+              <div class="field-row">
+                <div>
+                  <label class="field-label-v2">Right / Left handed</label>
+                  <select class="field-select-v2">
+                    <option value="">not selected</option>
+                    <option selected>Right</option>
+                    <option>Left</option>
+                  </select>
+                </div>
+                <div>
+                  <label class="field-label-v2">Headcover</label>
+                  <select class="field-select-v2">
+                    <option value="">not selected</option>
+                    <option>Yes</option>
+                    <option selected>No</option>
+                  </select>
+                </div>
+              </div>
+              <div class="field-row">
+                <div>
+                  <label class="field-label-v2">Clubs in set <span style="font-weight:400;text-transform:none;letter-spacing:0;color:var(--muted)">(if a set)</span></label>
+                  <select class="field-select-v2">
+                    <option value="">not selected</option>
+                    <option>3</option><option>4</option><option>5</option>
+                    <option>6</option><option>7</option><option>8</option>
+                    <option>9</option><option>10</option><option>11</option>
+                    <option>12</option><option>13</option><option>14</option>
+                  </select>
+                </div>
+                <div>
+                  <label class="field-label-v2">Flex</label>
+                  <select class="field-select-v2">
+                    <option value="">not selected</option>
+                    <option>Extra Stiff</option>
+                    <option>Stiff</option>
+                    <option>Regular</option>
+                    <option>Senior</option>
+                    <option>Ladies</option>
+                    <option>Junior</option>
+                  </select>
+                </div>
+              </div>
+              <div class="field-row">
+                <div>
+                  <label class="field-label-v2">Gender</label>
+                  <select class="field-select-v2">
+                    <option value="">not selected</option>
+                    <option selected>Mens</option>
+                    <option>Womens</option>
+                    <option>Junior</option>
+                    <option>Unisex</option>
+                  </select>
+                </div>
+                <div>
+                  <label class="field-label-v2">Loft</label>
+                  <input class="field-input-v2" type="text" placeholder="e.g. 10.5° or 56°/12°">
+                </div>
+              </div>
+              <div class="field-row single">
+                <div>
+                  <label class="field-label-v2">Shaft material</label>
+                  <select class="field-select-v2">
+                    <option value="">not selected</option>
+                    <option>Steel</option>
+                    <option>Graphite</option>
+                    <option>Multi-material</option>
+                    <option>Don't know</option>
+                  </select>
+                </div>
               </div>
             </div>
 
-            <button class="add-another-row" onclick="showScreen(5)">
+            <!-- Notes — light -->
+            <div class="section-divider">
+              <div class="section-label-lite">Notes <span class="lite-note">— optional</span></div>
+              <textarea class="desc-box" placeholder="e.g. minor sky mark on crown, otherwise mint — customer's been gaming since 2023"></textarea>
+              <div class="char-count">0 / 300</div>
+            </div>
+
+            <button class="add-another-row" onclick="showScreen(4)">
               <svg width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 3v10M3 8h10"/></svg>
               Add another club to this trade-in
             </button>
 
-            <button class="cta-btn" onclick="showScreen(3)" style="background:var(--green)">GET INSTANT TRADE-IN VALUE →</button>
-            <div class="cta-note">No AI guessing — uses your dropdown selections directly</div>
+            <button class="cta-btn" onclick="showScreen(2)" style="background:var(--green)">GET INSTANT TRADE-IN VALUE →</button>
+            <div class="cta-note">Trade-in value to deduct from customer's new purchase price</div>
           </div>
         </div>
 
-        <!-- V2-PSC3: Valuing -->
-        <div class="pga-screen" id="psc-v2-3">
+        <!-- V2-PSC2: Valuing -->
+        <div class="pga-screen" id="psc-v2-2">
           <div class="pro-account-bar">
             <div class="pro-account-bar-left">
               <span class="pro-badge-pill"><svg width="10" height="10" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 1l2 5h5l-4 3 1.5 5L8 11l-4.5 3L5 9 1 6h5z"/></svg>PGA Pro</span>
@@ -4097,18 +4148,41 @@ input[type="range"]::-webkit-slider-thumb {
           <div class="loading-wrap">
             <div class="spinner-ring"></div>
             <div class="load-title">Valuing the clubs...</div>
-            <div class="load-sub">Checking live market prices at your trade rate.<br>This usually takes less than 60 seconds.</div>
+            <div class="load-sub">Checking competitor sold prices and applying your 25% pro margin.<br>This usually takes 10–20 seconds.</div>
             <div class="load-steps">
-              <div class="load-step done-step"><div class="ldot done"></div>Reading club details (structured + AI)</div>
+              <div class="load-step done-step"><div class="ldot done"></div>Reading club details (photos + structured + extras)</div>
               <div class="load-step done-step"><div class="ldot done"></div>Identifying each item</div>
-              <div class="load-step active-step"><div class="ldot active"></div>Checking second-hand market value</div>
-              <div class="load-step"><div class="ldot"></div>Calculating trade-in at your rate (25%)</div>
+              <div class="load-step active-step"><div class="ldot active"></div>Checking eBay UK sold prices · Golf Clubs for Cash, Golfbidder, re-playgolf</div>
+              <div class="load-step"><div class="ldot"></div>Applying your 25% pro margin to the trade-in value</div>
+            </div>
+
+            <!-- Featured deals during the 10–20s wait -->
+            <div class="loading-offers">
+              <div class="loading-offers-title">While we work — Featured trade partners</div>
+              <div class="loading-offers-grid">
+                <div class="loading-offer-card">
+                  <div class="loading-offer-img">🏌️</div>
+                  <div class="loading-offer-title">New TaylorMade Qi10</div>
+                  <div class="loading-offer-tag">PRO 20% OFF</div>
+                </div>
+                <div class="loading-offer-card">
+                  <div class="loading-offer-img">⛳</div>
+                  <div class="loading-offer-title">Lesson packages</div>
+                  <div class="loading-offer-tag">PRO RATES</div>
+                </div>
+                <div class="loading-offer-card">
+                  <div class="loading-offer-img">🎒</div>
+                  <div class="loading-offer-title">Stand bag bundles</div>
+                  <div class="loading-offer-tag">£20 OFF</div>
+                </div>
+              </div>
+              <div style="font-size:11px;color:var(--muted);text-align:center;margin-top:10px">Suggest these to your customer alongside the trade-in deduction</div>
             </div>
           </div>
         </div>
 
-        <!-- V2-PSC4: Trade-in Value -->
-        <div class="pga-screen" id="psc-v2-4">
+        <!-- V2-PSC3: Trade-in Value -->
+        <div class="pga-screen" id="psc-v2-3">
           <div class="pro-account-bar">
             <div class="pro-account-bar-left">
               <span class="pro-badge-pill"><svg width="10" height="10" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 1l2 5h5l-4 3 1.5 5L8 11l-4.5 3L5 9 1 6h5z"/></svg>PGA Pro</span>
@@ -4135,14 +4209,14 @@ input[type="range"]::-webkit-slider-thumb {
               <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="8" cy="8" r="7"/><path d="M8 4v4l2.5 2"/></svg>
               Value valid for <span class="expiry-bold">23h 59m 55s</span>
             </div>
-            <button class="cta-btn" onclick="showScreen(5)" style="background:var(--green)">USE THIS TRADE-IN VALUE →</button>
+            <button class="cta-btn" onclick="showScreen(4)" style="background:var(--green)">USE THIS TRADE-IN VALUE →</button>
             <div class="decline-link">No thanks, cancel this trade-in</div>
             <div class="no-commit">Add more clubs on the next step, or proceed to record the trade-in.</div>
           </div>
         </div>
 
-        <!-- V2-PSC5: Trade-in batch (multiple clubs for this customer) -->
-        <div class="pga-screen" id="psc-v2-5">
+        <!-- V2-PSC4: Trade-in batch (multiple clubs for this customer) -->
+        <div class="pga-screen" id="psc-v2-4">
           <div class="pro-account-bar">
             <div class="pro-account-bar-left">
               <span class="pro-badge-pill"><svg width="10" height="10" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 1l2 5h5l-4 3 1.5 5L8 11l-4.5 3L5 9 1 6h5z"/></svg>PGA Pro</span>
@@ -4195,13 +4269,13 @@ input[type="range"]::-webkit-slider-thumb {
               <div class="batch-total-amount">£253</div>
             </div>
 
-            <button class="cta-btn" onclick="showScreen(6)" style="background:var(--green)">CONTINUE — RECORD TRADE-IN →</button>
+            <button class="cta-btn" onclick="showScreen(5)" style="background:var(--green)">CONTINUE — RECORD TRADE-IN →</button>
             <div class="cta-note">Customer pays £253 less on their new purchase</div>
           </div>
         </div>
 
-        <!-- V2-PSC6: Record Trade-in -->
-        <div class="pga-screen" id="psc-v2-6">
+        <!-- V2-PSC5: Record Trade-in -->
+        <div class="pga-screen" id="psc-v2-5">
           <div class="pro-account-bar">
             <div class="pro-account-bar-left">
               <span class="pro-badge-pill">
@@ -4239,13 +4313,13 @@ input[type="range"]::-webkit-slider-thumb {
             <div class="login-field-label">Customer Phone <span style="font-weight:400;text-transform:none;letter-spacing:0;color:var(--muted)">(optional)</span></div>
             <input class="login-input" type="tel" placeholder="07700 900123" style="margin-bottom:20px">
 
-            <button class="cta-btn" onclick="showScreen(7)" style="background:var(--green)">CONFIRM TRADE-IN — ADD TO BATCH →</button>
+            <button class="cta-btn" onclick="showScreen(6)" style="background:var(--green)">CONFIRM TRADE-IN — ADD TO BATCH →</button>
             <div class="cta-note">No email sent to customer — CFC pays you directly</div>
           </div>
         </div>
 
-        <!-- V2-PSC7: Send to CFC -->
-        <div class="pga-screen" id="psc-v2-7">
+        <!-- V2-PSC6: Send to CFC -->
+        <div class="pga-screen" id="psc-v2-6">
           <div class="pro-account-bar">
             <div class="pro-account-bar-left">
               <span class="pro-badge-pill"><svg width="10" height="10" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 1l2 5h5l-4 3 1.5 5L8 11l-4.5 3L5 9 1 6h5z"/></svg>PGA Pro</span>
@@ -4263,7 +4337,7 @@ input[type="range"]::-webkit-slider-thumb {
             </div>
             <div class="delivery-title">How will you send these to CFC?</div>
             <div class="delivery-sub">You collect the clubs from your customer. Choose how you'll get them to Cash Fore Clubs.</div>
-            <div class="delivery-card" onclick="showScreen(8)">
+            <div class="delivery-card" onclick="showScreen(7)">
               <div class="dc-icon"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="var(--green)" stroke-width="1.5"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/><path d="M2 10h20"/></svg></div>
               <div class="dc-body">
                 <div class="dc-title">Add to My Next Batch</div>
@@ -4271,7 +4345,7 @@ input[type="range"]::-webkit-slider-thumb {
               </div>
               <svg class="dc-arrow" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--green)" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
             </div>
-            <div class="delivery-card" onclick="showScreen(9)">
+            <div class="delivery-card" onclick="showScreen(8)">
               <div class="dc-icon"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="var(--orange)" stroke-width="1.5"><rect x="1" y="3" width="15" height="13" rx="2"/><path d="M16 8h4l3 5v4h-7V8z"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg></div>
               <div class="dc-body">
                 <div class="dc-title">Post These Clubs Now</div>
@@ -4282,8 +4356,8 @@ input[type="range"]::-webkit-slider-thumb {
           </div>
         </div>
 
-        <!-- V2-PSC8: Confirmed — Batch -->
-        <div class="pga-screen" id="psc-v2-8">
+        <!-- V2-PSC7: Confirmed — Batch -->
+        <div class="pga-screen" id="psc-v2-7">
           <div class="pro-account-bar">
             <div class="pro-account-bar-left">
               <span class="pro-badge-pill"><svg width="10" height="10" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 1l2 5h5l-4 3 1.5 5L8 11l-4.5 3L5 9 1 6h5z"/></svg>PGA Pro</span>
@@ -4314,8 +4388,8 @@ input[type="range"]::-webkit-slider-thumb {
           </div>
         </div>
 
-        <!-- V2-PSC9: Confirmed — Post Now -->
-        <div class="pga-screen" id="psc-v2-9">
+        <!-- V2-PSC8: Confirmed — Post Now -->
+        <div class="pga-screen" id="psc-v2-8">
           <div class="pro-account-bar">
             <div class="pro-account-bar-left">
               <span class="pro-badge-pill"><svg width="10" height="10" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 1l2 5h5l-4 3 1.5 5L8 11l-4.5 3L5 9 1 6h5z"/></svg>PGA Pro</span>
@@ -5455,16 +5529,15 @@ var customerScreenDataV2 = [
 ];
 
 var pgaScreenDataV2 = [
-  { label: 'V2 · Screen 1 of 10',  title: 'PGA Pro Login',                desc: 'Same login as V1 — the pro authenticates into their trade portal.',                                                                                                                                                                    tags: [['Trade portal',''], ['Same as V1','']] },
-  { label: 'V2 · Screen 2 of 10',  title: 'Add a club (Photos + AI)',      desc: 'Upload route — same as V1, but a tab now lets the pro switch to structured entry for any club where photos aren\'t clear. Multi-item button bundles several clubs into one trade-in.',                                                tags: [['Photos + AI',''], ['Method tabs','green'], ['Multi-item','blue']] },
-  { label: 'V2 · Screen 3 of 10',  title: 'Structured entry (dropdowns)', desc: 'NEW — drop-downs for club type, brand, model, year, condition, dexterity, shaft, loft. The fallback when AI can\'t confidently identify the club. No guessing — locks in exact specs at the pro margin.',                              tags: [['NEW screen','orange'], ['Dropdowns','green'], ['AI fallback','blue']] },
-  { label: 'V2 · Screen 4 of 10',  title: 'Valuing... (Pro)',             desc: 'Same loading state — first step now reads "Reading club details (structured + AI)" to reflect the dual-input model.',                                                                                                                  tags: [['AI analysis',''], ['Trade margin','green']] },
-  { label: 'V2 · Screen 5 of 10',  title: 'Trade-in Value',               desc: 'Same big-price reveal at the pro margin. The CTA leads to the batch list (instead of straight to customer details) so the pro can add more clubs.',                                                                                   tags: [['Trade-in value','green'], ['Pro margin','orange']] },
-  { label: 'V2 · Screen 6 of 10',  title: 'Trade-in batch list',          desc: 'NEW — list of clubs being traded for this single customer. Each row shows whether the club came from photos (AI %) or structured entry. Running trade-in total includes the pro margin.',                                              tags: [['NEW screen','orange'], ['Batch trade-in','green'], ['Mixed sources','blue']] },
-  { label: 'V2 · Screen 7 of 10',  title: 'Record Trade-in',              desc: 'Same as V1 — internal record only, CFC pays the pro directly. Confirms the bundled trade-in amount.',                                                                                                                                  tags: [['Pro records only',''], ['CFC pays pro','green']] },
-  { label: 'V2 · Screen 8 of 10',  title: 'Send to CFC',                  desc: 'Choose batch or post-now for the whole bundle.',                                                                                                                                                                                       tags: [['Batch option','green'], ['Post now','orange']] },
-  { label: 'V2 · Screen 9 of 10',  title: 'Confirmed — Batch',            desc: '"2 clubs added to your batch" — confirmation reflects the bundle. Same 3-step what-next walkthrough.',                                                                                                                                tags: [['Batch model','green'], ['Bundle','']] },
-  { label: 'V2 · Screen 10 of 10', title: 'Confirmed — Post Now',         desc: 'Postage label emailed to the pro for the bundle. Same flow as V1, multi-club wording.',                                                                                                                                                tags: [['Label to pro','orange'], ['Bundle dispatch','green']] }
+  { label: 'V2 · Screen 1 of 9', title: 'PGA Pro Login',          desc: 'Same login as V1 — the pro authenticates into their trade portal.',                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          tags: [['Trade portal',''], ['Same as V1','']] },
+  { label: 'V2 · Screen 2 of 9', title: 'Tell us about the club', desc: 'UNIFIED entry mirrored from the Customer flow. Photos are optional. The pro fills in as many structured fields as they can: Select a club, Select a brand, Model & year, condition slider (Poor → As New), and a collapsible Additional information block (handedness, headcover, clubs in set, flex, gender, loft, shaft material). More signal = sharper trade-in value at the pro margin. Replaces the old two-screen Photos / Structured split.',                                                                                                                                tags: [['Unified entry','green'], ['Photos optional','orange'], ['Additional info','blue']] },
+  { label: 'V2 · Screen 3 of 9', title: 'Valuing... (Pro)',       desc: 'Loading copy names the eBay UK sold-comp sources (Golf Clubs for Cash, Golfbidder, re-playgolf) and the pro\'s 25% margin. Featured trade-partner offers fill the 10–20s wait so the pro can suggest add-ons to their customer.',                                                                                                                                                                                                                                                                                                                                       tags: [['Transparency','green'], ['Pro margin step','orange'], ['Featured deals','blue']] },
+  { label: 'V2 · Screen 4 of 9', title: 'Trade-in Value',         desc: 'Big-price reveal at the pro margin. CTA leads to the batch list so the pro can add more clubs before recording.',                                                                                                                                                                                                                                                                                                                                                                                                                                                       tags: [['Trade-in value','green'], ['Pro margin','orange']] },
+  { label: 'V2 · Screen 5 of 9', title: 'Trade-in batch list',    desc: 'List of clubs being traded for this single customer. Each row shows whether the club came from photos (AI %) or structured entry. Running trade-in total includes the pro margin.',                                                                                                                                                                                                                                                                                                                                                                                    tags: [['Batch trade-in','green'], ['Mixed sources','blue']] },
+  { label: 'V2 · Screen 6 of 9', title: 'Record Trade-in',        desc: 'Internal record only — CFC pays the pro directly. Confirms the bundled trade-in amount.',                                                                                                                                                                                                                                                                                                                                                                                                                                                                              tags: [['Pro records only',''], ['CFC pays pro','green']] },
+  { label: 'V2 · Screen 7 of 9', title: 'Send to CFC',            desc: 'Choose batch or post-now for the whole bundle.',                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        tags: [['Batch option','green'], ['Post now','orange']] },
+  { label: 'V2 · Screen 8 of 9', title: 'Confirmed — Batch',      desc: '"2 clubs added to your batch" — confirmation reflects the bundle. Same 3-step what-next walkthrough.',                                                                                                                                                                                                                                                                                                                                                                                                                                                                  tags: [['Batch model','green'], ['Bundle','']] },
+  { label: 'V2 · Screen 9 of 9', title: 'Confirmed — Post Now',   desc: 'Postage label emailed to the pro for the bundle. Same flow as V1, multi-club wording.',                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  tags: [['Label to pro','orange'], ['Bundle dispatch','green']] }
 ];
 
 var customerNavLabelsV2 = [
@@ -5474,9 +5547,9 @@ var customerNavLabelsV2 = [
   '11. My quotes (awaiting bank)', '12. Secure bank entry'
 ];
 var pgaNavLabelsV2 = [
-  '1. Pro Login', '2. Photos + AI', '3. Structured entry',
-  '4. Valuing…', '5. Trade-in Value', '6. Items in trade-in',
-  '7. Record Trade-in', '8. Send to CFC', '9. Confirmed – Batch', '10. Confirmed – Post Now'
+  '1. Pro Login', '2. Tell us about the club', '3. Valuing…',
+  '4. Trade-in Value', '5. Items in trade-in', '6. Record Trade-in',
+  '7. Send to CFC', '8. Confirmed – Batch', '9. Confirmed – Post Now'
 ];
 
 /* ── renderNav ───────────────────────────────────────────────────────────── */
@@ -5565,8 +5638,8 @@ var V2_CONDITIONS = [
   { name: 'As New',    desc: 'Indistinguishable from new. No play marks anywhere. Original packaging or near-original condition. Shafts and grips look unused.' }
 ];
 
-function v2SetCondition(idx) {
-  var sc   = document.getElementById('sc-v2-1');  // unified entry screen
+function v2SetCondition(idx, panelId) {
+  var sc = document.getElementById(panelId || 'sc-v2-1');  // defaults to customer unified entry
   if (!sc) return;
   var dots   = sc.querySelectorAll('.condition-dot');
   var labels = sc.querySelectorAll('.condition-label');
@@ -5578,9 +5651,9 @@ function v2SetCondition(idx) {
   for (var j = 0; j < labels.length; j++) {
     labels[j].classList.toggle('active', j === idx);
   }
-  var fill = document.getElementById('v2-cond-fill');
+  var fill = sc.querySelector('.condition-track-fill');
   if (fill) fill.style.width = ((idx / 4) * 100) + '%';
-  var desc = document.getElementById('v2-cond-desc');
+  var desc = sc.querySelector('.condition-desc-card');
   if (desc) {
     var c = V2_CONDITIONS[idx];
     desc.innerHTML = '<strong>' + c.name + '</strong> — ' + c.desc;
@@ -5588,9 +5661,11 @@ function v2SetCondition(idx) {
 }
 
 /* ── V2 Additional-info collapsible panel ────────────────────────────────── */
-function v2ToggleAdditional() {
-  var toggle = document.getElementById('v2-additional-toggle');
-  var panel  = document.getElementById('v2-additional-panel');
+function v2ToggleAdditional(panelId) {
+  var sc = document.getElementById(panelId || 'sc-v2-1');
+  if (!sc) return;
+  var toggle = sc.querySelector('.additional-toggle');
+  var panel  = sc.querySelector('.additional-panel');
   if (!toggle || !panel) return;
   var open = !panel.classList.contains('open');
   toggle.classList.toggle('open', open);
