@@ -739,6 +739,81 @@ body {
 }
 .cdz-btn:hover { color: var(--orange); border-color: var(--orange); }
 
+/* ─── V2 — Additional info: collapsible, tinted panel ─── */
+.additional-toggle {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: #f7f7f8;
+  border: 1px solid #ececee;
+  border-radius: var(--radius);
+  padding: 11px 14px;
+  cursor: pointer;
+  transition: background .15s, border-color .15s;
+  margin-bottom: 14px;
+  user-select: none;
+}
+.additional-toggle:hover { background: #f0f0f2; }
+.additional-toggle.open {
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+  margin-bottom: 0;
+  border-bottom-color: transparent;
+}
+.additional-toggle-left {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-width: 0;
+}
+.additional-toggle-plus {
+  width: 18px; height: 18px;
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  color: var(--orange);
+  font-weight: 700;
+  font-size: 13px;
+  line-height: 1;
+  flex-shrink: 0;
+  transition: transform .2s;
+}
+.additional-toggle.open .additional-toggle-plus { transform: rotate(45deg); }
+.additional-toggle-text { min-width: 0; }
+.additional-toggle-title {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--dark);
+  text-transform: uppercase;
+  letter-spacing: .4px;
+}
+.additional-toggle-hint {
+  font-size: 11px;
+  color: var(--muted);
+  margin-top: 1px;
+}
+.additional-toggle-chevron {
+  color: var(--mid);
+  transition: transform .2s;
+  flex-shrink: 0;
+}
+.additional-toggle.open .additional-toggle-chevron { transform: rotate(180deg); }
+
+.additional-panel {
+  display: none;
+  background: #f7f7f8;
+  border: 1px solid #ececee;
+  border-top: none;
+  border-bottom-left-radius: var(--radius);
+  border-bottom-right-radius: var(--radius);
+  padding: 4px 14px 14px;
+  margin-bottom: 14px;
+}
+.additional-panel.open { display: block; }
+.additional-panel .field-row { margin-top: 10px; margin-bottom: 0; }
+.additional-panel .field-row:first-child { margin-top: 4px; }
+
 /* ─── V2 — Light section dividers ─── */
 .section-divider {
   margin: 18px 0 12px;
@@ -2750,82 +2825,7 @@ input[type="range"]::-webkit-slider-thumb {
               </div>
             </div>
 
-            <!-- Additional information — light, no card border -->
-            <div class="section-divider">
-              <div class="section-label-lite">Additional information <span class="lite-note">— fill what you can</span></div>
-            </div>
-            <div class="field-row">
-              <div>
-                <label class="field-label-v2">Right / Left handed</label>
-                <select class="field-select-v2">
-                  <option value="">not selected</option>
-                  <option selected>Right</option>
-                  <option>Left</option>
-                </select>
-              </div>
-              <div>
-                <label class="field-label-v2">Headcover</label>
-                <select class="field-select-v2">
-                  <option value="">not selected</option>
-                  <option>Yes</option>
-                  <option selected>No</option>
-                </select>
-              </div>
-            </div>
-            <div class="field-row">
-              <div>
-                <label class="field-label-v2">Clubs in set <span style="font-weight:400;text-transform:none;letter-spacing:0;color:var(--muted)">(if a set)</span></label>
-                <select class="field-select-v2">
-                  <option value="">not selected</option>
-                  <option>3</option><option>4</option><option>5</option>
-                  <option>6</option><option>7</option><option>8</option>
-                  <option>9</option><option>10</option><option>11</option>
-                  <option>12</option><option>13</option><option>14</option>
-                </select>
-              </div>
-              <div>
-                <label class="field-label-v2">Flex</label>
-                <select class="field-select-v2">
-                  <option value="">not selected</option>
-                  <option>Extra Stiff</option>
-                  <option>Stiff</option>
-                  <option>Regular</option>
-                  <option>Senior</option>
-                  <option>Ladies</option>
-                  <option>Junior</option>
-                </select>
-              </div>
-            </div>
-            <div class="field-row">
-              <div>
-                <label class="field-label-v2">Gender</label>
-                <select class="field-select-v2">
-                  <option value="">not selected</option>
-                  <option selected>Mens</option>
-                  <option>Womens</option>
-                  <option>Junior</option>
-                  <option>Unisex</option>
-                </select>
-              </div>
-              <div>
-                <label class="field-label-v2">Loft</label>
-                <input class="field-input-v2" type="text" placeholder="e.g. 10.5° or 56°/12°">
-              </div>
-            </div>
-            <div class="field-row single">
-              <div>
-                <label class="field-label-v2">Shaft material</label>
-                <select class="field-select-v2">
-                  <option value="">not selected</option>
-                  <option>Steel</option>
-                  <option>Graphite</option>
-                  <option>Multi-material</option>
-                  <option>Don't know</option>
-                </select>
-              </div>
-            </div>
-
-            <!-- Condition — light, no card border -->
+            <!-- Condition — moved above Additional information for primary inputs first -->
             <div class="section-divider">
               <div class="section-label-lite">Condition</div>
             </div>
@@ -2849,6 +2849,91 @@ input[type="range"]::-webkit-slider-thumb {
               </div>
               <div class="condition-desc-card" id="v2-cond-desc">
                 <strong>Good</strong> — Minimal / no marks to topline. Minimal cosmetic marks to head / crown. Usual play marks on the face and sole. Steel shafts may have slight cosmetic wear, no rust spots. Graphite shafts may show light scratching to graphics.
+              </div>
+            </div>
+
+            <!-- Additional information — collapsed by default, tinted panel when expanded -->
+            <div style="margin-top:18px"></div>
+            <div class="additional-toggle" id="v2-additional-toggle" onclick="v2ToggleAdditional()">
+              <div class="additional-toggle-left">
+                <span class="additional-toggle-plus">+</span>
+                <div class="additional-toggle-text">
+                  <div class="additional-toggle-title">Additional information</div>
+                  <div class="additional-toggle-hint">handedness, headcover, clubs in set, flex, gender, loft, shaft material</div>
+                </div>
+              </div>
+              <svg class="additional-toggle-chevron" width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 6l4 4 4-4"/></svg>
+            </div>
+            <div class="additional-panel" id="v2-additional-panel">
+              <div class="field-row">
+                <div>
+                  <label class="field-label-v2">Right / Left handed</label>
+                  <select class="field-select-v2">
+                    <option value="">not selected</option>
+                    <option selected>Right</option>
+                    <option>Left</option>
+                  </select>
+                </div>
+                <div>
+                  <label class="field-label-v2">Headcover</label>
+                  <select class="field-select-v2">
+                    <option value="">not selected</option>
+                    <option>Yes</option>
+                    <option selected>No</option>
+                  </select>
+                </div>
+              </div>
+              <div class="field-row">
+                <div>
+                  <label class="field-label-v2">Clubs in set <span style="font-weight:400;text-transform:none;letter-spacing:0;color:var(--muted)">(if a set)</span></label>
+                  <select class="field-select-v2">
+                    <option value="">not selected</option>
+                    <option>3</option><option>4</option><option>5</option>
+                    <option>6</option><option>7</option><option>8</option>
+                    <option>9</option><option>10</option><option>11</option>
+                    <option>12</option><option>13</option><option>14</option>
+                  </select>
+                </div>
+                <div>
+                  <label class="field-label-v2">Flex</label>
+                  <select class="field-select-v2">
+                    <option value="">not selected</option>
+                    <option>Extra Stiff</option>
+                    <option>Stiff</option>
+                    <option>Regular</option>
+                    <option>Senior</option>
+                    <option>Ladies</option>
+                    <option>Junior</option>
+                  </select>
+                </div>
+              </div>
+              <div class="field-row">
+                <div>
+                  <label class="field-label-v2">Gender</label>
+                  <select class="field-select-v2">
+                    <option value="">not selected</option>
+                    <option selected>Mens</option>
+                    <option>Womens</option>
+                    <option>Junior</option>
+                    <option>Unisex</option>
+                  </select>
+                </div>
+                <div>
+                  <label class="field-label-v2">Loft</label>
+                  <input class="field-input-v2" type="text" placeholder="e.g. 10.5° or 56°/12°">
+                </div>
+              </div>
+              <div class="field-row single">
+                <div>
+                  <label class="field-label-v2">Shaft material</label>
+                  <select class="field-select-v2">
+                    <option value="">not selected</option>
+                    <option>Steel</option>
+                    <option>Graphite</option>
+                    <option>Multi-material</option>
+                    <option>Don't know</option>
+                  </select>
+                </div>
               </div>
             </div>
 
@@ -5500,6 +5585,16 @@ function v2SetCondition(idx) {
     var c = V2_CONDITIONS[idx];
     desc.innerHTML = '<strong>' + c.name + '</strong> — ' + c.desc;
   }
+}
+
+/* ── V2 Additional-info collapsible panel ────────────────────────────────── */
+function v2ToggleAdditional() {
+  var toggle = document.getElementById('v2-additional-toggle');
+  var panel  = document.getElementById('v2-additional-panel');
+  if (!toggle || !panel) return;
+  var open = !panel.classList.contains('open');
+  toggle.classList.toggle('open', open);
+  panel.classList.toggle('open', open);
 }
 
 /* ── V2 payment-method selection ─────────────────────────────────────────── */
