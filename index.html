@@ -2318,8 +2318,8 @@ input[type="range"]::-webkit-slider-thumb {
   </div>
   <div class="topbar-end" style="gap:10px;display:flex">
     <div class="version-pill" role="group" aria-label="Mockup version">
-      <button class="version-btn active" id="version-btn-v1" onclick="switchVersion('v1')">V1</button>
-      <button class="version-btn"        id="version-btn-v2" onclick="switchVersion('v2')">V2 ✨</button>
+      <button class="version-btn active" id="version-btn-v2" onclick="switchVersion('v2')">V2</button>
+      <button class="version-btn"        id="version-btn-v1" onclick="switchVersion('v1')">V1</button>
     </div>
     <div class="topbar-badge">UI Mockup</div>
   </div>
@@ -2346,7 +2346,7 @@ input[type="range"]::-webkit-slider-thumb {
   <div id="content-col">
 
     <!-- CUSTOMER PANEL -->
-    <div class="mode-panel customer-panel active" id="customer-panel">
+    <div class="mode-panel customer-panel" id="customer-panel">
       <div class="device-frame">
 
         <!-- SCREEN 0: Login -->
@@ -2713,7 +2713,7 @@ input[type="range"]::-webkit-slider-thumb {
     <!-- ══════════════════════════════════════════════════════════════════════
          CUSTOMER PANEL — V2 (manual quote · batch · confidence · multi-item)
     ══════════════════════════════════════════════════════════════════════ -->
-    <div class="mode-panel customer-panel" id="customer-panel-v2">
+    <div class="mode-panel customer-panel active" id="customer-panel-v2">
       <div class="device-frame">
         <div class="v2-corner-tag">V2</div>
 
@@ -5382,7 +5382,7 @@ input[type="range"]::-webkit-slider-thumb {
       </div>
 
       <!-- About: Customer (shown in customer mode) -->
-      <div class="notes-card" id="about-customer">
+      <div class="notes-card" id="about-customer" style="display:none">
         <div class="notes-title">About this mockup</div>
         <div class="note-item"><div class="note-dot"></div><div class="note-text"><strong>7 screens</strong> covering the full sell flow from login to payment tracking.</div></div>
         <div class="note-item"><div class="note-dot"></div><div class="note-text"><strong>GPT-5.4-mini</strong> identifies the club from the photo — no manual entry needed.</div></div>
@@ -5402,7 +5402,7 @@ input[type="range"]::-webkit-slider-thumb {
       </div>
 
       <!-- About: Customer V2 (shown in customer + v2) -->
-      <div class="notes-card" id="about-customer-v2" style="display:none">
+      <div class="notes-card" id="about-customer-v2">
         <div class="notes-title">About V2 (Customer)</div>
         <div class="note-item"><div class="note-dot" style="background:#fbbf24"></div><div class="note-text"><strong>Manual / text-only quote</strong> — structured dropdowns when the seller has no photos.</div></div>
         <div class="note-item"><div class="note-dot" style="background:#fbbf24"></div><div class="note-text"><strong>Multi-item / batch quoting</strong> — bundle several clubs in one quote with a running total.</div></div>
@@ -5459,7 +5459,7 @@ input[type="range"]::-webkit-slider-thumb {
 
 /* ── State ─────────────────────────────────────────────────────────────── */
 var currentMode           = 'customer';
-var currentVersion        = 'v1';      // 'v1' | 'v2'
+var currentVersion        = 'v2';      // 'v2' is default; 'v1' kept as the legacy fallback
 var currentCustomerScreen = 0;
 var currentAdminScreen    = 0;
 var currentPgaScreen      = 0;
@@ -5856,9 +5856,9 @@ document.addEventListener('keydown', function(e) {
 
 /* ── Init ───────────────────────────────────────────────────────────────── */
 document.getElementById('footer-year').textContent = new Date().getFullYear();
-renderNav(customerNavLabels, 0);
-updateProgressBar(0, customerScreenData.length);
-updateNotesPanel(customerScreenData[0]);
+renderNav(customerNavLabelsV2, 0);
+updateProgressBar(0, customerScreenDataV2.length);
+updateNotesPanel(customerScreenDataV2[0]);
 
 </script>
 </body>
