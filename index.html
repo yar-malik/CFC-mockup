@@ -739,10 +739,23 @@ body {
 }
 .float-bag-item {
   display: grid;
-  grid-template-columns: 28px 1fr auto;
+  grid-template-columns: 28px 1fr auto 14px;
   gap: 8px;
   align-items: center;
 }
+.fb-remove {
+  background: none;
+  border: none;
+  color: var(--muted);
+  font-size: 14px;
+  line-height: 1;
+  padding: 0;
+  cursor: pointer;
+  opacity: 0;
+  transition: opacity .15s, color .15s;
+}
+.float-bag-item:hover .fb-remove { opacity: 1; }
+.fb-remove:hover { color: var(--red); }
 .float-bag-thumb {
   width: 28px;
   height: 28px;
@@ -2878,28 +2891,31 @@ input[type="range"]::-webkit-slider-thumb {
             <aside class="float-bag" aria-label="Your quote so far">
               <div class="float-bag-head">
                 <span class="float-bag-title">Your quote</span>
-                <span class="float-bag-count">3 items</span>
+                <span class="float-bag-count" data-v2-count="cust">3 items</span>
               </div>
               <div class="float-bag-items">
-                <div class="float-bag-item">
+                <div class="float-bag-item" data-v2-item="cust-paradym" data-v2-scope="cust" data-v2-price="128">
                   <div class="float-bag-thumb driver">DR</div>
                   <div class="float-bag-name">Paradym Driver</div>
                   <div class="float-bag-price">£128</div>
+                  <button class="fb-remove" title="Remove" onclick="v2RemoveItem('cust-paradym')">×</button>
                 </div>
-                <div class="float-bag-item">
+                <div class="float-bag-item" data-v2-item="cust-p770" data-v2-scope="cust" data-v2-price="345">
                   <div class="float-bag-thumb iron">IR</div>
                   <div class="float-bag-name">P770 Irons</div>
                   <div class="float-bag-price">£345</div>
+                  <button class="fb-remove" title="Remove" onclick="v2RemoveItem('cust-p770')">×</button>
                 </div>
-                <div class="float-bag-item">
+                <div class="float-bag-item" data-v2-item="cust-odyssey" data-v2-scope="cust" data-v2-price="72">
                   <div class="float-bag-thumb putter">PT</div>
                   <div class="float-bag-name">OG #7 Putter</div>
                   <div class="float-bag-price">£72</div>
+                  <button class="fb-remove" title="Remove" onclick="v2RemoveItem('cust-odyssey')">×</button>
                 </div>
               </div>
               <div class="float-bag-total">
                 <span class="float-bag-total-label">Total</span>
-                <span class="float-bag-total-amount">£545</span>
+                <span class="float-bag-total-amount" data-v2-total="cust">£545</span>
               </div>
               <button class="float-bag-add" onclick="showScreen(3)">
                 <svg width="10" height="10" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M8 3v10M3 8h10"/></svg>
@@ -3224,12 +3240,12 @@ input[type="range"]::-webkit-slider-thumb {
           <div class="batch-wrap">
             <div class="batch-heading-row">
               <div class="batch-heading">Items in your quote</div>
-              <span class="batch-count-pill">3 items</span>
+              <span class="batch-count-pill" data-v2-count="cust">3 items</span>
             </div>
             <div style="font-size:12px;color:var(--mid);margin-bottom:14px">Add more clubs to bundle them in one quote, or continue to see your total.</div>
 
             <div class="batch-list">
-              <div class="batch-item">
+              <div class="batch-item" data-v2-item="cust-paradym" data-v2-scope="cust" data-v2-price="128">
                 <div class="batch-item-thumb">IMG</div>
                 <div class="batch-item-info">
                   <div class="batch-item-name">Callaway Paradym Driver</div>
@@ -3237,10 +3253,10 @@ input[type="range"]::-webkit-slider-thumb {
                 </div>
                 <div>
                   <div class="batch-item-price">£128</div>
-                  <button class="batch-item-remove" title="Remove">×</button>
+                  <button class="batch-item-remove" title="Remove" onclick="v2RemoveItem('cust-paradym')">×</button>
                 </div>
               </div>
-              <div class="batch-item">
+              <div class="batch-item" data-v2-item="cust-p770" data-v2-scope="cust" data-v2-price="345">
                 <div class="batch-item-thumb">IMG</div>
                 <div class="batch-item-info">
                   <div class="batch-item-name">TaylorMade P770 Irons (5-PW)</div>
@@ -3248,10 +3264,10 @@ input[type="range"]::-webkit-slider-thumb {
                 </div>
                 <div>
                   <div class="batch-item-price">£345</div>
-                  <button class="batch-item-remove" title="Remove">×</button>
+                  <button class="batch-item-remove" title="Remove" onclick="v2RemoveItem('cust-p770')">×</button>
                 </div>
               </div>
-              <div class="batch-item">
+              <div class="batch-item" data-v2-item="cust-odyssey" data-v2-scope="cust" data-v2-price="72">
                 <div class="batch-item-thumb manual">FORM</div>
                 <div class="batch-item-info">
                   <div class="batch-item-name">Odyssey White Hot OG #7 Putter</div>
@@ -3259,7 +3275,7 @@ input[type="range"]::-webkit-slider-thumb {
                 </div>
                 <div>
                   <div class="batch-item-price">£72</div>
-                  <button class="batch-item-remove" title="Remove">×</button>
+                  <button class="batch-item-remove" title="Remove" onclick="v2RemoveItem('cust-odyssey')">×</button>
                 </div>
               </div>
             </div>
@@ -3282,9 +3298,9 @@ input[type="range"]::-webkit-slider-thumb {
             <div class="batch-total-card">
               <div>
                 <div class="batch-total-label">Quote total</div>
-                <div class="batch-total-sub">3 items · all confidence ≥ 90%</div>
+                <div class="batch-total-sub"><span data-v2-count="cust">3 items</span> · all confidence ≥ 90%</div>
               </div>
-              <div class="batch-total-amount">£545</div>
+              <div class="batch-total-amount" data-v2-total="cust">£545</div>
             </div>
 
             <button class="cta-btn" onclick="showScreen(4)">VALUE MY ITEMS →</button>
@@ -3333,19 +3349,19 @@ input[type="range"]::-webkit-slider-thumb {
         <!-- V2-SC5: Instant offer with batch breakdown -->
         <div class="cust-screen" id="sc-v2-5">
           <div class="offer-wrap">
-            <div class="offer-price-big">£545</div>
+            <div class="offer-price-big" data-v2-total="cust">£545</div>
             <div class="offer-club-line">
               Our offer for your
-              <strong>3 items</strong>
+              <strong data-v2-count="cust">3 items</strong>
               <span class="club-dot">·</span>
               All confidence ≥ 90%
             </div>
 
             <div class="offer-batch-breakdown">
-              <div class="offer-batch-breakdown-row"><span>Callaway Paradym Driver</span><strong>£128</strong></div>
-              <div class="offer-batch-breakdown-row"><span>TaylorMade P770 Irons (5-PW)</span><strong>£345</strong></div>
-              <div class="offer-batch-breakdown-row"><span>Odyssey White Hot OG #7 Putter</span><strong>£72</strong></div>
-              <div class="offer-batch-breakdown-row" style="padding-top:8px;border-top:1px solid var(--border);margin-top:4px"><span style="color:var(--dark);font-weight:700">Total</span><strong style="color:var(--green);font-size:14px">£545</strong></div>
+              <div class="offer-batch-breakdown-row" data-v2-item="cust-paradym" data-v2-scope="cust" data-v2-price="128"><span>Callaway Paradym Driver</span><strong>£128</strong></div>
+              <div class="offer-batch-breakdown-row" data-v2-item="cust-p770" data-v2-scope="cust" data-v2-price="345"><span>TaylorMade P770 Irons (5-PW)</span><strong>£345</strong></div>
+              <div class="offer-batch-breakdown-row" data-v2-item="cust-odyssey" data-v2-scope="cust" data-v2-price="72"><span>Odyssey White Hot OG #7 Putter</span><strong>£72</strong></div>
+              <div class="offer-batch-breakdown-row" style="padding-top:8px;border-top:1px solid var(--border);margin-top:4px"><span style="color:var(--dark);font-weight:700">Total</span><strong style="color:var(--green);font-size:14px" data-v2-total="cust">£545</strong></div>
             </div>
             <div class="pricing-explain-link" onclick="alert('Pricing logic\n\n1. Benchmarked against eBay UK sold prices from Golf Clubs for Cash, Golfbidder and re-playgolf — not consumer listings.\n2. Applied our standard 40% buy-back margin to the live market value.\n3. Bundle multi-item — eligible for +10% as store credit.\n\nMockup: actual transparency popover would link to comparable sales.')">
               <svg width="11" height="11" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><circle cx="8" cy="8" r="7"/><path d="M8 7v4M8 5h.01"/></svg>
@@ -4106,23 +4122,25 @@ input[type="range"]::-webkit-slider-thumb {
             <aside class="float-bag" aria-label="Trade-in bundle">
               <div class="float-bag-head">
                 <span class="float-bag-title">Trade-in</span>
-                <span class="float-bag-count">2 clubs</span>
+                <span class="float-bag-count" data-v2-count="pga" data-v2-unit="club">2 clubs</span>
               </div>
               <div class="float-bag-items">
-                <div class="float-bag-item">
+                <div class="float-bag-item" data-v2-item="pga-paradym" data-v2-scope="pga" data-v2-price="159">
                   <div class="float-bag-thumb driver">DR</div>
                   <div class="float-bag-name">Paradym Driver</div>
                   <div class="float-bag-price">£159</div>
+                  <button class="fb-remove" title="Remove" onclick="v2RemoveItem('pga-paradym')">×</button>
                 </div>
-                <div class="float-bag-item">
+                <div class="float-bag-item" data-v2-item="pga-g430" data-v2-scope="pga" data-v2-price="94">
                   <div class="float-bag-thumb iron">HY</div>
                   <div class="float-bag-name">G430 Hybrid</div>
                   <div class="float-bag-price">£94</div>
+                  <button class="fb-remove" title="Remove" onclick="v2RemoveItem('pga-g430')">×</button>
                 </div>
               </div>
               <div class="float-bag-total">
                 <span class="float-bag-total-label">Total</span>
-                <span class="float-bag-total-amount">£253</span>
+                <span class="float-bag-total-amount" data-v2-total="pga">£253</span>
               </div>
               <button class="float-bag-add" onclick="showScreen(4)">
                 <svg width="10" height="10" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M8 3v10M3 8h10"/></svg>
@@ -4419,12 +4437,12 @@ input[type="range"]::-webkit-slider-thumb {
           <div class="batch-wrap">
             <div class="batch-heading-row">
               <div class="batch-heading">Trade-in items</div>
-              <span class="batch-count-pill">2 clubs</span>
+              <span class="batch-count-pill" data-v2-count="pga" data-v2-unit="club">2 clubs</span>
             </div>
             <div style="font-size:12px;color:var(--mid);margin-bottom:14px">Bundle multiple clubs from the same customer — totalled together for one trade-in deduction.</div>
 
             <div class="batch-list">
-              <div class="batch-item">
+              <div class="batch-item" data-v2-item="pga-paradym" data-v2-scope="pga" data-v2-price="159">
                 <div class="batch-item-thumb">IMG</div>
                 <div class="batch-item-info">
                   <div class="batch-item-name">Callaway Paradym Driver</div>
@@ -4432,10 +4450,10 @@ input[type="range"]::-webkit-slider-thumb {
                 </div>
                 <div>
                   <div class="batch-item-price">£159</div>
-                  <button class="batch-item-remove">×</button>
+                  <button class="batch-item-remove" onclick="v2RemoveItem('pga-paradym')">×</button>
                 </div>
               </div>
-              <div class="batch-item">
+              <div class="batch-item" data-v2-item="pga-g430" data-v2-scope="pga" data-v2-price="94">
                 <div class="batch-item-thumb manual">FORM</div>
                 <div class="batch-item-info">
                   <div class="batch-item-name">Ping G430 Hybrid</div>
@@ -4443,7 +4461,7 @@ input[type="range"]::-webkit-slider-thumb {
                 </div>
                 <div>
                   <div class="batch-item-price">£94</div>
-                  <button class="batch-item-remove">×</button>
+                  <button class="batch-item-remove" onclick="v2RemoveItem('pga-g430')">×</button>
                 </div>
               </div>
             </div>
@@ -4456,9 +4474,9 @@ input[type="range"]::-webkit-slider-thumb {
             <div class="batch-total-card">
               <div>
                 <div class="batch-total-label">Trade-in total</div>
-                <div class="batch-total-sub">2 clubs · 25% pro margin applied</div>
+                <div class="batch-total-sub"><span data-v2-count="pga" data-v2-unit="club">2 clubs</span> · 25% pro margin applied</div>
               </div>
-              <div class="batch-total-amount">£253</div>
+              <div class="batch-total-amount" data-v2-total="pga">£253</div>
             </div>
 
             <button class="cta-btn" onclick="showScreen(5)" style="background:var(--green)">CONTINUE — RECORD TRADE-IN →</button>
@@ -5849,6 +5867,46 @@ function v2SetCondition(idx, panelId) {
   if (desc) {
     var c = V2_CONDITIONS[idx];
     desc.innerHTML = '<strong>' + c.name + '</strong> — ' + c.desc;
+  }
+}
+
+/* ── V2 remove-item (cascades across bag, batch list, offer breakdown) ───── */
+function v2RemoveItem(itemId) {
+  // Hide every DOM node tagged with this item id across every V2 screen
+  var nodes = document.querySelectorAll('[data-v2-item="' + itemId + '"]');
+  if (!nodes.length) return;
+  for (var i = 0; i < nodes.length; i++) {
+    nodes[i].style.display = 'none';
+  }
+  var scope = itemId.indexOf('pga-') === 0 ? 'pga' : 'cust';
+  v2RecomputeTotals(scope);
+}
+
+function v2RecomputeTotals(scope) {
+  // Sum remaining (not display:none) unique items in this scope
+  var rows = document.querySelectorAll('[data-v2-scope="' + scope + '"][data-v2-item]');
+  var seen = {};
+  var count = 0;
+  var total = 0;
+  for (var i = 0; i < rows.length; i++) {
+    var r = rows[i];
+    if (r.style.display === 'none') continue;
+    var iid = r.getAttribute('data-v2-item');
+    if (seen[iid]) continue;             // an item can appear on multiple screens — count once
+    seen[iid] = true;
+    count++;
+    total += parseInt(r.getAttribute('data-v2-price') || '0', 10);
+  }
+  // Update every total slot
+  var totalEls = document.querySelectorAll('[data-v2-total="' + scope + '"]');
+  for (var j = 0; j < totalEls.length; j++) {
+    totalEls[j].textContent = '£' + total;
+  }
+  // Update every count slot (units default to "item"/"items", PGA uses "club"/"clubs")
+  var countEls = document.querySelectorAll('[data-v2-count="' + scope + '"]');
+  for (var k = 0; k < countEls.length; k++) {
+    var unit = countEls[k].getAttribute('data-v2-unit') || 'item';
+    countEls[k].textContent = count + ' ' + unit + (count === 1 ? '' : 's');
   }
 }
 
