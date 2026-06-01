@@ -2920,7 +2920,7 @@ input[type="range"]::-webkit-slider-thumb {
                 <span class="float-bag-total-label">Total</span>
                 <span class="float-bag-total-amount" data-v2-total="cust">£545</span>
               </div>
-              <button class="float-bag-add" onclick="showScreen(3)">
+              <button class="float-bag-add" onclick="showScreen(1)">
                 <svg width="10" height="10" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M8 3v10M3 8h10"/></svg>
                 Add another club
               </button>
@@ -3125,7 +3125,7 @@ input[type="range"]::-webkit-slider-thumb {
               <div class="char-count">0 / 300</div>
             </div>
 
-            <button class="add-another-row" onclick="showScreen(3)">
+            <button class="add-another-row" onclick="showScreen(1)">
               <svg width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 3v10M3 8h10"/></svg>
               Add another club to this quote
             </button>
@@ -3168,7 +3168,7 @@ input[type="range"]::-webkit-slider-thumb {
                 <span class="float-bag-total-label">Total</span>
                 <span class="float-bag-total-amount" data-v2-total="cust">£545</span>
               </div>
-              <button class="float-bag-add" onclick="showScreen(3)">
+              <button class="float-bag-add" onclick="showScreen(1)">
                 <svg width="10" height="10" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M8 3v10M3 8h10"/></svg>
                 Add another club
               </button>
@@ -3219,79 +3219,6 @@ input[type="range"]::-webkit-slider-thumb {
 
             <button class="cta-btn" onclick="showScreen(3)">CONFIRM &amp; CONTINUE →</button>
             <div class="cta-note">Confirming here keeps each item's quote accurate.</div>
-          </div>
-        </div>
-
-        <!-- V2-SC3: Items in quote (batch summary + add another) -->
-        <div class="cust-screen" id="sc-v2-3">
-          <div class="batch-wrap">
-            <div class="batch-heading-row">
-              <div class="batch-heading">Items in your quote</div>
-              <span class="batch-count-pill" data-v2-count="cust">3 items</span>
-            </div>
-            <div style="font-size:12px;color:var(--mid);margin-bottom:14px">Add more clubs to bundle them in one quote, or continue to see your total.</div>
-
-            <div class="batch-list">
-              <div class="batch-item" data-v2-item="cust-paradym" data-v2-scope="cust" data-v2-price="128">
-                <div class="batch-item-thumb">IMG</div>
-                <div class="batch-item-info">
-                  <div class="batch-item-name">Callaway Paradym Driver</div>
-                  <div class="batch-item-meta">Good condition · 2023 · <span class="confidence-tag">✓ 94% confident</span></div>
-                </div>
-                <div>
-                  <div class="batch-item-price">£128</div>
-                  <button class="batch-item-remove" title="Remove" onclick="v2RemoveItem('cust-paradym')">×</button>
-                </div>
-              </div>
-              <div class="batch-item" data-v2-item="cust-p770" data-v2-scope="cust" data-v2-price="345">
-                <div class="batch-item-thumb">IMG</div>
-                <div class="batch-item-info">
-                  <div class="batch-item-name">TaylorMade P770 Irons (5-PW)</div>
-                  <div class="batch-item-meta">Very good condition · 2022 · <span class="confidence-tag">✓ 91% confident</span></div>
-                </div>
-                <div>
-                  <div class="batch-item-price">£345</div>
-                  <button class="batch-item-remove" title="Remove" onclick="v2RemoveItem('cust-p770')">×</button>
-                </div>
-              </div>
-              <div class="batch-item" data-v2-item="cust-odyssey" data-v2-scope="cust" data-v2-price="72">
-                <div class="batch-item-thumb manual">FORM</div>
-                <div class="batch-item-info">
-                  <div class="batch-item-name">Odyssey White Hot OG #7 Putter</div>
-                  <div class="batch-item-meta">Good condition · entered manually</div>
-                </div>
-                <div>
-                  <div class="batch-item-price">£72</div>
-                  <button class="batch-item-remove" title="Remove" onclick="v2RemoveItem('cust-odyssey')">×</button>
-                </div>
-              </div>
-            </div>
-
-            <button class="add-another-row" onclick="showScreen(1)">
-              <svg width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 3v10M3 8h10"/></svg>
-              Add another club (photos or manual)
-            </button>
-
-            <!-- Free-post threshold progress (£50) -->
-            <div class="postage-threshold-card unlocked">
-              <div class="postage-threshold-row">
-                <span><strong>✓ Free tracked post unlocked</strong> — bundle over £50</span>
-                <span>£545 / £50</span>
-              </div>
-              <div class="postage-bar"><div class="postage-bar-fill" style="width:100%"></div></div>
-              <div style="font-size:11px;color:var(--mid);margin-top:6px">Single-item quotes under £50 pay £4.99 postage — bundle two or more items to qualify for free post.</div>
-            </div>
-
-            <div class="batch-total-card">
-              <div>
-                <div class="batch-total-label">Quote total</div>
-                <div class="batch-total-sub"><span data-v2-count="cust">3 items</span> · all confidence ≥ 90%</div>
-              </div>
-              <div class="batch-total-amount" data-v2-total="cust">£545</div>
-            </div>
-
-            <button class="cta-btn" onclick="showScreen(4)">VALUE MY ITEMS →</button>
-            <div class="cta-note">Free · No obligation · Offer valid for 24 hours</div>
           </div>
         </div>
 
@@ -3392,9 +3319,82 @@ input[type="range"]::-webkit-slider-thumb {
               <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="8" cy="8" r="7"/><path d="M8 4v4l2.5 2"/></svg>
               Offer expires in <span class="expiry-bold">23h 59m 59s</span>
             </div>
-            <button class="cta-btn" onclick="showScreen(6)">ACCEPT OFFER</button>
+            <button class="cta-btn" onclick="showScreen(5)">ACCEPT OFFER</button>
             <div class="decline-link">No thanks, I'll pass</div>
             <div class="no-commit">Accepting this offer is not a final commitment until collection is arranged.</div>
+          </div>
+        </div>
+
+        <!-- V2-SC3: Items in quote (post-offer review + last-chance upsell) -->
+        <div class="cust-screen" id="sc-v2-3">
+          <div class="batch-wrap">
+            <div class="batch-heading-row">
+              <div class="batch-heading">Items in your quote</div>
+              <span class="batch-count-pill" data-v2-count="cust">3 items</span>
+            </div>
+            <div style="font-size:12px;color:var(--mid);margin-bottom:14px">Want a higher offer? Add another club to bump the total before payment — your current offer is locked for 24h.</div>
+
+            <div class="batch-list">
+              <div class="batch-item" data-v2-item="cust-paradym" data-v2-scope="cust" data-v2-price="128">
+                <div class="batch-item-thumb">IMG</div>
+                <div class="batch-item-info">
+                  <div class="batch-item-name">Callaway Paradym Driver</div>
+                  <div class="batch-item-meta">Good condition · 2023 · <span class="confidence-tag">✓ 94% confident</span></div>
+                </div>
+                <div>
+                  <div class="batch-item-price">£128</div>
+                  <button class="batch-item-remove" title="Remove" onclick="v2RemoveItem('cust-paradym')">×</button>
+                </div>
+              </div>
+              <div class="batch-item" data-v2-item="cust-p770" data-v2-scope="cust" data-v2-price="345">
+                <div class="batch-item-thumb">IMG</div>
+                <div class="batch-item-info">
+                  <div class="batch-item-name">TaylorMade P770 Irons (5-PW)</div>
+                  <div class="batch-item-meta">Very good condition · 2022 · <span class="confidence-tag">✓ 91% confident</span></div>
+                </div>
+                <div>
+                  <div class="batch-item-price">£345</div>
+                  <button class="batch-item-remove" title="Remove" onclick="v2RemoveItem('cust-p770')">×</button>
+                </div>
+              </div>
+              <div class="batch-item" data-v2-item="cust-odyssey" data-v2-scope="cust" data-v2-price="72">
+                <div class="batch-item-thumb manual">FORM</div>
+                <div class="batch-item-info">
+                  <div class="batch-item-name">Odyssey White Hot OG #7 Putter</div>
+                  <div class="batch-item-meta">Good condition · entered manually</div>
+                </div>
+                <div>
+                  <div class="batch-item-price">£72</div>
+                  <button class="batch-item-remove" title="Remove" onclick="v2RemoveItem('cust-odyssey')">×</button>
+                </div>
+              </div>
+            </div>
+
+            <button class="add-another-row" onclick="showScreen(1)">
+              <svg width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 3v10M3 8h10"/></svg>
+              Add another club (photos or manual)
+            </button>
+
+            <!-- Free-post threshold progress (£50) -->
+            <div class="postage-threshold-card unlocked">
+              <div class="postage-threshold-row">
+                <span><strong>✓ Free tracked post unlocked</strong> — bundle over £50</span>
+                <span>£545 / £50</span>
+              </div>
+              <div class="postage-bar"><div class="postage-bar-fill" style="width:100%"></div></div>
+              <div style="font-size:11px;color:var(--mid);margin-top:6px">Single-item quotes under £50 pay £4.99 postage — bundle two or more items to qualify for free post.</div>
+            </div>
+
+            <div class="batch-total-card">
+              <div>
+                <div class="batch-total-label">Quote total</div>
+                <div class="batch-total-sub"><span data-v2-count="cust">3 items</span> · offer locked for 24h</div>
+              </div>
+              <div class="batch-total-amount" data-v2-total="cust">£545</div>
+            </div>
+
+            <button class="cta-btn" onclick="showScreen(6)">CONTINUE TO PAYMENT →</button>
+            <div class="cta-note">Adding another club re-runs valuing — your current offer stays valid until you confirm</div>
           </div>
         </div>
 
@@ -3436,7 +3436,7 @@ input[type="range"]::-webkit-slider-thumb {
 
             <div class="delivery-back" onclick="showScreen(5)">
               <svg width="13" height="13" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M10 3L5 8l5 5"/></svg>
-              Back to offer
+              Back to review
             </div>
             <div class="accepted-banner">
               <div class="accepted-banner-icon">
@@ -5934,9 +5934,9 @@ var customerScreenDataV2 = [
   { label: 'V2 · Screen 1 of 12',  title: 'Log in screen',                desc: 'Same login as V1 — customers sign in to a single account that holds quotes from any data source (photos, dropdowns, both).',                                                                                                                                                                                                                                                       tags: [['Login',''], ['Same as V1','']] },
   { label: 'V2 · Screen 2 of 12',  title: 'Tell us about your club',      desc: 'UNIFIED entry — photos are optional. The seller drops in photos if they have them, then fills in as many structured fields as they can: Select a club, Select a brand, Model & year, an Additional Information block (handedness, headcover, clubs in set, flex, gender, loft, shaft material), condition slider, optional notes. More signal = sharper AI offer.', tags: [['Unified entry','green'], ['Photos optional','orange'], ['Additional info','blue']] },
   { label: 'V2 · Screen 3 of 12',  title: 'Confirm item(s)',              desc: 'Multi-item handling only — model details already captured in the entry form. If two different clubs are detected in the photos, we ask whether to quote them as separate items or merge into one.',                                                                                                                                                            tags: [['Multi-item detect','blue']] },
-  { label: 'V2 · Screen 4 of 12',  title: 'Items in your quote',          desc: 'Batch summary with running total, "add another", and a free-tracked-post progress bar (£50 threshold) that drives bundle-size up.',                                                                                                                                                                                                                                       tags: [['Batch quoting','green'], ['£50 free-post','orange'], ['Running total','blue']] },
-  { label: 'V2 · Screen 5 of 12',  title: 'Valuing your items...',        desc: 'Loading copy names the data source explicitly (eBay UK sold prices, Golf Clubs for Cash, Golfbidder, re-playgolf) and the 40% buy-back margin. Featured product offers fill the 10–20s wait to drive engagement.',                                                                                                                                                         tags: [['Transparency','green'], ['Engagement offers','orange'], ['eBay benchmarks','blue']] },
-  { label: 'V2 · Screen 6 of 12',  title: 'Instant offer (bundled)',      desc: 'Offer reveal with per-item breakdown above the total + a "How we priced this" link explaining the eBay-sold-comps + 40% margin logic.',                                                                                                                                                                                                                                   tags: [['Bundle total',''], ['Pricing transparency','green'], ['Countdown','blue']] },
+  { label: 'V2 · Screen 4 of 12',  title: 'Valuing your items...',        desc: 'Loading copy names the data source explicitly (eBay UK sold prices, Golf Clubs for Cash, Golfbidder, re-playgolf) and the 40% buy-back margin. Featured product offers fill the 10–20s wait to drive engagement.',                                                                                                                                                         tags: [['Transparency','green'], ['Engagement offers','orange'], ['eBay benchmarks','blue']] },
+  { label: 'V2 · Screen 5 of 12',  title: 'Instant offer (bundled)',      desc: 'Offer reveal with per-item breakdown above the total + a "How we priced this" link explaining the eBay-sold-comps + 40% margin logic.',                                                                                                                                                                                                                                   tags: [['Bundle total',''], ['Pricing transparency','green'], ['Countdown','blue']] },
+  { label: 'V2 · Screen 6 of 12',  title: 'Items in your quote',          desc: 'Post-offer review screen — last-chance upsell. The seller sees their locked-in £545 bundle and is invited to add another club to push the total higher before continuing to payment. Free-tracked-post progress bar (£50 threshold) reinforces "more = better."',                                                                                                            tags: [['Post-offer review','green'], ['Last-chance upsell','orange'], ['£50 free-post','blue']] },
   { label: 'V2 · Screen 7 of 12',  title: 'Payment method',               desc: 'Customer picks Cash to bank (no form upfront) or Store Credit (+10% bonus). The Cash card explains that bank details are captured AFTER inspection via a secure emailed link to the WordPress dashboard.',                                                                                                                                                                tags: [['Cash to bank','green'], ['Store credit +10%','blue'], ['Bank details deferred','orange']] },
   { label: 'V2 · Screen 8 of 12',  title: 'Delivery choice',              desc: 'Sticky summary row shows the payment method picked on the previous step with a "change" link back.',                                                                                                                                                                                                                                                                       tags: [['Drop in store',''], ['Send by post','green']] },
   { label: 'V2 · Screen 9 of 12',  title: 'Confirmed — In Store',         desc: 'In-store confirmation. Reference code, store address, payment-method summary, 3-step walkthrough that adapts wording to cash vs. store credit.',                                                                                                                                                                                                                          tags: [['Reference code','orange'], ['Store address',''], ['Payment recap','blue']] },
@@ -6263,8 +6263,8 @@ function _showCustomerScreen(n) {
   var data = currentVersion === 'v2' ? customerScreenDataV2 : customerScreenData;
   updateNotesPanel(data[n]);
 
-  // Live countdown only on the offer screen (V1 idx 4, V2 idx 5)
-  var offerIdx = currentVersion === 'v2' ? 5 : 4;
+  // Live countdown only on the offer screen (V1 idx 4, V2 idx 4 — post-reorder, offer sits before items-in-quote)
+  var offerIdx = 4;
   if (n === offerIdx) {
     startCountdown();
   } else {
