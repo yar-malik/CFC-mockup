@@ -695,6 +695,100 @@ body {
 }
 .bank-secure-note strong { color: var(--dark); font-weight: 700; }
 
+/* ─── V2 — Condition slider (Poor → As New) ─── */
+.condition-slider-wrap {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 16px 18px;
+  margin-bottom: 14px;
+}
+.condition-slider-title {
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--mid);
+  text-transform: uppercase;
+  letter-spacing: .4px;
+  margin-bottom: 18px;
+}
+.condition-track-wrap {
+  position: relative;
+  padding: 10px 0;
+  margin-bottom: 4px;
+}
+.condition-track {
+  position: absolute;
+  left: 9px;
+  right: 9px;
+  top: 50%;
+  height: 6px;
+  background: #dcdcde;
+  border-radius: 3px;
+  transform: translateY(-50%);
+  overflow: visible;
+}
+.condition-track-fill {
+  position: absolute;
+  left: 0; top: 0;
+  height: 100%;
+  background: #22c55e;
+  border-radius: 3px;
+  transition: width .2s;
+}
+.condition-dots {
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  z-index: 2;
+}
+.condition-dot {
+  width: 18px; height: 18px;
+  background: var(--white);
+  border: 2px solid #dcdcde;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: background .15s, border-color .15s, box-shadow .15s;
+}
+.condition-dot.active-prior {
+  background: #22c55e;
+  border-color: #22c55e;
+}
+.condition-dot.active {
+  background: #22c55e;
+  border-color: #15803d;
+  box-shadow: 0 0 0 4px rgba(34,197,94,0.18);
+}
+.condition-labels {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 8px;
+  font-size: 12px;
+  color: var(--mid);
+}
+.condition-label {
+  flex: 1;
+  text-align: center;
+  cursor: pointer;
+  padding: 4px 0;
+  transition: color .15s, font-weight .15s;
+}
+.condition-label:first-child { text-align: left; }
+.condition-label:last-child  { text-align: right; }
+.condition-label.active {
+  color: var(--dark);
+  font-weight: 700;
+}
+.condition-desc-card {
+  background: var(--surface);
+  border-radius: var(--radius-sm);
+  padding: 12px 14px;
+  margin-top: 14px;
+  font-size: 13px;
+  color: var(--dark);
+  line-height: 1.5;
+}
+.condition-desc-card strong { font-weight: 700; }
+
 /* ─── V2 — Free postage threshold progress ─── */
 .postage-threshold-card {
   background: var(--surface);
@@ -2608,6 +2702,31 @@ input[type="range"]::-webkit-slider-thumb {
                 <label class="field-label-v2">More info on the club <span style="font-weight:400;text-transform:none;letter-spacing:0;color:var(--muted)">(model, year, shaft, loft…)</span></label>
                 <input class="field-input-v2" type="text" placeholder="e.g. Paradym 2023, stiff shaft, 10.5°">
                 <div class="field-helper">Helps the AI pin down the exact model when photos are ambiguous.</div>
+              </div>
+            </div>
+
+            <!-- Condition slider — Poor / Fair / Good / Excellent / As New -->
+            <div class="condition-slider-wrap">
+              <div class="condition-slider-title">Rate the condition of the club</div>
+              <div class="condition-track-wrap">
+                <div class="condition-track"><div class="condition-track-fill" id="v2-cond-fill" style="width:50%"></div></div>
+                <div class="condition-dots">
+                  <div class="condition-dot active-prior" onclick="v2SetCondition(0)"></div>
+                  <div class="condition-dot active-prior" onclick="v2SetCondition(1)"></div>
+                  <div class="condition-dot active"       onclick="v2SetCondition(2)"></div>
+                  <div class="condition-dot"              onclick="v2SetCondition(3)"></div>
+                  <div class="condition-dot"              onclick="v2SetCondition(4)"></div>
+                </div>
+              </div>
+              <div class="condition-labels">
+                <div class="condition-label"        onclick="v2SetCondition(0)">Poor</div>
+                <div class="condition-label"        onclick="v2SetCondition(1)">Fair</div>
+                <div class="condition-label active" onclick="v2SetCondition(2)">Good</div>
+                <div class="condition-label"        onclick="v2SetCondition(3)">Excellent</div>
+                <div class="condition-label"        onclick="v2SetCondition(4)">As New</div>
+              </div>
+              <div class="condition-desc-card" id="v2-cond-desc">
+                <strong>Good</strong> — Minimal / no marks to topline. Minimal cosmetic marks to head / crown. Usual play marks on the face and sole. Irons may show normal wear and marking on the face and sole. Steel shafts may have some marking and slight cosmetic wear, there will be no evidence of rust spots. Graphite shafts may show light scratching and wear to graphics.
               </div>
             </div>
 
@@ -5338,6 +5457,37 @@ function updateAdminSidebar(n) {
 function _activeCustomerPanelId() { return currentVersion === 'v2' ? 'customer-panel-v2' : 'customer-panel'; }
 function _activePgaPanelId()      { return currentVersion === 'v2' ? 'pga-panel-v2'      : 'pga-panel';      }
 function _activeAdminPanelId()    { return 'admin-panel'; /* admin shared across versions */ }
+
+/* ── V2 condition slider (Poor → As New) ─────────────────────────────────── */
+var V2_CONDITIONS = [
+  { name: 'Poor',      desc: 'Heavy wear or damage. Deep scratches, dents or chips to head, face or sole. Steel shafts may show rust spots; graphite shafts may have noticeable scratching. Grips often worn through. Fully functional but cosmetically tired.' },
+  { name: 'Fair',      desc: 'Visible cosmetic damage to head, crown or sole. Play marks more pronounced than typical use. Shafts may have minor surface marks or very light rust spots. Grips show clear wear. Still in good playing order.' },
+  { name: 'Good',      desc: 'Minimal / no marks to topline. Minimal cosmetic marks to head / crown. Usual play marks on the face and sole. Irons may show normal wear and marking on the face and sole. Steel shafts may have some marking and slight cosmetic wear, there will be no evidence of rust spots. Graphite shafts may show light scratching and wear to graphics.' },
+  { name: 'Excellent', desc: 'Very light play marks if any. No marks to topline or crown. Face and sole near-pristine. Shafts in clean condition with no rust or major marks. Grips fresh — only a small amount of use.' },
+  { name: 'As New',    desc: 'Indistinguishable from new. No play marks anywhere. Original packaging or near-original condition. Shafts and grips look unused.' }
+];
+
+function v2SetCondition(idx) {
+  var sc2  = document.getElementById('sc-v2-2');
+  if (!sc2) return;
+  var dots   = sc2.querySelectorAll('.condition-dot');
+  var labels = sc2.querySelectorAll('.condition-label');
+  for (var i = 0; i < dots.length; i++) {
+    dots[i].classList.remove('active', 'active-prior');
+    if (i < idx)       dots[i].classList.add('active-prior');
+    else if (i === idx) dots[i].classList.add('active');
+  }
+  for (var j = 0; j < labels.length; j++) {
+    labels[j].classList.toggle('active', j === idx);
+  }
+  var fill = document.getElementById('v2-cond-fill');
+  if (fill) fill.style.width = ((idx / 4) * 100) + '%';
+  var desc = document.getElementById('v2-cond-desc');
+  if (desc) {
+    var c = V2_CONDITIONS[idx];
+    desc.innerHTML = '<strong>' + c.name + '</strong> — ' + c.desc;
+  }
+}
 
 /* ── V2 payment-method selection ─────────────────────────────────────────── */
 var v2PaymentMethod = 'cash';  // 'cash' | 'credit'
