@@ -695,6 +695,205 @@ body {
 }
 .bank-secure-note strong { color: var(--dark); font-weight: 700; }
 
+/* ─── V2 — Free postage threshold progress ─── */
+.postage-threshold-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 12px 14px;
+  margin-bottom: 14px;
+}
+.postage-threshold-card.unlocked {
+  background: #e8f3e7;
+  border-color: #a8cda5;
+}
+.postage-threshold-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 12px;
+  color: var(--mid);
+  margin-bottom: 8px;
+}
+.postage-threshold-row strong { color: var(--dark); }
+.postage-threshold-card.unlocked .postage-threshold-row strong { color: var(--green); }
+.postage-bar {
+  height: 6px;
+  background: #f3f4f6;
+  border-radius: 3px;
+  overflow: hidden;
+}
+.postage-bar-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #fbbf24, var(--orange));
+  border-radius: 3px;
+  transition: width .3s;
+}
+.postage-threshold-card.unlocked .postage-bar-fill { background: var(--green); }
+
+/* ─── V2 — Loading screen product offers ─── */
+.loading-offers {
+  margin-top: 22px;
+  padding-top: 18px;
+  border-top: 1px dashed var(--border);
+}
+.loading-offers-title {
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: .5px;
+  margin-bottom: 10px;
+  text-align: center;
+}
+.loading-offers-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+}
+.loading-offer-card {
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 10px;
+  text-align: center;
+  background: var(--white);
+  transition: border-color .15s, transform .15s;
+  cursor: pointer;
+}
+.loading-offer-card:hover { border-color: var(--orange); transform: translateY(-1px); }
+.loading-offer-img {
+  width: 100%; height: 50px;
+  background: linear-gradient(135deg, #fff0eb, #fdecd6);
+  border-radius: var(--radius-sm);
+  margin-bottom: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--orange);
+  font-size: 18px;
+}
+.loading-offer-title { font-size: 11px; font-weight: 700; color: var(--dark); line-height: 1.2; margin-bottom: 2px; }
+.loading-offer-tag {
+  display: inline-block;
+  background: var(--orange);
+  color: #fff;
+  font-size: 9px;
+  font-weight: 700;
+  padding: 1px 6px;
+  border-radius: 8px;
+  letter-spacing: .3px;
+}
+
+/* ─── V2 — Pricing transparency popover ─── */
+.pricing-explain-link {
+  font-size: 11px;
+  color: var(--blue);
+  cursor: pointer;
+  text-decoration: underline;
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  margin-top: 8px;
+}
+
+/* ─── V2 — Awaiting bank details state ─── */
+.awaiting-bank-banner {
+  background: linear-gradient(135deg, #fef7e6, #fdecd6);
+  border: 1px solid #f4d680;
+  border-radius: var(--radius);
+  padding: 14px 16px;
+  margin-bottom: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+.awaiting-bank-banner-left { flex: 1; }
+.awaiting-bank-banner-tag {
+  font-size: 10px;
+  font-weight: 700;
+  color: #92660b;
+  text-transform: uppercase;
+  letter-spacing: .5px;
+  margin-bottom: 2px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.awaiting-bank-banner-title { font-size: 13px; font-weight: 700; color: var(--dark); margin-bottom: 2px; }
+.awaiting-bank-banner-sub { font-size: 11px; color: var(--mid); }
+.awaiting-bank-cta {
+  background: #92660b;
+  color: #fff;
+  border: none;
+  border-radius: var(--radius);
+  padding: 9px 14px;
+  font-size: 12px;
+  font-weight: 700;
+  cursor: pointer;
+  white-space: nowrap;
+  letter-spacing: .3px;
+  flex-shrink: 0;
+}
+.awaiting-bank-cta:hover { background: #6e4d08; }
+
+/* ─── V2 — Internal accuracy notes (admin) ─── */
+.internal-notes-block {
+  background: #fef7e6;
+  border: 1px solid #f4d680;
+  border-radius: 6px;
+  padding: 12px 14px;
+  margin-top: 12px;
+}
+.internal-notes-label {
+  font-size: 11px;
+  font-weight: 700;
+  color: #92660b;
+  text-transform: uppercase;
+  letter-spacing: .4px;
+  margin-bottom: 6px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.internal-notes-pill {
+  background: #92660b;
+  color: #fff;
+  font-size: 9px;
+  padding: 1px 6px;
+  border-radius: 8px;
+  letter-spacing: .3px;
+  text-transform: uppercase;
+}
+.internal-notes-textarea {
+  width: 100%;
+  min-height: 70px;
+  border: 1px solid #e5d68a;
+  background: #fffdf5;
+  border-radius: 5px;
+  padding: 8px 10px;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 12px;
+  color: var(--dark);
+  resize: vertical;
+}
+.internal-notes-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 8px;
+  font-size: 11px;
+}
+.internal-notes-flag {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: #92660b;
+  font-weight: 700;
+  cursor: pointer;
+}
+.internal-notes-meta { color: var(--muted); }
+
 /* Accepted banner — extended for payment+delivery confirmation screens */
 .payment-summary-row {
   display: flex;
@@ -2351,8 +2550,69 @@ input[type="range"]::-webkit-slider-thumb {
               Add another club to this quote
             </button>
 
-            <div class="desc-label">Notes (optional — brand, model, condition, specs)</div>
-            <textarea class="desc-box" placeholder="e.g. TaylorMade Stealth 2, 2023, good condition, stiff shaft..."></textarea>
+            <!-- Structured helpers — sharpen AI accuracy. Same dropdowns as the manual flow. -->
+            <div class="field-row">
+              <div>
+                <label class="field-label-v2">Select a club</label>
+                <select class="field-select-v2">
+                  <option value="">— pick a category —</option>
+                  <option>Driver</option>
+                  <option>Fairway wood</option>
+                  <option>Hybrid</option>
+                  <option>Individual iron</option>
+                  <option>Irons (set)</option>
+                  <option>Wedge</option>
+                  <option>Putter</option>
+                  <option>Package set</option>
+                  <option>Golf bags</option>
+                  <option>GPS / rangefinder</option>
+                  <option>Launch monitor</option>
+                  <option>Driver shaft</option>
+                  <option>Fairway shaft</option>
+                  <option>Hybrid shaft</option>
+                  <option>Iron shafts</option>
+                  <option>Headcover</option>
+                  <option>Clothing</option>
+                  <option>Shoes</option>
+                  <option>Golf balls</option>
+                  <option>Golf glove</option>
+                  <option>Accessories</option>
+                  <option>Wrench</option>
+                </select>
+              </div>
+              <div>
+                <label class="field-label-v2">Select a brand</label>
+                <select class="field-select-v2">
+                  <option value="">— pick a brand —</option>
+                  <option>TaylorMade</option>
+                  <option>Callaway</option>
+                  <option>Titleist</option>
+                  <option>Ping</option>
+                  <option>Cobra</option>
+                  <option>Mizuno</option>
+                  <option>Cleveland</option>
+                  <option>Wilson</option>
+                  <option>Srixon</option>
+                  <option>Odyssey</option>
+                  <option>Scotty Cameron</option>
+                  <option>PXG</option>
+                  <option>Honma</option>
+                  <option>Bridgestone</option>
+                  <option>Other / Not sure</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="field-row single">
+              <div>
+                <label class="field-label-v2">More info on the club <span style="font-weight:400;text-transform:none;letter-spacing:0;color:var(--muted)">(model, year, shaft, loft…)</span></label>
+                <input class="field-input-v2" type="text" placeholder="e.g. Paradym 2023, stiff shaft, 10.5°">
+                <div class="field-helper">Helps the AI pin down the exact model when photos are ambiguous.</div>
+              </div>
+            </div>
+
+            <div class="desc-label">Notes (optional — anything else worth knowing)</div>
+            <textarea class="desc-box" placeholder="e.g. minor sky mark on crown, otherwise mint — sold via local pro"></textarea>
             <div class="char-count">0 / 300</div>
             <button class="cta-btn" onclick="showScreen(4)">CONTINUE →</button>
             <div class="cta-note">We'll ask you to confirm anything we're unsure about</div>
@@ -2628,6 +2888,16 @@ input[type="range"]::-webkit-slider-thumb {
               Add another club (photos or manual)
             </button>
 
+            <!-- Free-post threshold progress (£50) -->
+            <div class="postage-threshold-card unlocked">
+              <div class="postage-threshold-row">
+                <span><strong>✓ Free tracked post unlocked</strong> — bundle over £50</span>
+                <span>£545 / £50</span>
+              </div>
+              <div class="postage-bar"><div class="postage-bar-fill" style="width:100%"></div></div>
+              <div style="font-size:11px;color:var(--mid);margin-top:6px">Single-item quotes under £50 pay £4.99 postage — bundle two or more items to qualify for free post.</div>
+            </div>
+
             <div class="batch-total-card">
               <div>
                 <div class="batch-total-label">Quote total</div>
@@ -2646,12 +2916,35 @@ input[type="range"]::-webkit-slider-thumb {
           <div class="loading-wrap">
             <div class="spinner-ring"></div>
             <div class="load-title">Valuing your 3 items...</div>
-            <div class="load-sub">Checking live market prices for each club.<br>This usually takes less than 60 seconds.</div>
+            <div class="load-sub">Checking competitor sold prices and applying our 40% buy-back margin.<br>This usually takes 10–20 seconds.</div>
             <div class="load-steps">
               <div class="load-step done-step"><div class="ldot done"></div>Identifying each item (3 of 3)</div>
               <div class="load-step done-step"><div class="ldot done"></div>Confirming AI confidence ≥ 90%</div>
-              <div class="load-step active-step"><div class="ldot active"></div>Checking second-hand market value</div>
-              <div class="load-step"><div class="ldot"></div>Calculating your bundled offer</div>
+              <div class="load-step active-step"><div class="ldot active"></div>Checking eBay UK sold prices · Golf Clubs for Cash, Golfbidder, re-playgolf</div>
+              <div class="load-step"><div class="ldot"></div>Applying 40% buy-back margin to the bundle total</div>
+            </div>
+
+            <!-- Product offers shown during the 10–20s wait -->
+            <div class="loading-offers">
+              <div class="loading-offers-title">While we work — Featured deals</div>
+              <div class="loading-offers-grid">
+                <div class="loading-offer-card">
+                  <div class="loading-offer-img">🏌️</div>
+                  <div class="loading-offer-title">New TaylorMade Qi10</div>
+                  <div class="loading-offer-tag">15% OFF</div>
+                </div>
+                <div class="loading-offer-card">
+                  <div class="loading-offer-img">⛳</div>
+                  <div class="loading-offer-title">Lesson starter pack</div>
+                  <div class="loading-offer-tag">£49 only</div>
+                </div>
+                <div class="loading-offer-card">
+                  <div class="loading-offer-img">🎒</div>
+                  <div class="loading-offer-title">Premium stand bag</div>
+                  <div class="loading-offer-tag">£20 OFF</div>
+                </div>
+              </div>
+              <div style="font-size:11px;color:var(--muted);text-align:center;margin-top:10px">Tap to browse · these deals are available to spend your store credit on</div>
             </div>
           </div>
         </div>
@@ -2672,6 +2965,10 @@ input[type="range"]::-webkit-slider-thumb {
               <div class="offer-batch-breakdown-row"><span>TaylorMade P770 Irons (5-PW)</span><strong>£345</strong></div>
               <div class="offer-batch-breakdown-row"><span>Odyssey White Hot OG #7 Putter</span><strong>£72</strong></div>
               <div class="offer-batch-breakdown-row" style="padding-top:8px;border-top:1px solid var(--border);margin-top:4px"><span style="color:var(--dark);font-weight:700">Total</span><strong style="color:var(--green);font-size:14px">£545</strong></div>
+            </div>
+            <div class="pricing-explain-link" onclick="alert('Pricing logic\n\n1. Benchmarked against eBay UK sold prices from Golf Clubs for Cash, Golfbidder and re-playgolf — not consumer listings.\n2. Applied our standard 40% buy-back margin to the live market value.\n3. Bundle multi-item — eligible for +10% as store credit.\n\nMockup: actual transparency popover would link to comparable sales.')">
+              <svg width="11" height="11" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><circle cx="8" cy="8" r="7"/><path d="M8 7v4M8 5h.01"/></svg>
+              How we priced this · eBay sold-comps + 40% margin
             </div>
 
             <div class="expiry-row">
@@ -2724,33 +3021,19 @@ input[type="range"]::-webkit-slider-thumb {
                   </div>
                 </div>
 
-                <!-- Bank account form (visible when Cash is selected) -->
+                <!-- Bank details deferred until AFTER inspection -->
                 <div class="payment-card-bank-form" onclick="event.stopPropagation()">
-                  <div class="field-row single">
-                    <div>
-                      <label class="field-label-v2">Account holder name</label>
-                      <input class="field-input-v2" type="text" placeholder="As shown on your bank statement">
-                    </div>
-                  </div>
-                  <div class="field-row">
-                    <div>
-                      <label class="field-label-v2">Sort code</label>
-                      <input class="field-input-v2" type="text" placeholder="00-00-00" maxlength="8">
-                    </div>
-                    <div>
-                      <label class="field-label-v2">Account number</label>
-                      <input class="field-input-v2" type="text" placeholder="00000000" maxlength="8">
-                    </div>
-                  </div>
-                  <div class="field-row single">
-                    <div>
-                      <label class="field-label-v2">Payment reference <span style="font-weight:400;text-transform:none;letter-spacing:0;color:var(--muted)">(optional)</span></label>
-                      <input class="field-input-v2" type="text" placeholder="e.g. CFC-9K2X (auto-filled)">
-                    </div>
-                  </div>
                   <div class="bank-secure-note">
                     <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" style="flex-shrink:0;margin-top:1px"><rect x="2" y="6" width="12" height="9" rx="1.5"/><path d="M5 6V4a3 3 0 016 0v2"/></svg>
-                    <div><strong>Secure storage.</strong> Bank details are encrypted and only used for this payout. You can manage saved details from your account.</div>
+                    <div>
+                      <strong>Bank details collected after inspection.</strong>
+                      Once we receive and verify your clubs, we'll email you a secure link to enter your sort code and account number from your <strong>My Quotes</strong> dashboard. This keeps your details out of any unsecured form and only captures them when payment is imminent.
+                    </div>
+                  </div>
+                  <div style="display:flex;align-items:center;gap:8px;margin-top:10px;font-size:11px;color:var(--mid)">
+                    <span style="background:#e8f3e7;color:var(--green);font-size:10px;font-weight:700;padding:2px 8px;border-radius:10px;letter-spacing:.3px">GDPR · Encrypted at rest</span>
+                    <span>·</span>
+                    <span>UK bank transfer · 48h after inspection</span>
                   </div>
                 </div>
               </div>
@@ -2933,13 +3216,27 @@ input[type="range"]::-webkit-slider-thumb {
               <div class="dash-heading">Your Club Quotes</div>
               <div class="dash-sub">You have 3 quotes on file (including 1 multi-item bundle).</div>
 
-              <!-- Quote 1: Multi-item bundle -->
+              <!-- Quote 1: Multi-item bundle — POST INSPECTION, awaiting bank details -->
               <div class="dash-quote-card">
                 <div class="dqc-top">
                   <div class="dqc-name">3-item bundle · Driver · Irons · Putter</div>
-                  <span class="status-badge">Accepted</span>
+                  <span class="status-badge" style="background:#fef7e6;color:#92660b;border:1px solid #f4d680">Inspected ✓ · Awaiting bank details</span>
                 </div>
-                <div class="dqc-meta">Multi-item · Today · CFC-9K2X · <span id="v2-myquotes-pay-badge" style="color:var(--green);font-weight:700">Cash to bank ****1234</span></div>
+                <div class="dqc-meta">Multi-item · Inspected today · CFC-9K2X · <span id="v2-myquotes-pay-badge" style="color:#92660b;font-weight:700">Cash payout selected</span></div>
+
+                <!-- Awaiting bank details banner — opens secure entry screen -->
+                <div class="awaiting-bank-banner" style="margin-top:10px">
+                  <div class="awaiting-bank-banner-left">
+                    <div class="awaiting-bank-banner-tag">
+                      <svg width="11" height="11" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="6" width="12" height="9" rx="1.5"/><path d="M5 6V4a3 3 0 016 0v2"/></svg>
+                      Action required
+                    </div>
+                    <div class="awaiting-bank-banner-title">Enter bank details to receive your £545 payment</div>
+                    <div class="awaiting-bank-banner-sub">Secure link sent to james@email.co.uk · expires in 7 days</div>
+                  </div>
+                  <button class="awaiting-bank-cta" onclick="showScreen(13)">ENTER SECURELY →</button>
+                </div>
+
                 <div class="offer-batch-breakdown" style="margin:8px 0 12px">
                   <div class="offer-batch-breakdown-row"><span>Callaway Paradym Driver</span><strong>£128</strong></div>
                   <div class="offer-batch-breakdown-row"><span>TaylorMade P770 Irons (5-PW)</span><strong>£345</strong></div>
@@ -2950,7 +3247,7 @@ input[type="range"]::-webkit-slider-thumb {
                     <div class="dqc-offer-label">Bundle total:</div>
                     <div class="dqc-offer-price">£545</div>
                   </div>
-                  <button class="ship-btn">VIEW SHIPPING INSTRUCTIONS</button>
+                  <button class="ship-btn">VIEW INSPECTION REPORT</button>
                 </div>
               </div>
 
@@ -2970,6 +3267,84 @@ input[type="range"]::-webkit-slider-thumb {
                 </div>
               </div>
 
+            </div>
+          </div>
+        </div>
+
+        <!-- V2-SC13: Secure bank details entry (post-inspection, via emailed link) -->
+        <div class="cust-screen" id="sc-v2-13">
+          <div class="dash-layout">
+            <div class="dash-sidebar">
+              <div class="dash-sidebar-item"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="1" y="1" width="6" height="6" rx="1"/><rect x="9" y="1" width="6" height="6" rx="1"/><rect x="1" y="9" width="6" height="6" rx="1"/><rect x="9" y="9" width="6" height="6" rx="1"/></svg>Dashboard</div>
+              <div class="dash-sidebar-item active"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 2h10a1 1 0 011 1v11a1 1 0 01-1 1H3a1 1 0 01-1-1V3a1 1 0 011-1z"/><path d="M5 6h6M5 9h6M5 12h3"/></svg>My Club Quotes</div>
+              <div class="dash-sidebar-item"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="8" cy="5" r="3"/><path d="M2 14c0-3 2.7-5 6-5s6 2 6 5"/></svg>Account details</div>
+              <div class="dash-sidebar-item"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M10 8H2M6 5l-3 3 3 3"/><path d="M10 3h3a1 1 0 011 1v8a1 1 0 01-1 1h-3"/></svg>Log out</div>
+            </div>
+            <div class="dash-main-area">
+              <div class="delivery-back" onclick="showScreen(12)">
+                <svg width="13" height="13" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M10 3L5 8l5 5"/></svg>
+                Back to My Quotes
+              </div>
+
+              <div class="dash-heading" style="margin-top:14px">Enter bank details securely</div>
+              <div class="dash-sub">Quote <strong>CFC-9K2X</strong> · 3-item bundle · inspected today · <strong>£545 cash payout</strong></div>
+
+              <!-- Trust banner -->
+              <div style="background:#e8f3e7;border:1px solid #a8cda5;border-radius:var(--radius);padding:14px;margin:14px 0 20px;display:flex;gap:12px;align-items:flex-start">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--green)" stroke-width="1.7" style="flex-shrink:0;margin-top:1px"><path d="M12 2l9 4v6c0 5-3.8 9.7-9 11-5.2-1.3-9-6-9-11V6l9-4z"/><polyline points="9 12 11 14 15 10"/></svg>
+                <div>
+                  <div style="font-size:13px;font-weight:700;color:var(--green);margin-bottom:3px">Encrypted, single-use entry — GDPR compliant</div>
+                  <div style="font-size:12px;color:var(--mid);line-height:1.5">
+                    You're here via the secure link we emailed after inspecting your clubs. Details are encrypted at rest, used only for this payout, and never stored in plain text. Form auto-locks after submission.
+                  </div>
+                </div>
+              </div>
+
+              <!-- Secure bank form -->
+              <div class="manual-form-wrap" style="padding:0">
+                <div class="field-row single">
+                  <div>
+                    <label class="field-label-v2">Account holder name <span style="color:var(--red)">*</span></label>
+                    <input class="field-input-v2" type="text" placeholder="As shown on your bank statement">
+                  </div>
+                </div>
+                <div class="field-row">
+                  <div>
+                    <label class="field-label-v2">Sort code <span style="color:var(--red)">*</span></label>
+                    <input class="field-input-v2" type="text" placeholder="00-00-00" maxlength="8">
+                    <div class="field-helper">UK banks only · 6 digits</div>
+                  </div>
+                  <div>
+                    <label class="field-label-v2">Account number <span style="color:var(--red)">*</span></label>
+                    <input class="field-input-v2" type="text" placeholder="00000000" maxlength="8">
+                    <div class="field-helper">8 digits</div>
+                  </div>
+                </div>
+                <div class="field-row single">
+                  <div>
+                    <label class="field-label-v2">Confirm account number <span style="color:var(--red)">*</span></label>
+                    <input class="field-input-v2" type="text" placeholder="00000000" maxlength="8">
+                  </div>
+                </div>
+
+                <div style="margin:14px 0;display:flex;gap:8px;align-items:flex-start">
+                  <input type="checkbox" id="bankConfirm" style="margin-top:3px">
+                  <label for="bankConfirm" style="font-size:12px;color:var(--mid);line-height:1.45;cursor:pointer">
+                    I confirm these are my own UK bank account details and authorise Cash Fore Clubs to make a one-off payment of <strong style="color:var(--dark)">£545</strong> to this account.
+                  </label>
+                </div>
+
+                <div class="bank-secure-note" style="margin-top:0">
+                  <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" style="flex-shrink:0;margin-top:1px"><rect x="2" y="6" width="12" height="9" rx="1.5"/><path d="M5 6V4a3 3 0 016 0v2"/></svg>
+                  <div>
+                    <strong>How we keep this safe.</strong>
+                    Details are encrypted with AES-256, stored in a separate vault from the AI database, and accessed only by the payments team for this transaction. Auto-purged 90 days after payout.
+                  </div>
+                </div>
+
+                <button class="cta-btn" onclick="alert('Mockup — bank details would be submitted securely here.')" style="margin-top:18px;background:var(--green)">SUBMIT &amp; RELEASE PAYMENT →</button>
+                <div class="cta-note" style="text-align:center">Payment usually arrives within 48 hours of submission</div>
+              </div>
             </div>
           </div>
         </div>
@@ -4157,6 +4532,24 @@ input[type="range"]::-webkit-slider-thumb {
                       <textarea class="inspect-textarea" placeholder="Describe your findings..."></textarea>
                       <div style="font-size:10px;color:var(--muted);margin-bottom:14px;margin-top:4px">Tip: Be specific — sellers convert better when they understand the adjustment.</div>
 
+                      <!-- Internal accuracy notes — CFC staff only, feeds AI retraining -->
+                      <div class="internal-notes-block">
+                        <div class="internal-notes-label">
+                          <svg width="11" height="11" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="6" width="12" height="9" rx="1.5"/><path d="M5 6V4a3 3 0 016 0v2"/></svg>
+                          Internal accuracy notes
+                          <span class="internal-notes-pill">Staff only</span>
+                        </div>
+                        <textarea class="internal-notes-textarea" placeholder="e.g. AI quoted £128, sold at auction for £95 — head wear understated. Flag Paradym driver model for retraining."></textarea>
+                        <div class="internal-notes-row">
+                          <label class="internal-notes-flag">
+                            <input type="checkbox" style="accent-color:#92660b">
+                            Flag for AI retraining
+                          </label>
+                          <span class="internal-notes-meta">Not visible to seller · syncs to learning dataset</span>
+                        </div>
+                      </div>
+                      <div style="height:14px"></div>
+
                       <div style="font-size:11px;font-weight:700;color:var(--dark);text-transform:uppercase;letter-spacing:.4px;margin-bottom:8px">Offer decision</div>
                       <label style="display:flex;align-items:center;gap:8px;font-size:12px;color:var(--mid);margin-bottom:6px;cursor:pointer">
                         <input type="radio" name="offer-decision" checked style="accent-color:var(--orange)"> Confirm original offer of <strong style="color:var(--dark)">£140</strong>
@@ -4828,19 +5221,20 @@ var adminNavLabels = [
 
 /* ── V2 screen metadata ────────────────────────────────────────────────── */
 var customerScreenDataV2 = [
-  { label: 'V2 · Screen 1 of 13',  title: 'Log in screen',                desc: 'Same login as V1 — customers sign in to a single account that holds both photo-based and manual quotes.',                                                                                                                              tags: [['Login',''], ['Same as V1','']] },
-  { label: 'V2 · Screen 2 of 13',  title: 'Choose method',                desc: 'NEW — customer picks how to start a quote: upload photos (AI route) or enter details manually via structured dropdowns. Both routes use the same offer logic.',                                                                       tags: [['NEW screen','orange'], ['Two routes','green'], ['Structured fallback','blue']] },
-  { label: 'V2 · Screen 3 of 13',  title: 'Upload photos (multi-item)',   desc: 'Upload route — drop zone now hints at multi-item quotes. "Add another club to this quote" button bundles more items in the same offer. Tabs let the user flip to manual entry if they prefer.',                                       tags: [['Photo upload',''], ['Multi-item bundle','green'], ['Method tabs','blue']] },
-  { label: 'V2 · Screen 4 of 13',  title: 'Manual entry (structured)',    desc: 'NEW — no-photo route. Structured dropdowns: club type, brand, model, year, condition, dexterity, shaft, loft/length. Mirrors the existing form logic — never a free-text box.',                                                       tags: [['NEW screen','orange'], ['Structured form','green'], ['No photos needed','blue']] },
-  { label: 'V2 · Screen 5 of 13',  title: 'Confirm item(s)',              desc: 'NEW — combined confidence + multi-item handling. If AI confidence is below the threshold, we ask the user to pick the right model from multiple-choice. If two different clubs are detected in the photos, we ask whether to quote them as separate items or merge.', tags: [['NEW screen','orange'], ['Confidence check','green'], ['Multi-item detect','blue']] },
-  { label: 'V2 · Screen 6 of 13',  title: 'Valuing your items...',        desc: 'Loading state — same as V1 but valuing multiple items at once. Step 2 explicitly mentions confirming AI confidence ≥ 90%.',                                                                                                          tags: [['AI analysis',''], ['Multi-item batch','green']] },
-  { label: 'V2 · Screen 7 of 13',  title: 'Items in your quote',          desc: 'NEW — batch summary. Shows each item with its price, a live running total, and a button to add more. Mirrors the batch-style flow used in PGA. Users can review and remove items before accepting.',                                  tags: [['NEW screen','orange'], ['Batch quoting','green'], ['Running total','blue']] },
-  { label: 'V2 · Screen 8 of 13',  title: 'Instant offer (bundled)',      desc: 'The offer reveal now includes a per-item breakdown above the total. Same big-price hero and countdown timer as V1.',                                                                                                                  tags: [['Bundle total',''], ['Breakdown','green'], ['Countdown','blue']] },
-  { label: 'V2 · Screen 9 of 13',  title: 'Payment method',               desc: 'NEW — customer chooses cash to bank (full value, requires sort code + account number) or store credit (+10% bonus, no bank details). The Cash card expands inline with a secure bank-details form. Store credit shows usage rules.',  tags: [['NEW screen','orange'], ['Cash to bank','green'], ['Store credit +10%','blue']] },
-  { label: 'V2 · Screen 10 of 13', title: 'Delivery choice',              desc: 'Same as V1 but worded for multi-item quotes — clubs travel together in one parcel or one in-store visit. Sticky summary row shows the payment method picked on the previous step.',                                                  tags: [['Drop in store',''], ['Send by post','green']] },
-  { label: 'V2 · Screen 11 of 13', title: 'Confirmed — In Store',         desc: 'In-store confirmation. Reference code, store address, payment-method summary, and a 3-step walkthrough that adapts wording to cash vs. store credit.',                                                                              tags: [['Reference code','orange'], ['Store address',''], ['Payment recap','blue']] },
-  { label: 'V2 · Screen 12 of 13', title: 'Confirmed — Post',             desc: 'Post confirmation. Customer packs all items into one parcel, payment-method recap shown, and the final step adapts to cash vs. store credit.',                                                                                       tags: [['DPD label',''], ['One parcel','green'], ['Payment recap','blue']] },
-  { label: 'V2 · Screen 13 of 13', title: 'My Quotes (with bundles)',     desc: 'Dashboard now shows multi-item bundles as a single quote with per-item breakdown and a payment-method badge (Cash / Store Credit).',                                                                                                  tags: [['Bundle quotes','green'], ['Payment badge','orange'], ['History','blue']] }
+  { label: 'V2 · Screen 1 of 14',  title: 'Log in screen',                desc: 'Same login as V1 — customers sign in to a single account that holds both photo-based and manual quotes.',                                                                                                                              tags: [['Login',''], ['Same as V1','']] },
+  { label: 'V2 · Screen 2 of 14',  title: 'Choose method',                desc: 'NEW — customer picks how to start a quote: upload photos (AI route) or enter details manually via structured dropdowns. Both routes use the same offer logic.',                                                                       tags: [['NEW screen','orange'], ['Two routes','green'], ['Structured fallback','blue']] },
+  { label: 'V2 · Screen 3 of 14',  title: 'Upload photos (multi-item)',   desc: 'Upload route — drop zone now hints at multi-item quotes. "Add another club to this quote" button bundles more items in the same offer. Two helper dropdowns (Select a club, Select a brand) plus a free-text "more info" field sharpen AI accuracy without forcing full manual entry.',  tags: [['Photo upload',''], ['Helper dropdowns','green'], ['Multi-item bundle','blue']] },
+  { label: 'V2 · Screen 4 of 14',  title: 'Manual entry (structured)',    desc: 'NEW — no-photo route. Structured dropdowns: club type, brand, model, year, condition, dexterity, shaft, loft/length. Mirrors the existing form logic — never a free-text box.',                                                       tags: [['NEW screen','orange'], ['Structured form','green'], ['No photos needed','blue']] },
+  { label: 'V2 · Screen 5 of 14',  title: 'Confirm item(s)',              desc: 'NEW — combined confidence + multi-item handling. If AI confidence is below the threshold, we ask the user to pick the right model from multiple-choice. If two different clubs are detected in the photos, we ask whether to quote them as separate items or merge.', tags: [['NEW screen','orange'], ['Confidence check','green'], ['Multi-item detect','blue']] },
+  { label: 'V2 · Screen 6 of 14',  title: 'Valuing your items...',        desc: 'UPDATED — loading copy now names the data source explicitly (eBay UK sold prices, Golf Clubs for Cash, Golfbidder, re-playgolf) and the 40% buy-back margin. Featured product offers fill the 10–20s wait to drive engagement.',  tags: [['Transparency','green'], ['Engagement offers','orange'], ['eBay benchmarks','blue']] },
+  { label: 'V2 · Screen 7 of 14',  title: 'Items in your quote',          desc: 'NEW — batch summary with running total, "add another", and a free-tracked-post progress bar (£50 threshold) that drives bundle-size up.',                                                                                              tags: [['Batch quoting','green'], ['£50 free-post','orange'], ['Running total','blue']] },
+  { label: 'V2 · Screen 8 of 14',  title: 'Instant offer (bundled)',      desc: 'Offer reveal with per-item breakdown above the total + a "How we priced this" link explaining the eBay-sold-comps + 40% margin logic.',                                                                                                tags: [['Bundle total',''], ['Pricing transparency','green'], ['Countdown','blue']] },
+  { label: 'V2 · Screen 9 of 14',  title: 'Payment method',               desc: 'NEW — customer picks Cash to bank (no form upfront) or Store Credit (+10% bonus). The Cash card now explains that bank details are captured AFTER inspection via a secure emailed link to the WordPress dashboard.',                  tags: [['Cash to bank','green'], ['Store credit +10%','blue'], ['Bank details deferred','orange']] },
+  { label: 'V2 · Screen 10 of 14', title: 'Delivery choice',              desc: 'Sticky summary row shows the payment method picked on the previous step with a "change" link back.',                                                                                                                                   tags: [['Drop in store',''], ['Send by post','green']] },
+  { label: 'V2 · Screen 11 of 14', title: 'Confirmed — In Store',         desc: 'In-store confirmation. Reference code, store address, payment-method summary, 3-step walkthrough that adapts wording to cash vs. store credit.',                                                                                     tags: [['Reference code','orange'], ['Store address',''], ['Payment recap','blue']] },
+  { label: 'V2 · Screen 12 of 14', title: 'Confirmed — Post',             desc: 'Post confirmation. Customer packs all items into one parcel, payment-method recap shown, final step adapts to cash vs. store credit.',                                                                                                tags: [['DPD label',''], ['One parcel','green'], ['Payment recap','blue']] },
+  { label: 'V2 · Screen 13 of 14', title: 'My Quotes (post-inspection)',  desc: 'UPDATED — bundle now shows "Inspected ✓ · Awaiting bank details" status with a prominent action banner that opens the secure entry screen. Per-item breakdown and payment status carried over.',                                       tags: [['Action banner','orange'], ['Inspected status','green'], ['Secure entry CTA','blue']] },
+  { label: 'V2 · Screen 14 of 14', title: 'Secure bank entry',            desc: 'NEW — accessible only via the emailed post-inspection link. Captures sort code, account number, confirms £545 payment authorisation. GDPR / encrypted-at-rest copy makes the security model visible.',                              tags: [['NEW screen','orange'], ['Post-inspection','green'], ['GDPR · encrypted','blue']] }
 ];
 
 var pgaScreenDataV2 = [
@@ -4859,7 +5253,8 @@ var pgaScreenDataV2 = [
 var customerNavLabelsV2 = [
   '1. Log in', '2. Choose method', '3. Upload photos', '4. Manual entry',
   '5. Confirm items', '6. Valuing…', '7. Items in quote', '8. Instant offer',
-  '9. Payment method', '10. Delivery', '11. Confirmed – Store', '12. Confirmed – Post', '13. My quotes'
+  '9. Payment method', '10. Delivery', '11. Confirmed – Store', '12. Confirmed – Post',
+  '13. My quotes (awaiting bank)', '14. Secure bank entry'
 ];
 var pgaNavLabelsV2 = [
   '1. Pro Login', '2. Photos + AI', '3. Structured entry',
