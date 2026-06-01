@@ -3443,8 +3443,8 @@ input[type="range"]::-webkit-slider-thumb {
                   <div class="bank-secure-note">
                     <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" style="flex-shrink:0;margin-top:1px"><rect x="2" y="6" width="12" height="9" rx="1.5"/><path d="M5 6V4a3 3 0 016 0v2"/></svg>
                     <div>
-                      <strong>Bank details collected after inspection.</strong>
-                      Once we receive and verify your clubs, we'll email you a secure link to enter your sort code and account number from your <strong>My Quotes</strong> dashboard. This keeps your details out of any unsecured form and only captures them when payment is imminent.
+                      <strong>Bank details collected after inspection — on our payment partner's secure form.</strong>
+                      Once we receive and verify your clubs, we'll email you a secure link hosted by our payment partner (GoCardless). Your sort code and account number are entered there — never on CFC, never stored in our database.
                     </div>
                   </div>
                   <div style="display:flex;align-items:center;gap:8px;margin-top:10px;font-size:11px;color:var(--mid)">
@@ -3641,17 +3641,17 @@ input[type="range"]::-webkit-slider-thumb {
                 </div>
                 <div class="dqc-meta">Multi-item · Inspected today · CFC-9K2X · <span id="v2-myquotes-pay-badge" style="color:#92660b;font-weight:700">Cash payout selected</span></div>
 
-                <!-- Awaiting bank details banner — opens secure entry screen -->
+                <!-- Awaiting bank details banner — secure entry hosted off-site by our payment partner; CFC never stores bank details -->
                 <div class="awaiting-bank-banner" style="margin-top:10px">
                   <div class="awaiting-bank-banner-left">
                     <div class="awaiting-bank-banner-tag">
                       <svg width="11" height="11" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="6" width="12" height="9" rx="1.5"/><path d="M5 6V4a3 3 0 016 0v2"/></svg>
-                      Action required
+                      Check your email
                     </div>
-                    <div class="awaiting-bank-banner-title">Enter bank details to receive your £545 payment</div>
-                    <div class="awaiting-bank-banner-sub">Secure link sent to james@email.co.uk · expires in 7 days</div>
+                    <div class="awaiting-bank-banner-title">Secure payout link sent to james@email.co.uk</div>
+                    <div class="awaiting-bank-banner-sub">Hosted by our payment partner (GoCardless) — CFC never stores your bank details. Link expires in 7 days.</div>
                   </div>
-                  <button class="awaiting-bank-cta" onclick="showScreen(11)">ENTER SECURELY →</button>
+                  <button class="awaiting-bank-cta" onclick="alert('Mockup — in production this resends the GoCardless-hosted secure form link to your email. Bank details are collected on the partner&apos;s domain and never touch the CFC database.')">RESEND LINK</button>
                 </div>
 
                 <div class="offer-batch-breakdown" style="margin:8px 0 12px">
@@ -3684,84 +3684,6 @@ input[type="range"]::-webkit-slider-thumb {
                 </div>
               </div>
 
-            </div>
-          </div>
-        </div>
-
-        <!-- V2-SC11: Secure bank details entry (post-inspection, via emailed link) -->
-        <div class="cust-screen" id="sc-v2-11">
-          <div class="dash-layout">
-            <div class="dash-sidebar">
-              <div class="dash-sidebar-item"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="1" y="1" width="6" height="6" rx="1"/><rect x="9" y="1" width="6" height="6" rx="1"/><rect x="1" y="9" width="6" height="6" rx="1"/><rect x="9" y="9" width="6" height="6" rx="1"/></svg>Dashboard</div>
-              <div class="dash-sidebar-item active"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 2h10a1 1 0 011 1v11a1 1 0 01-1 1H3a1 1 0 01-1-1V3a1 1 0 011-1z"/><path d="M5 6h6M5 9h6M5 12h3"/></svg>My Club Quotes</div>
-              <div class="dash-sidebar-item"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="8" cy="5" r="3"/><path d="M2 14c0-3 2.7-5 6-5s6 2 6 5"/></svg>Account details</div>
-              <div class="dash-sidebar-item"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M10 8H2M6 5l-3 3 3 3"/><path d="M10 3h3a1 1 0 011 1v8a1 1 0 01-1 1h-3"/></svg>Log out</div>
-            </div>
-            <div class="dash-main-area">
-              <div class="delivery-back" onclick="showScreen(10)">
-                <svg width="13" height="13" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M10 3L5 8l5 5"/></svg>
-                Back to My Quotes
-              </div>
-
-              <div class="dash-heading" style="margin-top:14px">Enter bank details securely</div>
-              <div class="dash-sub">Quote <strong>CFC-9K2X</strong> · 3-item bundle · inspected today · <strong>£545 cash payout</strong></div>
-
-              <!-- Trust banner -->
-              <div style="background:#e8f3e7;border:1px solid #a8cda5;border-radius:var(--radius);padding:14px;margin:14px 0 20px;display:flex;gap:12px;align-items:flex-start">
-                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--green)" stroke-width="1.7" style="flex-shrink:0;margin-top:1px"><path d="M12 2l9 4v6c0 5-3.8 9.7-9 11-5.2-1.3-9-6-9-11V6l9-4z"/><polyline points="9 12 11 14 15 10"/></svg>
-                <div>
-                  <div style="font-size:13px;font-weight:700;color:var(--green);margin-bottom:3px">Encrypted, single-use entry — GDPR compliant</div>
-                  <div style="font-size:12px;color:var(--mid);line-height:1.5">
-                    You're here via the secure link we emailed after inspecting your clubs. Details are encrypted at rest, used only for this payout, and never stored in plain text. Form auto-locks after submission.
-                  </div>
-                </div>
-              </div>
-
-              <!-- Secure bank form -->
-              <div class="manual-form-wrap" style="padding:0">
-                <div class="field-row single">
-                  <div>
-                    <label class="field-label-v2">Account holder name <span style="color:var(--red)">*</span></label>
-                    <input class="field-input-v2" type="text" placeholder="As shown on your bank statement">
-                  </div>
-                </div>
-                <div class="field-row">
-                  <div>
-                    <label class="field-label-v2">Sort code <span style="color:var(--red)">*</span></label>
-                    <input class="field-input-v2" type="text" placeholder="00-00-00" maxlength="8">
-                    <div class="field-helper">UK banks only · 6 digits</div>
-                  </div>
-                  <div>
-                    <label class="field-label-v2">Account number <span style="color:var(--red)">*</span></label>
-                    <input class="field-input-v2" type="text" placeholder="00000000" maxlength="8">
-                    <div class="field-helper">8 digits</div>
-                  </div>
-                </div>
-                <div class="field-row single">
-                  <div>
-                    <label class="field-label-v2">Confirm account number <span style="color:var(--red)">*</span></label>
-                    <input class="field-input-v2" type="text" placeholder="00000000" maxlength="8">
-                  </div>
-                </div>
-
-                <div style="margin:14px 0;display:flex;gap:8px;align-items:flex-start">
-                  <input type="checkbox" id="bankConfirm" style="margin-top:3px">
-                  <label for="bankConfirm" style="font-size:12px;color:var(--mid);line-height:1.45;cursor:pointer">
-                    I confirm these are my own UK bank account details and authorise Cash Fore Clubs to make a one-off payment of <strong style="color:var(--dark)">£545</strong> to this account.
-                  </label>
-                </div>
-
-                <div class="bank-secure-note" style="margin-top:0">
-                  <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" style="flex-shrink:0;margin-top:1px"><rect x="2" y="6" width="12" height="9" rx="1.5"/><path d="M5 6V4a3 3 0 016 0v2"/></svg>
-                  <div>
-                    <strong>How we keep this safe.</strong>
-                    Details are encrypted with AES-256, stored in a separate vault from the AI database, and accessed only by the payments team for this transaction. Auto-purged 90 days after payout.
-                  </div>
-                </div>
-
-                <button class="cta-btn" onclick="alert('Mockup — bank details would be submitted securely here.')" style="margin-top:18px;background:var(--green)">SUBMIT &amp; RELEASE PAYMENT →</button>
-                <div class="cta-note" style="text-align:center">Payment usually arrives within 48 hours of submission</div>
-              </div>
             </div>
           </div>
         </div>
@@ -4375,34 +4297,7 @@ input[type="range"]::-webkit-slider-thumb {
             </div>
             <span class="pro-rate-tag">Trade Rate: 25% margin</span>
           </div>
-          <div class="loading-wrap entry-with-bag">
-
-            <aside class="float-bag" aria-label="Trade-in bundle" style="text-align:left">
-              <div class="float-bag-head">
-                <span class="float-bag-title">Trade-in</span>
-                <span class="float-bag-count" data-v2-count="pga" data-v2-unit="club">2 clubs</span>
-              </div>
-              <div class="float-bag-items">
-                <div class="float-bag-item" data-v2-item="pga-paradym" data-v2-scope="pga" data-v2-price="159">
-                  <div class="float-bag-thumb driver">DR</div>
-                  <div class="float-bag-name">Paradym Driver</div>
-                  <div class="float-bag-price">£159</div>
-                  <button class="fb-remove" title="Remove" onclick="v2RemoveItem('pga-paradym')">×</button>
-                </div>
-                <div class="float-bag-item" data-v2-item="pga-g430" data-v2-scope="pga" data-v2-price="94">
-                  <div class="float-bag-thumb iron">HY</div>
-                  <div class="float-bag-name">G430 Hybrid</div>
-                  <div class="float-bag-price">£94</div>
-                  <button class="fb-remove" title="Remove" onclick="v2RemoveItem('pga-g430')">×</button>
-                </div>
-              </div>
-              <div class="float-bag-total">
-                <span class="float-bag-total-label">Total</span>
-                <span class="float-bag-total-amount" data-v2-total="pga">£253</span>
-              </div>
-              <div class="float-bag-note">Pro margin 25% · customer discount</div>
-            </aside>
-
+          <div class="loading-wrap">
             <div class="spinner-ring"></div>
             <div class="load-title">Valuing the clubs...</div>
             <div class="load-sub">Checking competitor sold prices and applying your 25% pro margin.<br>This usually takes 10–20 seconds.</div>
@@ -4614,34 +4509,7 @@ input[type="range"]::-webkit-slider-thumb {
             </div>
             <span class="pro-rate-tag">Trade Rate: 25% margin</span>
           </div>
-          <div class="delivery-wrap entry-with-bag">
-
-            <aside class="float-bag" aria-label="Trade-in bundle">
-              <div class="float-bag-head">
-                <span class="float-bag-title">Trade-in</span>
-                <span class="float-bag-count" data-v2-count="pga" data-v2-unit="club">2 clubs</span>
-              </div>
-              <div class="float-bag-items">
-                <div class="float-bag-item" data-v2-item="pga-paradym" data-v2-scope="pga" data-v2-price="159">
-                  <div class="float-bag-thumb driver">DR</div>
-                  <div class="float-bag-name">Paradym Driver</div>
-                  <div class="float-bag-price">£159</div>
-                  <button class="fb-remove" title="Remove" onclick="v2RemoveItem('pga-paradym')">×</button>
-                </div>
-                <div class="float-bag-item" data-v2-item="pga-g430" data-v2-scope="pga" data-v2-price="94">
-                  <div class="float-bag-thumb iron">HY</div>
-                  <div class="float-bag-name">G430 Hybrid</div>
-                  <div class="float-bag-price">£94</div>
-                  <button class="fb-remove" title="Remove" onclick="v2RemoveItem('pga-g430')">×</button>
-                </div>
-              </div>
-              <div class="float-bag-total">
-                <span class="float-bag-total-label">Total</span>
-                <span class="float-bag-total-amount" data-v2-total="pga">£253</span>
-              </div>
-              <div class="float-bag-note">Pro margin 25% · customer discount</div>
-            </aside>
-
+          <div class="delivery-wrap">
             <div style="background:#e8f3e7;border:1px solid #a8cda5;border-radius:var(--radius);padding:10px 16px;margin-bottom:20px;display:flex;align-items:center;justify-content:space-between;">
               <div>
                 <div style="font-size:10px;font-weight:700;color:var(--green);text-transform:uppercase;letter-spacing:.5px;margin-bottom:2px">Trade-in recorded — £253</div>
@@ -5828,18 +5696,17 @@ var adminNavLabels = [
 
 /* ── V2 screen metadata ────────────────────────────────────────────────── */
 var customerScreenDataV2 = [
-  { label: 'V2 · Screen 1 of 12',  title: 'Log in screen',                desc: 'Same login as V1 — customers sign in to a single account that holds quotes from any data source (photos, dropdowns, both).',                                                                                                                                                                                                                                                       tags: [['Login',''], ['Same as V1','']] },
-  { label: 'V2 · Screen 2 of 12',  title: 'Tell us about your club',      desc: 'UNIFIED entry — photos are optional. The seller drops in photos if they have them, then fills in as many structured fields as they can: Select a club, Select a brand, Model & year, an Additional Information block (handedness, headcover, clubs in set, flex, gender, loft, shaft material), condition slider, optional notes. More signal = sharper AI offer.', tags: [['Unified entry','green'], ['Photos optional','orange'], ['Additional info','blue']] },
-  { label: 'V2 · Screen 3 of 12',  title: 'Confirm item(s)',              desc: 'Multi-item handling only — model details already captured in the entry form. If two different clubs are detected in the photos, we ask whether to quote them as separate items or merge into one.',                                                                                                                                                            tags: [['Multi-item detect','blue']] },
-  { label: 'V2 · Screen 4 of 12',  title: 'Valuing your items...',        desc: 'Loading copy names the data source explicitly (eBay UK sold prices, Golf Clubs for Cash, Golfbidder, re-playgolf) and the 40% buy-back margin. Featured product offers fill the 10–20s wait to drive engagement.',                                                                                                                                                         tags: [['Transparency','green'], ['Engagement offers','orange'], ['eBay benchmarks','blue']] },
-  { label: 'V2 · Screen 5 of 12',  title: 'Instant offer (bundled)',      desc: 'Offer reveal with per-item breakdown above the total + a "How we priced this" link explaining the eBay-sold-comps + 40% margin logic.',                                                                                                                                                                                                                                   tags: [['Bundle total',''], ['Pricing transparency','green'], ['Countdown','blue']] },
-  { label: 'V2 · Screen 6 of 12',  title: 'Items in your quote',          desc: 'Post-offer review screen — last-chance upsell. The seller sees their locked-in £545 bundle and is invited to add another club to push the total higher before continuing to payment. Free-tracked-post progress bar (£50 threshold) reinforces "more = better."',                                                                                                            tags: [['Post-offer review','green'], ['Last-chance upsell','orange'], ['£50 free-post','blue']] },
-  { label: 'V2 · Screen 7 of 12',  title: 'Payment method',               desc: 'Customer picks Cash to bank (no form upfront) or Store Credit (+10% bonus). The Cash card explains that bank details are captured AFTER inspection via a secure emailed link to the WordPress dashboard.',                                                                                                                                                                tags: [['Cash to bank','green'], ['Store credit +10%','blue'], ['Bank details deferred','orange']] },
-  { label: 'V2 · Screen 8 of 12',  title: 'Delivery choice',              desc: 'Sticky summary row shows the payment method picked on the previous step with a "change" link back.',                                                                                                                                                                                                                                                                       tags: [['Drop in store',''], ['Send by post','green']] },
-  { label: 'V2 · Screen 9 of 12',  title: 'Confirmed — In Store',         desc: 'In-store confirmation. Reference code, store address, payment-method summary, 3-step walkthrough that adapts wording to cash vs. store credit.',                                                                                                                                                                                                                          tags: [['Reference code','orange'], ['Store address',''], ['Payment recap','blue']] },
-  { label: 'V2 · Screen 10 of 12', title: 'Confirmed — Post',             desc: 'Post confirmation. Customer packs all items into one parcel, payment-method recap shown, final step adapts to cash vs. store credit.',                                                                                                                                                                                                                                    tags: [['DPD label',''], ['One parcel','green'], ['Payment recap','blue']] },
-  { label: 'V2 · Screen 11 of 12', title: 'My Quotes (post-inspection)',  desc: 'Bundle shows "Inspected ✓ · Awaiting bank details" status with a prominent action banner that opens the secure entry screen.',                                                                                                                                                                                                                                              tags: [['Action banner','orange'], ['Inspected status','green'], ['Secure entry CTA','blue']] },
-  { label: 'V2 · Screen 12 of 12', title: 'Secure bank entry',            desc: 'Accessible only via the emailed post-inspection link. Captures sort code, account number, confirms £545 payment authorisation. GDPR / encrypted-at-rest copy makes the security model visible.',                                                                                                                                                                            tags: [['Post-inspection','green'], ['GDPR · encrypted','blue']] }
+  { label: 'V2 · Screen 1 of 11',  title: 'Log in screen',                desc: 'Same login as V1 — customers sign in to a single account that holds quotes from any data source (photos, dropdowns, both).',                                                                                                                                                                                                                                                       tags: [['Login',''], ['Same as V1','']] },
+  { label: 'V2 · Screen 2 of 11',  title: 'Tell us about your club',      desc: 'UNIFIED entry — photos are optional. The seller drops in photos if they have them, then fills in as many structured fields as they can: Select a club, Select a brand, Model & year, an Additional Information block (handedness, headcover, clubs in set, flex, gender, loft, shaft material), condition slider, optional notes. More signal = sharper AI offer.', tags: [['Unified entry','green'], ['Photos optional','orange'], ['Additional info','blue']] },
+  { label: 'V2 · Screen 3 of 11',  title: 'Confirm item(s)',              desc: 'Multi-item handling only — model details already captured in the entry form. If two different clubs are detected in the photos, we ask whether to quote them as separate items or merge into one.',                                                                                                                                                            tags: [['Multi-item detect','blue']] },
+  { label: 'V2 · Screen 4 of 11',  title: 'Valuing your items...',        desc: 'Loading copy names the data source explicitly (eBay UK sold prices, Golf Clubs for Cash, Golfbidder, re-playgolf) and the 40% buy-back margin. Featured product offers fill the 10–20s wait to drive engagement.',                                                                                                                                                         tags: [['Transparency','green'], ['Engagement offers','orange'], ['eBay benchmarks','blue']] },
+  { label: 'V2 · Screen 5 of 11',  title: 'Instant offer (bundled)',      desc: 'Offer reveal with per-item breakdown above the total + a "How we priced this" link explaining the eBay-sold-comps + 40% margin logic.',                                                                                                                                                                                                                                   tags: [['Bundle total',''], ['Pricing transparency','green'], ['Countdown','blue']] },
+  { label: 'V2 · Screen 6 of 11',  title: 'Items in your quote',          desc: 'Post-offer review screen — last-chance upsell. The seller sees their locked-in £545 bundle and is invited to add another club to push the total higher before continuing to payment. Free-tracked-post progress bar (£50 threshold) reinforces "more = better."',                                                                                                            tags: [['Post-offer review','green'], ['Last-chance upsell','orange'], ['£50 free-post','blue']] },
+  { label: 'V2 · Screen 7 of 11',  title: 'Payment method',               desc: 'Customer picks Cash to bank (no form upfront) or Store Credit (+10% bonus). The Cash card explains that bank details are captured AFTER inspection on our payment partner&apos;s hosted form — never collected on CFC, never stored in WordPress.',                                                                                                                                                                tags: [['Cash to bank','green'], ['Store credit +10%','blue'], ['Bank details deferred','orange']] },
+  { label: 'V2 · Screen 8 of 11',  title: 'Delivery choice',              desc: 'Sticky summary row shows the payment method picked on the previous step with a "change" link back.',                                                                                                                                                                                                                                                                       tags: [['Drop in store',''], ['Send by post','green']] },
+  { label: 'V2 · Screen 9 of 11',  title: 'Confirmed — In Store',         desc: 'In-store confirmation. Reference code, store address, payment-method summary, 3-step walkthrough that adapts wording to cash vs. store credit.',                                                                                                                                                                                                                          tags: [['Reference code','orange'], ['Store address',''], ['Payment recap','blue']] },
+  { label: 'V2 · Screen 10 of 11', title: 'Confirmed — Post',             desc: 'Post confirmation. Customer packs all items into one parcel, payment-method recap shown, final step adapts to cash vs. store credit.',                                                                                                                                                                                                                                    tags: [['DPD label',''], ['One parcel','green'], ['Payment recap','blue']] },
+  { label: 'V2 · Screen 11 of 11', title: 'My Quotes (post-inspection)',  desc: 'Bundle shows "Inspected ✓ · Awaiting bank details" status. Banner explains the bank-details form is hosted by our payment partner (GoCardless) — never collected on the CFC site, so plain-text bank details never enter the WordPress database.',                                                                                                                              tags: [['External secure entry','green'], ['Inspected status','blue'], ['No PII in WP','orange']] }
 ];
 
 var pgaScreenDataV2 = [
