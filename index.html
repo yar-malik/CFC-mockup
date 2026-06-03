@@ -3420,49 +3420,15 @@ input[type="range"]::-webkit-slider-thumb {
 
             <div class="payment-cards" id="v2-payment-cards">
 
-              <!-- Cash option -->
-              <div class="payment-card cash selected" id="v2-pay-cash"
-                   onclick="v2SelectPayment('cash')">
-                <div class="payment-card-top">
-                  <span class="payment-card-radio"></span>
-                  <div>
-                    <div class="payment-card-title">
-                      Cash to my bank
-                      <span class="payment-card-pill">Recommended</span>
-                    </div>
-                    <div class="payment-card-desc">Full cash value transferred to your UK bank within 48 hours of inspection.</div>
-                  </div>
-                  <div class="payment-card-amount-wrap">
-                    <div class="payment-card-amount">£545</div>
-                    <div class="payment-card-amount-sub">to your bank</div>
-                  </div>
-                </div>
-
-                <!-- Bank details deferred until AFTER inspection -->
-                <div class="payment-card-bank-form" onclick="event.stopPropagation()">
-                  <div class="bank-secure-note">
-                    <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" style="flex-shrink:0;margin-top:1px"><rect x="2" y="6" width="12" height="9" rx="1.5"/><path d="M5 6V4a3 3 0 016 0v2"/></svg>
-                    <div>
-                      <strong>Bank details collected after inspection — on our payment partner's secure form.</strong>
-                      Once we receive and verify your clubs, we'll email you a secure link hosted by our payment partner (GoCardless). Your sort code and account number are entered there — never on CFC, never stored in our database.
-                    </div>
-                  </div>
-                  <div style="display:flex;align-items:center;gap:8px;margin-top:10px;font-size:11px;color:var(--mid)">
-                    <span style="background:#e8f3e7;color:var(--green);font-size:10px;font-weight:700;padding:2px 8px;border-radius:10px;letter-spacing:.3px">GDPR · Encrypted at rest</span>
-                    <span>·</span>
-                    <span>UK bank transfer · 48h after inspection</span>
-                  </div>
-                </div>
-              </div>
-
-              <!-- Store Credit option -->
-              <div class="payment-card credit" id="v2-pay-credit"
+              <!-- Store Credit option — now the recommended default -->
+              <div class="payment-card credit selected" id="v2-pay-credit"
                    onclick="v2SelectPayment('credit')">
                 <div class="payment-card-top">
                   <span class="payment-card-radio"></span>
                   <div>
                     <div class="payment-card-title">
                       Store Credit
+                      <span class="payment-card-pill">Recommended</span>
                       <span class="payment-card-pill bonus">+10% bonus</span>
                     </div>
                     <div class="payment-card-desc">Get £600 to spend on new clubs, gear or lessons at Cash Fore Clubs — instore or online.</div>
@@ -3478,6 +3444,24 @@ input[type="range"]::-webkit-slider-thumb {
                   • Valid for 12 months from issue.<br>
                   • Spend in any combination — full or part-payment on any product.<br>
                   • No bank details needed.
+                </div>
+              </div>
+
+              <!-- Cash option -->
+              <div class="payment-card cash" id="v2-pay-cash"
+                   onclick="v2SelectPayment('cash')">
+                <div class="payment-card-top">
+                  <span class="payment-card-radio"></span>
+                  <div>
+                    <div class="payment-card-title">
+                      Cash to my bank
+                    </div>
+                    <div class="payment-card-desc">Full cash value transferred to your UK bank within 48 hours of inspection.</div>
+                  </div>
+                  <div class="payment-card-amount-wrap">
+                    <div class="payment-card-amount">£545</div>
+                    <div class="payment-card-amount-sub">to your bank</div>
+                  </div>
                 </div>
               </div>
 
@@ -5905,7 +5889,7 @@ function v2ToggleAdditional(panelId) {
 }
 
 /* ── V2 payment-method selection ─────────────────────────────────────────── */
-var v2PaymentMethod = 'cash';  // 'cash' | 'credit'
+var v2PaymentMethod = 'credit';  // 'cash' | 'credit' — store credit is the recommended default
 
 function v2SelectPayment(method) {
   v2PaymentMethod = method;
@@ -6091,6 +6075,8 @@ document.getElementById('footer-year').textContent = new Date().getFullYear();
 renderNav(customerNavLabelsV2, 0);
 updateProgressBar(0, customerScreenDataV2.length);
 updateNotesPanel(customerScreenDataV2[0]);
+// Sync downstream payment-method labels to the default selection (store credit)
+if (typeof v2SelectPayment === 'function') v2SelectPayment('credit');
 
 </script>
 </body>
