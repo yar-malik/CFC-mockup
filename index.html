@@ -3621,12 +3621,12 @@ input[type="range"]::-webkit-slider-thumb {
               <div class="dash-quote-card">
                 <div class="dqc-top">
                   <div class="dqc-name">3-item bundle · Driver · Irons · Putter</div>
-                  <span class="status-badge" style="background:#fef7e6;color:#92660b;border:1px solid #f4d680">Inspected ✓ · Awaiting bank details</span>
+                  <span class="status-badge" id="v2-myquotes-status-badge" style="background:#fef7e6;color:#92660b;border:1px solid #f4d680">Inspected ✓ · Awaiting bank details</span>
                 </div>
                 <div class="dqc-meta">Multi-item · Inspected today · CFC-9K2X · <span id="v2-myquotes-pay-badge" style="color:#92660b;font-weight:700">Cash payout selected</span></div>
 
-                <!-- Awaiting bank details banner — secure entry hosted off-site by our payment partner; CFC never stores bank details -->
-                <div class="awaiting-bank-banner" style="margin-top:10px">
+                <!-- Awaiting bank details banner — only shown for cash payouts; hidden when store credit is selected -->
+                <div class="awaiting-bank-banner" id="v2-awaiting-bank-banner" style="margin-top:10px;display:none">
                   <div class="awaiting-bank-banner-left">
                     <div class="awaiting-bank-banner-tag">
                       <svg width="11" height="11" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="6" width="12" height="9" rx="1.5"/><path d="M5 6V4a3 3 0 016 0v2"/></svg>
@@ -5919,6 +5919,27 @@ function v2SelectPayment(method) {
   _set('v2-post-pay-step-title',  stepTitle);
   _set('v2-post-pay-step-body',   stepBody);
   _set('v2-myquotes-pay-badge',   badge);
+
+  // Awaiting-bank banner on My Quotes is only relevant when the customer chose cash
+  var awaitingBanner = document.getElementById('v2-awaiting-bank-banner');
+  if (awaitingBanner) awaitingBanner.style.display = method === 'cash' ? '' : 'none';
+
+  // Status badge on My Quotes flips between amber "awaiting bank details" (cash)
+  // and green "store credit added" (credit)
+  var statusBadge = document.getElementById('v2-myquotes-status-badge');
+  if (statusBadge) {
+    if (method === 'cash') {
+      statusBadge.textContent = 'Inspected ✓ · Awaiting bank details';
+      statusBadge.style.background = '#fef7e6';
+      statusBadge.style.color = '#92660b';
+      statusBadge.style.border = '1px solid #f4d680';
+    } else {
+      statusBadge.textContent = 'Inspected ✓ · Store credit added';
+      statusBadge.style.background = '#e8f3e7';
+      statusBadge.style.color = '#2d5a27';
+      statusBadge.style.border = '1px solid #a8cda5';
+    }
+  }
 }
 
 /* ── switchVersion ───────────────────────────────────────────────────────── */
