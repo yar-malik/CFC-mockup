@@ -353,14 +353,29 @@ body {
   background: var(--white);
   transition: border-color .15s;
 }
-.field-input-v2:focus, .field-select-v2:focus { border-color: var(--orange); outline: none; }
-.field-select-v2 {
+.field-input-v2:focus, .field-select-v2:focus, .field-combo-v2:focus { border-color: var(--orange); outline: none; }
+.field-select-v2,
+.field-combo-v2 {
   appearance: none;
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'%3E%3Cpath fill='%2350575e' d='M0 0l5 6 5-6z'/%3E%3C/svg%3E");
   background-repeat: no-repeat;
   background-position: right 12px center;
   padding-right: 32px;
 }
+/* Searchable combobox — styled like field-select-v2 but accepts free-text + filters the linked <datalist> */
+.field-combo-v2 {
+  width: 100%;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 9px 32px 9px 12px;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 13px;
+  color: var(--dark);
+  background-color: var(--white);
+  transition: border-color .15s;
+}
+/* Hide the duplicate browser-native chevron on inputs that have a datalist (Chrome/Edge), so only our chevron shows */
+.field-combo-v2::-webkit-calendar-picker-indicator { opacity: 0; }
 .field-helper { font-size: 11px; color: var(--muted); margin-top: 4px; }
 
 /* ── Club category card grid (replaces the legacy "pick a category" select) ── */
@@ -3014,24 +3029,7 @@ input[type="range"]::-webkit-slider-thumb {
             <div class="field-row">
               <div>
                 <label class="field-label-v2">Select a brand</label>
-                <select class="field-select-v2">
-                  <option value="">— pick a brand —</option>
-                  <option>TaylorMade</option>
-                  <option>Callaway</option>
-                  <option>Titleist</option>
-                  <option>Ping</option>
-                  <option>Cobra</option>
-                  <option>Mizuno</option>
-                  <option>Cleveland</option>
-                  <option>Wilson</option>
-                  <option>Srixon</option>
-                  <option>Odyssey</option>
-                  <option>Scotty Cameron</option>
-                  <option>PXG</option>
-                  <option>Honma</option>
-                  <option>Bridgestone</option>
-                  <option>Other / Not sure</option>
-                </select>
+                <input class="field-combo-v2" list="dl-brand" placeholder="Type to search or pick a brand" autocomplete="off">
               </div>
               <div>
                 <label class="field-label-v2">Model &amp; year <span style="font-weight:400;text-transform:none;letter-spacing:0;color:var(--muted)">(optional)</span></label>
@@ -3082,55 +3080,27 @@ input[type="range"]::-webkit-slider-thumb {
               <div class="field-row">
                 <div>
                   <label class="field-label-v2">Right / Left handed</label>
-                  <select class="field-select-v2">
-                    <option value="">not selected</option>
-                    <option selected>Right</option>
-                    <option>Left</option>
-                  </select>
+                  <input class="field-combo-v2" list="dl-handed" value="Right" placeholder="Type or pick" autocomplete="off">
                 </div>
                 <div>
                   <label class="field-label-v2">Headcover</label>
-                  <select class="field-select-v2">
-                    <option value="">not selected</option>
-                    <option>Yes</option>
-                    <option selected>No</option>
-                  </select>
+                  <input class="field-combo-v2" list="dl-headcover" value="No" placeholder="Type or pick" autocomplete="off">
                 </div>
               </div>
               <div class="field-row">
                 <div>
                   <label class="field-label-v2">Clubs in set <span style="font-weight:400;text-transform:none;letter-spacing:0;color:var(--muted)">(if a set)</span></label>
-                  <select class="field-select-v2">
-                    <option value="">not selected</option>
-                    <option>3</option><option>4</option><option>5</option>
-                    <option>6</option><option>7</option><option>8</option>
-                    <option>9</option><option>10</option><option>11</option>
-                    <option>12</option><option>13</option><option>14</option>
-                  </select>
+                  <input class="field-combo-v2" list="dl-clubs-in-set" placeholder="Type or pick (3–14)" autocomplete="off">
                 </div>
                 <div>
                   <label class="field-label-v2">Flex</label>
-                  <select class="field-select-v2">
-                    <option value="">not selected</option>
-                    <option>Extra Stiff</option>
-                    <option>Stiff</option>
-                    <option>Regular</option>
-                    <option>Senior</option>
-                    <option>Ladies</option>
-                    <option>Junior</option>
-                  </select>
+                  <input class="field-combo-v2" list="dl-flex" placeholder="Type or pick" autocomplete="off">
                 </div>
               </div>
               <div class="field-row">
                 <div>
                   <label class="field-label-v2">Gender</label>
-                  <select class="field-select-v2">
-                    <option value="">not selected</option>
-                    <option selected>Mens</option>
-                    <option>Womens</option>
-                    <option>Junior</option>
-                    <option>Unisex</option>
-                  </select>
+                  <input class="field-combo-v2" list="dl-gender" value="Mens" placeholder="Type or pick" autocomplete="off">
                 </div>
                 <div>
                   <label class="field-label-v2">Loft</label>
@@ -3140,13 +3110,7 @@ input[type="range"]::-webkit-slider-thumb {
               <div class="field-row single">
                 <div>
                   <label class="field-label-v2">Shaft material</label>
-                  <select class="field-select-v2">
-                    <option value="">not selected</option>
-                    <option>Steel</option>
-                    <option>Graphite</option>
-                    <option>Multi-material</option>
-                    <option>Don't know</option>
-                  </select>
+                  <input class="field-combo-v2" list="dl-shaft-material" placeholder="Type or pick" autocomplete="off">
                 </div>
               </div>
             </div>
@@ -4157,24 +4121,7 @@ input[type="range"]::-webkit-slider-thumb {
             <div class="field-row">
               <div>
                 <label class="field-label-v2">Select a brand</label>
-                <select class="field-select-v2">
-                  <option value="">— pick a brand —</option>
-                  <option>TaylorMade</option>
-                  <option>Callaway</option>
-                  <option>Titleist</option>
-                  <option>Ping</option>
-                  <option>Cobra</option>
-                  <option>Mizuno</option>
-                  <option>Cleveland</option>
-                  <option>Wilson</option>
-                  <option>Srixon</option>
-                  <option>Odyssey</option>
-                  <option>Scotty Cameron</option>
-                  <option>PXG</option>
-                  <option>Honma</option>
-                  <option>Bridgestone</option>
-                  <option>Other / Not sure</option>
-                </select>
+                <input class="field-combo-v2" list="dl-brand" placeholder="Type to search or pick a brand" autocomplete="off">
               </div>
               <div>
                 <label class="field-label-v2">Model &amp; year <span style="font-weight:400;text-transform:none;letter-spacing:0;color:var(--muted)">(optional)</span></label>
@@ -4225,55 +4172,27 @@ input[type="range"]::-webkit-slider-thumb {
               <div class="field-row">
                 <div>
                   <label class="field-label-v2">Right / Left handed</label>
-                  <select class="field-select-v2">
-                    <option value="">not selected</option>
-                    <option selected>Right</option>
-                    <option>Left</option>
-                  </select>
+                  <input class="field-combo-v2" list="dl-handed" value="Right" placeholder="Type or pick" autocomplete="off">
                 </div>
                 <div>
                   <label class="field-label-v2">Headcover</label>
-                  <select class="field-select-v2">
-                    <option value="">not selected</option>
-                    <option>Yes</option>
-                    <option selected>No</option>
-                  </select>
+                  <input class="field-combo-v2" list="dl-headcover" value="No" placeholder="Type or pick" autocomplete="off">
                 </div>
               </div>
               <div class="field-row">
                 <div>
                   <label class="field-label-v2">Clubs in set <span style="font-weight:400;text-transform:none;letter-spacing:0;color:var(--muted)">(if a set)</span></label>
-                  <select class="field-select-v2">
-                    <option value="">not selected</option>
-                    <option>3</option><option>4</option><option>5</option>
-                    <option>6</option><option>7</option><option>8</option>
-                    <option>9</option><option>10</option><option>11</option>
-                    <option>12</option><option>13</option><option>14</option>
-                  </select>
+                  <input class="field-combo-v2" list="dl-clubs-in-set" placeholder="Type or pick (3–14)" autocomplete="off">
                 </div>
                 <div>
                   <label class="field-label-v2">Flex</label>
-                  <select class="field-select-v2">
-                    <option value="">not selected</option>
-                    <option>Extra Stiff</option>
-                    <option>Stiff</option>
-                    <option>Regular</option>
-                    <option>Senior</option>
-                    <option>Ladies</option>
-                    <option>Junior</option>
-                  </select>
+                  <input class="field-combo-v2" list="dl-flex" placeholder="Type or pick" autocomplete="off">
                 </div>
               </div>
               <div class="field-row">
                 <div>
                   <label class="field-label-v2">Gender</label>
-                  <select class="field-select-v2">
-                    <option value="">not selected</option>
-                    <option selected>Mens</option>
-                    <option>Womens</option>
-                    <option>Junior</option>
-                    <option>Unisex</option>
-                  </select>
+                  <input class="field-combo-v2" list="dl-gender" value="Mens" placeholder="Type or pick" autocomplete="off">
                 </div>
                 <div>
                   <label class="field-label-v2">Loft</label>
@@ -4283,13 +4202,7 @@ input[type="range"]::-webkit-slider-thumb {
               <div class="field-row single">
                 <div>
                   <label class="field-label-v2">Shaft material</label>
-                  <select class="field-select-v2">
-                    <option value="">not selected</option>
-                    <option>Steel</option>
-                    <option>Graphite</option>
-                    <option>Multi-material</option>
-                    <option>Don't know</option>
-                  </select>
+                  <input class="field-combo-v2" list="dl-shaft-material" placeholder="Type or pick" autocomplete="off">
                 </div>
               </div>
             </div>
@@ -6147,5 +6060,57 @@ updateNotesPanel(customerScreenDataV2[0]);
 if (typeof v2SelectPayment === 'function') v2SelectPayment('credit');
 
 </script>
+<!-- Shared <datalist>s for searchable comboboxes — typing filters, clicking the chevron opens the full list -->
+<datalist id="dl-brand">
+  <option value="TaylorMade"></option>
+  <option value="Callaway"></option>
+  <option value="Titleist"></option>
+  <option value="Ping"></option>
+  <option value="Cobra"></option>
+  <option value="Mizuno"></option>
+  <option value="Cleveland"></option>
+  <option value="Wilson"></option>
+  <option value="Srixon"></option>
+  <option value="Odyssey"></option>
+  <option value="Scotty Cameron"></option>
+  <option value="PXG"></option>
+  <option value="Honma"></option>
+  <option value="Bridgestone"></option>
+  <option value="Other / Not sure"></option>
+</datalist>
+<datalist id="dl-handed">
+  <option value="Right"></option>
+  <option value="Left"></option>
+</datalist>
+<datalist id="dl-headcover">
+  <option value="Yes"></option>
+  <option value="No"></option>
+</datalist>
+<datalist id="dl-clubs-in-set">
+  <option value="3"></option><option value="4"></option><option value="5"></option>
+  <option value="6"></option><option value="7"></option><option value="8"></option>
+  <option value="9"></option><option value="10"></option><option value="11"></option>
+  <option value="12"></option><option value="13"></option><option value="14"></option>
+</datalist>
+<datalist id="dl-flex">
+  <option value="Extra Stiff"></option>
+  <option value="Stiff"></option>
+  <option value="Regular"></option>
+  <option value="Senior"></option>
+  <option value="Ladies"></option>
+  <option value="Junior"></option>
+</datalist>
+<datalist id="dl-gender">
+  <option value="Mens"></option>
+  <option value="Womens"></option>
+  <option value="Junior"></option>
+  <option value="Unisex"></option>
+</datalist>
+<datalist id="dl-shaft-material">
+  <option value="Steel"></option>
+  <option value="Graphite"></option>
+  <option value="Multi-material"></option>
+  <option value="Don't know"></option>
+</datalist>
 </body>
 </html>
