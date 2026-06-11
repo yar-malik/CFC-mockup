@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Cash Fore Clubs — UI Mockup</title>
-<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='7' fill='%232D5A27'/><circle cx='24' cy='8' r='2.5' fill='%23fbbf24'/><text x='16' y='24' font-family='Georgia,serif' font-size='22' font-weight='900' fill='%23fff' text-anchor='middle'>£</text></svg>">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='7' fill='%231f4d2b'/><circle cx='24' cy='8' r='2.5' fill='%23e8491d'/><text x='16' y='24' font-family='Georgia,serif' font-size='22' font-weight='900' fill='%23fff' text-anchor='middle'>£</text></svg>">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=DM+Serif+Display&display=swap" rel="stylesheet">
@@ -19,12 +19,12 @@
    DESIGN TOKENS  (unified — single source of truth for both modes)
 ═══════════════════════════════════════════════════════════════════════════ */
 :root {
-  /* Brand — matched to cashforeclubs.co.uk */
-  --orange:      #f6c600;   /* CFC yellow */
-  --orange-dark: #d7aa00;
-  --green:       #2d6a35;   /* CFC golf green */
-  --green-dark:  #1f4d2b;
-  --brand-black: #111111;
+  /* Brand — matched to cashforeclubs.co.uk (BOOK NOW button + nav bar + "Cash" logo) */
+  --orange:      #e8491d;   /* vivid red-orange — CTA buttons + "Cash" in logo */
+  --orange-dark: #c73d17;
+  --green:       #1f4d2b;   /* dark forest green — topbar/nav background */
+  --green-dark:  #143818;
+  --brand-black: #0c172c;   /* dark navy — hero/banner backgrounds */
   --blue:        #2271b1;
   --blue-dark:   #135e96;
   --red:         #d63638;
@@ -58,7 +58,7 @@ body {
    TOPBAR
 ═══════════════════════════════════════════════════════════════════════════ */
 .topbar {
-  background: var(--brand-black);
+  background: var(--green);
   padding: 12px 24px;
   display: grid;
   grid-template-columns: 1fr auto 1fr;
@@ -75,6 +75,8 @@ body {
   letter-spacing: 0.3px;
 }
 .topbar-logo span { color: var(--orange); }
+.topbar-logo .logo-cash { color: var(--orange); }
+.topbar-logo .logo-fore-clubs { color: #fff; }
 .topbar-end {
   display: flex;
   justify-content: flex-end;
@@ -119,8 +121,8 @@ body {
 }
 .mode-btn.active {
   background: var(--orange);
-  color: var(--brand-black);
-  box-shadow: 0 1px 6px rgba(246,198,0,0.4);
+  color: #fff;
+  box-shadow: 0 1px 6px rgba(232,73,29,0.45);
 }
 .mode-btn:hover:not(.active) { color: rgba(255,255,255,0.9); }
 
@@ -247,15 +249,15 @@ body {
 }
 .version-btn.active {
   background: var(--orange);
-  color: var(--brand-black);
-  box-shadow: 0 1px 6px rgba(246,198,0,0.4);
+  color: #fff;
+  box-shadow: 0 1px 6px rgba(232,73,29,0.45);
 }
 .version-btn:hover:not(.active) { color: rgba(255,255,255,0.9); }
 .v2-corner-tag {
   position: absolute;
   top: 12px; right: 14px;
   background: var(--orange);
-  color: var(--brand-black);
+  color: #fff;
   font-size: 10px;
   font-weight: 700;
   padding: 3px 8px;
@@ -1207,14 +1209,14 @@ body {
 .loading-offer-card:hover { border-color: var(--orange); transform: translateY(-1px); }
 .loading-offer-img {
   width: 100%; height: 50px;
-  background: linear-gradient(135deg, #ffffff, #fff4bd);
-  border: 1px solid #eee0a0;
+  background: linear-gradient(135deg, #ffffff, #fde7d4);
+  border: 1px solid #fbd0b3;
   border-radius: var(--radius-sm);
   margin-bottom: 6px;
   display: flex;
   align-items: center;
   justify-content: center;
-  color: var(--brand-black);
+  color: var(--orange);
   font-size: 13px;
   font-weight: 900;
   letter-spacing: .5px;
@@ -1224,7 +1226,7 @@ body {
 .loading-offer-tag {
   display: inline-block;
   background: var(--orange);
-  color: var(--brand-black);
+  color: #fff;
   font-size: 9px;
   font-weight: 700;
   padding: 1px 6px;
@@ -1499,7 +1501,7 @@ body {
 /* ── CTA buttons ── */
 .cta-btn {
   width: 100%; padding: 15px;
-  background: var(--orange); color: var(--brand-black);
+  background: var(--orange); color: #fff;
   border: none; border-radius: var(--radius-sm);
   font-family: 'DM Sans', sans-serif;
   font-size: 14px; font-weight: 700; letter-spacing: .5px;
@@ -1512,11 +1514,11 @@ body {
 .cta-btn.outline {
   background: none;
   border: 1.5px solid var(--orange);
-  color: var(--brand-black);
+  color: var(--orange);
 }
-.cta-btn.outline:hover { background: #fff7cc; }
+.cta-btn.outline:hover { background: #fff0eb; }
 .pga-panel .cta-btn { color: #fff; }
-.pga-panel .cta-btn.outline { color: var(--brand-black); }
+.pga-panel .cta-btn.outline { color: var(--orange); }
 .cta-note { text-align: center; font-size: 11px; color: var(--muted); }
 
 /* ── Loading / Valuing screen ── */
@@ -1868,7 +1870,7 @@ body {
 .wp-menu-sep { height: 1px; background: #2c3338; margin: 6px 0; }
 /* Cash Fore Clubs custom plugin highlight */
 .wp-menu-cfc {
-  color: #fbbf24 !important;
+  color: var(--orange) !important;
   font-weight: 700;
 }
 .wp-menu-cfc svg { opacity: 1 !important; }
@@ -2261,8 +2263,8 @@ input[type="range"]::-webkit-slider-thumb {
 .pro-rate-tag {
   font-size: 11px;
   font-weight: 700;
-  background: #fbbf24;
-  color: #1a3a6a;
+  background: var(--orange);
+  color: #fff;
   padding: 3px 9px;
   border-radius: 20px;
   letter-spacing: .3px;
@@ -2343,8 +2345,8 @@ input[type="range"]::-webkit-slider-thumb {
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  background: #fbbf24;
-  color: #1a3a6a;
+  background: var(--orange);
+  color: #fff;
   font-size: 11px;
   font-weight: 700;
   padding: 4px 12px;
@@ -2505,7 +2507,7 @@ input[type="range"]::-webkit-slider-thumb {
      TOPBAR
 ══════════════════════════════════════════════════════════════════════════ -->
 <div class="topbar">
-  <div class="topbar-logo">Cash <span>Fore</span> Clubs</div>
+  <div class="topbar-logo"><span class="logo-cash">Cash</span> <span class="logo-fore-clubs">Fore Clubs</span></div>
   <div class="mode-pill">
     <button class="mode-btn active" id="mode-btn-customer" onclick="switchMode('customer')">
       ● Customer Flow
@@ -5571,18 +5573,18 @@ input[type="range"]::-webkit-slider-thumb {
       <!-- About: Customer V2 (shown in customer + v2) -->
       <div class="notes-card" id="about-customer-v2">
         <div class="notes-title">About V2 (Customer)</div>
-        <div class="note-item"><div class="note-dot" style="background:#fbbf24"></div><div class="note-text"><strong>Manual / text-only quote</strong> — structured dropdowns when the seller has no photos.</div></div>
-        <div class="note-item"><div class="note-dot" style="background:#fbbf24"></div><div class="note-text"><strong>Multi-item / batch quoting</strong> — bundle several clubs in one quote with a running total.</div></div>
-        <div class="note-item"><div class="note-dot" style="background:#fbbf24"></div><div class="note-text"><strong>Confidence handling</strong> — AI confidence below the threshold prompts a multiple-choice confirmation.</div></div>
-        <div class="note-item"><div class="note-dot" style="background:#fbbf24"></div><div class="note-text"><strong>Multi-item image detection</strong> — when photos show two different clubs, the user is asked to split or merge.</div></div>
+        <div class="note-item"><div class="note-dot" style="background:var(--orange)"></div><div class="note-text"><strong>Manual / text-only quote</strong> — structured dropdowns when the seller has no photos.</div></div>
+        <div class="note-item"><div class="note-dot" style="background:var(--orange)"></div><div class="note-text"><strong>Multi-item / batch quoting</strong> — bundle several clubs in one quote with a running total.</div></div>
+        <div class="note-item"><div class="note-dot" style="background:var(--orange)"></div><div class="note-text"><strong>Confidence handling</strong> — AI confidence below the threshold prompts a multiple-choice confirmation.</div></div>
+        <div class="note-item"><div class="note-dot" style="background:var(--orange)"></div><div class="note-text"><strong>Multi-item image detection</strong> — when photos show two different clubs, the user is asked to split or merge.</div></div>
       </div>
 
       <!-- About: PGA V2 (shown in pga + v2) -->
       <div class="notes-card" id="about-pga-v2" style="display:none">
         <div class="notes-title">About V2 (PGA Pro)</div>
-        <div class="note-item"><div class="note-dot" style="background:#fbbf24"></div><div class="note-text"><strong>Structured dropdowns</strong> — club type, brand, model, year, condition, shaft as a fallback when AI can't identify confidently.</div></div>
-        <div class="note-item"><div class="note-dot" style="background:#fbbf24"></div><div class="note-text"><strong>Batch trade-in</strong> — record multiple clubs for the same customer and deduct one combined total.</div></div>
-        <div class="note-item"><div class="note-dot" style="background:#fbbf24"></div><div class="note-text"><strong>Photos + structured</strong> live side-by-side via a tab, so the pro picks whichever route works for the specific item.</div></div>
+        <div class="note-item"><div class="note-dot" style="background:var(--orange)"></div><div class="note-text"><strong>Structured dropdowns</strong> — club type, brand, model, year, condition, shaft as a fallback when AI can't identify confidently.</div></div>
+        <div class="note-item"><div class="note-dot" style="background:var(--orange)"></div><div class="note-text"><strong>Batch trade-in</strong> — record multiple clubs for the same customer and deduct one combined total.</div></div>
+        <div class="note-item"><div class="note-dot" style="background:var(--orange)"></div><div class="note-text"><strong>Photos + structured</strong> live side-by-side via a tab, so the pro picks whichever route works for the specific item.</div></div>
       </div>
 
       <!-- About: Admin (shown in admin mode) -->
