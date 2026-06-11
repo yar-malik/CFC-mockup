@@ -20,20 +20,21 @@
 ═══════════════════════════════════════════════════════════════════════════ */
 :root {
   /* Brand — matched to cashforeclubs.co.uk */
-  --orange:      #e67a2e;   /* primary brand orange */
-  --orange-dark: #c75f1a;
-  --green:       #2f6b3c;   /* CFC forest green */
+  --orange:      #f6c600;   /* CFC yellow */
+  --orange-dark: #d7aa00;
+  --green:       #2d6a35;   /* CFC golf green */
   --green-dark:  #1f4d2b;
+  --brand-black: #111111;
   --blue:        #2271b1;
   --blue-dark:   #135e96;
   --red:         #d63638;
 
   /* Neutrals — unified to WP admin palette */
-  --dark:        #0c172c;   /* CFC dark navy */
-  --mid:         #3A4764;
-  --muted:       #8c8f94;
+  --dark:        #171717;
+  --mid:         #454545;
+  --muted:       #777777;
   --border:      #dcdcde;
-  --surface:     #f7f7f7;
+  --surface:     #f5f5f0;
   --white:       #ffffff;
 
   /* Shape */
@@ -57,7 +58,7 @@ body {
    TOPBAR
 ═══════════════════════════════════════════════════════════════════════════ */
 .topbar {
-  background: var(--green);
+  background: var(--brand-black);
   padding: 12px 24px;
   display: grid;
   grid-template-columns: 1fr auto 1fr;
@@ -73,7 +74,7 @@ body {
   font-size: 20px;
   letter-spacing: 0.3px;
 }
-.topbar-logo span { color: #fbbf24; }
+.topbar-logo span { color: var(--orange); }
 .topbar-end {
   display: flex;
   justify-content: flex-end;
@@ -118,8 +119,8 @@ body {
 }
 .mode-btn.active {
   background: var(--orange);
-  color: #fff;
-  box-shadow: 0 1px 6px rgba(232,73,29,0.45);
+  color: var(--brand-black);
+  box-shadow: 0 1px 6px rgba(246,198,0,0.4);
 }
 .mode-btn:hover:not(.active) { color: rgba(255,255,255,0.9); }
 
@@ -245,16 +246,16 @@ body {
   white-space: nowrap;
 }
 .version-btn.active {
-  background: #fbbf24;
-  color: #1d2327;
-  box-shadow: 0 1px 6px rgba(251,191,36,0.45);
+  background: var(--orange);
+  color: var(--brand-black);
+  box-shadow: 0 1px 6px rgba(246,198,0,0.4);
 }
 .version-btn:hover:not(.active) { color: rgba(255,255,255,0.9); }
 .v2-corner-tag {
   position: absolute;
   top: 12px; right: 14px;
-  background: #fbbf24;
-  color: #1d2327;
+  background: var(--orange);
+  color: var(--brand-black);
   font-size: 10px;
   font-weight: 700;
   padding: 3px 8px;
@@ -1168,7 +1169,7 @@ body {
 }
 .postage-bar-fill {
   height: 100%;
-  background: linear-gradient(90deg, #fbbf24, var(--orange));
+  background: linear-gradient(90deg, #fff1a8, var(--orange));
   border-radius: 3px;
   transition: width .3s;
 }
@@ -1206,21 +1207,24 @@ body {
 .loading-offer-card:hover { border-color: var(--orange); transform: translateY(-1px); }
 .loading-offer-img {
   width: 100%; height: 50px;
-  background: linear-gradient(135deg, #fff0eb, #fdecd6);
+  background: linear-gradient(135deg, #ffffff, #fff4bd);
+  border: 1px solid #eee0a0;
   border-radius: var(--radius-sm);
   margin-bottom: 6px;
   display: flex;
   align-items: center;
   justify-content: center;
-  color: var(--orange);
-  font-size: 18px;
+  color: var(--brand-black);
+  font-size: 13px;
+  font-weight: 900;
+  letter-spacing: .5px;
 }
 .loading-offer-title { font-size: 11px; font-weight: 700; color: var(--dark); line-height: 1.2; margin-bottom: 2px; }
 .loading-offer-price { font-size: 12px; font-weight: 700; color: var(--green); margin-bottom: 4px; }
 .loading-offer-tag {
   display: inline-block;
   background: var(--orange);
-  color: #fff;
+  color: var(--brand-black);
   font-size: 9px;
   font-weight: 700;
   padding: 1px 6px;
@@ -1495,7 +1499,7 @@ body {
 /* ── CTA buttons ── */
 .cta-btn {
   width: 100%; padding: 15px;
-  background: var(--orange); color: #fff;
+  background: var(--orange); color: var(--brand-black);
   border: none; border-radius: var(--radius-sm);
   font-family: 'DM Sans', sans-serif;
   font-size: 14px; font-weight: 700; letter-spacing: .5px;
@@ -1508,9 +1512,11 @@ body {
 .cta-btn.outline {
   background: none;
   border: 1.5px solid var(--orange);
-  color: var(--orange);
+  color: var(--brand-black);
 }
-.cta-btn.outline:hover { background: #fff0eb; }
+.cta-btn.outline:hover { background: #fff7cc; }
+.pga-panel .cta-btn { color: #fff; }
+.pga-panel .cta-btn.outline { color: var(--brand-black); }
 .cta-note { text-align: center; font-size: 11px; color: var(--muted); }
 
 /* ── Loading / Valuing screen ── */
@@ -2446,9 +2452,12 @@ input[type="range"]::-webkit-slider-thumb {
 ═══════════════════════════════════════════════════════════════════════════ */
 @media (max-width: 800px) {
   /* Topbar stacks to single column on mobile */
-  .topbar { grid-template-columns: 1fr; gap: 8px; }
-  .mode-pill { width: 100%; }
-  .mode-btn  { flex: 1; justify-content: center; }
+  .topbar { grid-template-columns: minmax(0, 1fr); gap: 8px; padding: 12px 16px; overflow: hidden; }
+  .topbar-logo,
+  .mode-pill,
+  .topbar-end { width: 100%; max-width: 100%; min-width: 0; }
+  .mode-pill { overflow-x: auto; }
+  .mode-btn  { flex: 1 1 0; justify-content: center; min-width: 0; padding: 6px 8px; font-size: 11px; }
   .topbar-end { justify-content: center; }
 
   /* Page layout: single column */
@@ -2655,6 +2664,31 @@ input[type="range"]::-webkit-slider-thumb {
               <div class="load-step active-step"><div class="ldot active"></div>Checking second-hand market value</div>
               <div class="load-step"><div class="ldot"></div>Calculating your offer</div>
             </div>
+
+            <div class="loading-offers">
+              <div class="loading-offers-title">While we work — 3 newest in shop</div>
+              <div class="loading-offers-grid">
+                <div class="loading-offer-card">
+                  <div class="loading-offer-img">NEW</div>
+                  <div class="loading-offer-title">Callaway QUANTUM Irons 6-PW+GW+AW</div>
+                  <div class="loading-offer-price">£960</div>
+                  <div class="loading-offer-tag">LATEST</div>
+                </div>
+                <div class="loading-offer-card">
+                  <div class="loading-offer-img">NEW</div>
+                  <div class="loading-offer-title">Scotty Cameron SELECT NEWPORT 2</div>
+                  <div class="loading-offer-price">£250</div>
+                  <div class="loading-offer-tag">LATEST</div>
+                </div>
+                <div class="loading-offer-card">
+                  <div class="loading-offer-img">NEW</div>
+                  <div class="loading-offer-title">TaylorMade Sim Max Irons 5-PW</div>
+                  <div class="loading-offer-price">£375</div>
+                  <div class="loading-offer-tag">LATEST</div>
+                </div>
+              </div>
+              <div style="font-size:11px;color:var(--muted);text-align:center;margin-top:10px">Newest arrivals from Cash Fore Clubs · store credit can be used online or in store</div>
+            </div>
           </div>
         </div>
 
@@ -2675,8 +2709,12 @@ input[type="range"]::-webkit-slider-thumb {
               Offer expires in <span class="expiry-bold" id="countdown-display">23h 59m 59s</span>
             </div>
             <button class="cta-btn" onclick="showScreen(5)">ACCEPT OFFER</button>
+            <button class="cta-btn outline save-later-btn" onclick="alert('Mockup: offer saved for 24h.\nWe\'ll email you a reminder before it expires.')">
+              <svg width="13" height="13" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" style="vertical-align:-2px;margin-right:5px"><path d="M3 2v12l5-3 5 3V2z"/></svg>
+              SAVE FOR LATER
+            </button>
             <div class="decline-link">No thanks, I'll pass</div>
-            <div class="no-commit">Accepting this offer is not a final commitment until collection is arranged.</div>
+            <div class="no-commit">Accepting this offer is not a final commitment until collection is arranged. Saving holds the price for 24h.</div>
           </div>
         </div>
 
@@ -2742,9 +2780,9 @@ input[type="range"]::-webkit-slider-thumb {
               <div>
                 <div class="store-address-title">Cash Fore Clubs — Chippenham</div>
                 <div class="store-address-text">
-                  Unit 4, Pewsham Way<br>
+                  Unit 6B, Bumpers Way<br>
                   Chippenham, Wiltshire<br>
-                  SN15 3RY
+                  SN14 6LH
                 </div>
                 <div class="store-hours">Mon–Fri 9am–5pm &nbsp;·&nbsp; Sat 9am–4pm &nbsp;·&nbsp; Sun Closed</div>
               </div>
@@ -3237,25 +3275,25 @@ input[type="range"]::-webkit-slider-thumb {
               <div class="loading-offers-title">While we work — 3 newest in shop</div>
               <div class="loading-offers-grid">
                 <div class="loading-offer-card">
-                  <div class="loading-offer-img">🏌️</div>
-                  <div class="loading-offer-title">TaylorMade Qi10 Driver</div>
-                  <div class="loading-offer-price">£289</div>
-                  <div class="loading-offer-tag">NEW</div>
+                  <div class="loading-offer-img">NEW</div>
+                  <div class="loading-offer-title">Callaway QUANTUM Irons 6-PW+GW+AW</div>
+                  <div class="loading-offer-price">£960</div>
+                  <div class="loading-offer-tag">LATEST</div>
                 </div>
                 <div class="loading-offer-card">
-                  <div class="loading-offer-img">⛳</div>
-                  <div class="loading-offer-title">Titleist T200 Irons (5-PW)</div>
-                  <div class="loading-offer-price">£645</div>
-                  <div class="loading-offer-tag">NEW</div>
+                  <div class="loading-offer-img">NEW</div>
+                  <div class="loading-offer-title">Scotty Cameron SELECT NEWPORT 2</div>
+                  <div class="loading-offer-price">£250</div>
+                  <div class="loading-offer-tag">LATEST</div>
                 </div>
                 <div class="loading-offer-card">
-                  <div class="loading-offer-img">🥅</div>
-                  <div class="loading-offer-title">Scotty Cameron Phantom 5</div>
-                  <div class="loading-offer-price">£195</div>
-                  <div class="loading-offer-tag">NEW</div>
+                  <div class="loading-offer-img">NEW</div>
+                  <div class="loading-offer-title">TaylorMade Sim Max Irons 5-PW</div>
+                  <div class="loading-offer-price">£375</div>
+                  <div class="loading-offer-tag">LATEST</div>
                 </div>
               </div>
-              <div style="font-size:11px;color:var(--muted);text-align:center;margin-top:10px">Just listed · spend your store credit (+10%) on any item in the shop</div>
+              <div style="font-size:11px;color:var(--muted);text-align:center;margin-top:10px">Newest arrivals from Cash Fore Clubs · spend store credit (+10%) online or in store</div>
             </div>
           </div>
         </div>
@@ -3538,9 +3576,9 @@ input[type="range"]::-webkit-slider-thumb {
               <div>
                 <div class="store-address-title">Cash Fore Clubs — Chippenham</div>
                 <div class="store-address-text">
-                  Unit 4, Pewsham Way<br>
+                  Unit 6B, Bumpers Way<br>
                   Chippenham, Wiltshire<br>
-                  SN15 3RY
+                  SN14 6LH
                 </div>
                 <div class="store-hours">Mon–Fri 9am–5pm &nbsp;·&nbsp; Sat 9am–4pm &nbsp;·&nbsp; Sun Closed</div>
               </div>
@@ -3805,8 +3843,12 @@ input[type="range"]::-webkit-slider-thumb {
               Value valid for <span class="expiry-bold">23h 59m 55s</span>
             </div>
             <button class="cta-btn" onclick="showScreen(4)" style="background:var(--green)">USE THIS TRADE-IN VALUE →</button>
+            <button class="cta-btn outline save-later-btn" onclick="alert('Mockup: trade-in value saved as a draft for 24h.')">
+              <svg width="13" height="13" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" style="vertical-align:-2px;margin-right:5px"><path d="M3 2v12l5-3 5 3V2z"/></svg>
+              SAVE FOR LATER
+            </button>
             <div class="decline-link">No thanks, cancel this trade-in</div>
-            <div class="no-commit">Record the trade-in on the next step — no email sent to your customer.</div>
+            <div class="no-commit">Record the trade-in on the next step — no email sent to your customer. Saving holds the draft value for 24h.</div>
           </div>
         </div>
 
@@ -4244,27 +4286,30 @@ input[type="range"]::-webkit-slider-thumb {
               <div class="load-step"><div class="ldot"></div>Applying your 25% pro margin to the trade-in value</div>
             </div>
 
-            <!-- Featured deals during the 10–20s wait -->
+            <!-- 3 newest items in the shop, shown during the 10–20s wait -->
             <div class="loading-offers">
-              <div class="loading-offers-title">While we work — Featured trade partners</div>
+              <div class="loading-offers-title">While we work — 3 newest in shop</div>
               <div class="loading-offers-grid">
                 <div class="loading-offer-card">
-                  <div class="loading-offer-img">🏌️</div>
-                  <div class="loading-offer-title">New TaylorMade Qi10</div>
-                  <div class="loading-offer-tag">PRO 20% OFF</div>
+                  <div class="loading-offer-img">NEW</div>
+                  <div class="loading-offer-title">Callaway QUANTUM Irons 6-PW+GW+AW</div>
+                  <div class="loading-offer-price">£960</div>
+                  <div class="loading-offer-tag">LATEST</div>
                 </div>
                 <div class="loading-offer-card">
-                  <div class="loading-offer-img">⛳</div>
-                  <div class="loading-offer-title">Lesson packages</div>
-                  <div class="loading-offer-tag">PRO RATES</div>
+                  <div class="loading-offer-img">NEW</div>
+                  <div class="loading-offer-title">Scotty Cameron SELECT NEWPORT 2</div>
+                  <div class="loading-offer-price">£250</div>
+                  <div class="loading-offer-tag">LATEST</div>
                 </div>
                 <div class="loading-offer-card">
-                  <div class="loading-offer-img">🎒</div>
-                  <div class="loading-offer-title">Stand bag bundles</div>
-                  <div class="loading-offer-tag">£20 OFF</div>
+                  <div class="loading-offer-img">NEW</div>
+                  <div class="loading-offer-title">TaylorMade Sim Max Irons 5-PW</div>
+                  <div class="loading-offer-price">£375</div>
+                  <div class="loading-offer-tag">LATEST</div>
                 </div>
               </div>
-              <div style="font-size:11px;color:var(--muted);text-align:center;margin-top:10px">Suggest these to your customer alongside the trade-in deduction</div>
+              <div style="font-size:11px;color:var(--muted);text-align:center;margin-top:10px">Newest arrivals from Cash Fore Clubs · suggest them alongside the trade-in deduction</div>
             </div>
           </div>
         </div>
@@ -4298,8 +4343,12 @@ input[type="range"]::-webkit-slider-thumb {
               Value valid for <span class="expiry-bold">23h 59m 55s</span>
             </div>
             <button class="cta-btn" onclick="showScreen(4)" style="background:var(--green)">USE THIS TRADE-IN VALUE →</button>
+            <button class="cta-btn outline save-later-btn" onclick="alert('Mockup: trade-in value saved as a draft for 24h.')">
+              <svg width="13" height="13" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" style="vertical-align:-2px;margin-right:5px"><path d="M3 2v12l5-3 5 3V2z"/></svg>
+              SAVE FOR LATER
+            </button>
             <div class="decline-link">No thanks, cancel this trade-in</div>
-            <div class="no-commit">Add more clubs on the next step, or proceed to record the trade-in.</div>
+            <div class="no-commit">Add more clubs on the next step, save this value for later, or proceed to record the trade-in.</div>
           </div>
         </div>
 
@@ -5589,8 +5638,8 @@ var customerScreenData = [
   { label: 'Screen 1 of 9', title: 'Log in screen',              desc: 'Returning customers log in with their username or email and password. New customers can create an account. A "Condition Guide" link helps sellers assess their club\'s grade before getting started.',                                                tags: [['Login / Register',''], ['Returning customers','green'], ['Condition guide','blue']] },
   { label: 'Screen 2 of 9', title: 'Upload screen',              desc: 'Customer lands here after logging in. They upload up to 5 photos of their club and optionally add a description. The CTA is disabled until at least one photo is added.',                                                                             tags: [['Photo upload',''], ['Drag & drop',''], ['Trust signals','green']] },
   { label: 'Screen 3 of 9', title: 'Photos added',               desc: 'Once photos are uploaded, thumbnails appear inside the drop zone and the photo count is shown. The CTA button activates. Customer can also type a description for extra context.',                                                                     tags: [['Photos confirmed','green'], ['CTA active','green'], ['Description field','']] },
-  { label: 'Screen 4 of 9', title: 'Valuing your clubs...',      desc: 'Loading state shown while GPT-4 Vision analyses the photos and checks second-hand market prices. Step-by-step progress shown to keep the customer informed.',                                                                                          tags: [['AI analysis',''], ['Live market check',''], ['~10 seconds','blue']] },
-  { label: 'Screen 5 of 9', title: 'Instant offer revealed',     desc: 'The buyback price is shown large and clear. Club name and condition confirmed. A 24-hour countdown creates urgency. Customer can accept or decline.',                                                                                                   tags: [['Big price reveal',''], ['Countdown timer',''], ['Accept / Decline','green']] },
+  { label: 'Screen 4 of 9', title: 'Valuing your clubs...',      desc: 'Loading state shown while GPT-4 Vision analyses the photos and checks second-hand market prices. Step-by-step progress shown to keep the customer informed, with the 3 newest shop arrivals shown during the wait.',                                      tags: [['AI analysis',''], ['Newest arrivals','orange'], ['~10 seconds','blue']] },
+  { label: 'Screen 5 of 9', title: 'Instant offer revealed',     desc: 'The buyback price is shown large and clear. Club name and condition confirmed. A 24-hour countdown creates urgency. Customer can accept, save for later, or decline.',                                                                                     tags: [['Big price reveal',''], ['Save for later','orange'], ['Accept / Save / Decline','green']] },
   { label: 'Screen 6 of 9', title: 'Delivery choice',            desc: 'After accepting the offer, the customer chooses how to send their clubs — Drop In Store (Chippenham) or Send by Post (free prepaid DPD label). Each path leads to a tailored confirmation screen.',                                                   tags: [['Drop In Store',''], ['Send by Post','green'], ['Two paths','blue']] },
   { label: 'Screen 7 of 9', title: 'Confirmed — In Store',       desc: 'Customer chose to drop off in store. A large reference code is shown for the counter staff to match the club. Store address, opening hours and a 3-step in-store walkthrough are displayed.',                                                         tags: [['Store address',''], ['Reference code','orange'], ['In-store steps','green']] },
   { label: 'Screen 8 of 9', title: 'Confirmed — Post',           desc: 'Customer chose to send by post. Confirmation that a free prepaid DPD label is being emailed. Three-step walkthrough (check email → pack → get paid) sets clear expectations.',                                                                        tags: [['DPD label',''], ['Email confirmation','green'], ['Next steps','blue']] },
@@ -5635,8 +5684,8 @@ var customerScreenDataV2 = [
   { label: 'V2 · Screen 1 of 11',  title: 'Log in screen',                desc: 'Same login as V1 — customers sign in to a single account that holds quotes from any data source (photos, dropdowns, both).',                                                                                                                                                                                                                                                       tags: [['Login',''], ['Same as V1','']] },
   { label: 'V2 · Screen 2 of 11',  title: 'Tell us about your club',      desc: 'UNIFIED entry — photos are optional. The seller drops in photos if they have them, then fills in as many structured fields as they can: Select a club, Select a brand, Model & year, an Additional Information block (handedness, headcover, clubs in set, flex, gender, loft, shaft material), condition slider, optional notes. More signal = sharper AI offer.', tags: [['Unified entry','green'], ['Photos optional','orange'], ['Additional info','blue']] },
   { label: 'V2 · Screen 3 of 11',  title: 'Confirm item(s)',              desc: 'Multi-item handling only — model details already captured in the entry form. If two different clubs are detected in the photos, we ask whether to quote them as separate items or merge into one.',                                                                                                                                                            tags: [['Multi-item detect','blue']] },
-  { label: 'V2 · Screen 4 of 11',  title: 'Valuing your items...',        desc: 'Loading copy names the data source explicitly (eBay UK sold prices, Golf Clubs for Cash, Golfbidder, re-playgolf) and the 40% buy-back margin. Featured product offers fill the 10–20s wait to drive engagement.',                                                                                                                                                         tags: [['Transparency','green'], ['Engagement offers','orange'], ['eBay benchmarks','blue']] },
-  { label: 'V2 · Screen 5 of 11',  title: 'Instant offer (bundled)',      desc: 'Offer reveal with per-item breakdown above the total + a "How we priced this" link explaining the eBay-sold-comps + 40% margin logic.',                                                                                                                                                                                                                                   tags: [['Bundle total',''], ['Pricing transparency','green'], ['Countdown','blue']] },
+  { label: 'V2 · Screen 4 of 11',  title: 'Valuing your items...',        desc: 'Loading copy names the data source explicitly (eBay UK sold prices, Golf Clubs for Cash, Golfbidder, re-playgolf) and the 40% buy-back margin. The 3 newest CFC shop arrivals fill the 10–20s wait to drive engagement.',                                                                                                                                                  tags: [['Transparency','green'], ['Newest arrivals','orange'], ['eBay benchmarks','blue']] },
+  { label: 'V2 · Screen 5 of 11',  title: 'Instant offer (bundled)',      desc: 'Offer reveal with per-item breakdown above the total + a "How we priced this" link explaining the eBay-sold-comps + 40% margin logic. Customer can accept, save for later, or decline.',                                                                                                                                                                                   tags: [['Bundle total',''], ['Save for later','orange'], ['Pricing transparency','green']] },
   { label: 'V2 · Screen 6 of 11',  title: 'Items in your quote',          desc: 'Post-offer review screen — last-chance upsell. The seller sees their locked-in £545 bundle and is invited to add another club to push the total higher before continuing to payment. Free-tracked-post progress bar (£50 threshold) reinforces "more = better."',                                                                                                            tags: [['Post-offer review','green'], ['Last-chance upsell','orange'], ['£50 free-post','blue']] },
   { label: 'V2 · Screen 7 of 11',  title: 'Payment method',               desc: 'Customer picks Cash to bank (no form upfront) or Store Credit (+10% bonus). The Cash card explains that bank details are captured AFTER inspection on our payment partner&apos;s hosted form — never collected on CFC, never stored in WordPress.',                                                                                                                                                                tags: [['Cash to bank','green'], ['Store credit +10%','blue'], ['Bank details deferred','orange']] },
   { label: 'V2 · Screen 8 of 11',  title: 'Delivery choice',              desc: 'Sticky summary row shows the payment method picked on the previous step with a "change" link back.',                                                                                                                                                                                                                                                                       tags: [['Drop in store',''], ['Send by post','green']] },
@@ -5648,7 +5697,7 @@ var customerScreenDataV2 = [
 var pgaScreenDataV2 = [
   { label: 'V2 · Screen 1 of 9', title: 'PGA Pro Login',          desc: 'Same login as V1 — the pro authenticates into their trade portal.',                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          tags: [['Trade portal',''], ['Same as V1','']] },
   { label: 'V2 · Screen 2 of 9', title: 'Tell us about the club', desc: 'UNIFIED entry mirrored from the Customer flow. Photos are optional. The pro fills in as many structured fields as they can: Select a club, Select a brand, Model & year, condition slider (Poor → As New), and a collapsible Additional information block (handedness, headcover, clubs in set, flex, gender, loft, shaft material). More signal = sharper trade-in value at the pro margin. Replaces the old two-screen Photos / Structured split.',                                                                                                                                tags: [['Unified entry','green'], ['Photos optional','orange'], ['Additional info','blue']] },
-  { label: 'V2 · Screen 3 of 9', title: 'Valuing... (Pro)',       desc: 'Loading copy names the eBay UK sold-comp sources (Golf Clubs for Cash, Golfbidder, re-playgolf) and the pro\'s 25% margin. Featured trade-partner offers fill the 10–20s wait so the pro can suggest add-ons to their customer.',                                                                                                                                                                                                                                                                                                                                       tags: [['Transparency','green'], ['Pro margin step','orange'], ['Featured deals','blue']] },
+  { label: 'V2 · Screen 3 of 9', title: 'Valuing... (Pro)',       desc: 'Loading copy names the eBay UK sold-comp sources (Golf Clubs for Cash, Golfbidder, re-playgolf) and the pro\'s 25% margin. The 3 newest CFC shop arrivals fill the 10–20s wait so the pro can suggest add-ons to their customer.',                                                                                                                                                                                                                                                                                                                                  tags: [['Transparency','green'], ['Pro margin step','orange'], ['Newest arrivals','blue']] },
   { label: 'V2 · Screen 4 of 9', title: 'Trade-in Value',         desc: 'Big-price reveal at the pro margin. CTA leads to the batch list so the pro can add more clubs before recording.',                                                                                                                                                                                                                                                                                                                                                                                                                                                       tags: [['Trade-in value','green'], ['Pro margin','orange']] },
   { label: 'V2 · Screen 5 of 9', title: 'Trade-in batch list',    desc: 'List of clubs being traded for this single customer. Each row shows whether the club came from photos (AI %) or structured entry. Running trade-in total includes the pro margin.',                                                                                                                                                                                                                                                                                                                                                                                    tags: [['Batch trade-in','green'], ['Mixed sources','blue']] },
   { label: 'V2 · Screen 6 of 9', title: 'Record Trade-in',        desc: 'Internal record only — CFC pays the pro directly. Confirms the bundled trade-in amount.',                                                                                                                                                                                                                                                                                                                                                                                                                                                                              tags: [['Pro records only',''], ['CFC pays pro','green']] },
@@ -5658,8 +5707,8 @@ var pgaScreenDataV2 = [
 ];
 
 var customerNavLabelsV2 = [
-  '1. Log in', '2. Tell us about your club', '3. Confirm items', '4. Items in quote',
-  '5. Valuing…', '6. Instant offer', '7. Payment method', '8. Delivery',
+  '1. Log in', '2. Tell us about your club', '3. Confirm items', '4. Valuing…',
+  '5. Instant offer', '6. Items in quote', '7. Payment method', '8. Delivery',
   '9. Confirmed – Store', '10. Confirmed – Post',
   '11. My quotes (awaiting bank)', '12. Secure bank entry'
 ];
