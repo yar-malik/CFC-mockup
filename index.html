@@ -19,20 +19,21 @@
    DESIGN TOKENS  (unified — single source of truth for both modes)
 ═══════════════════════════════════════════════════════════════════════════ */
 :root {
-  /* Brand */
-  --orange:      #E8491D;
-  --orange-dark: #c73d17;
-  --green:       #2D5A27;
+  /* Brand — matched to cashforeclubs.co.uk */
+  --orange:      #e67a2e;   /* primary brand orange */
+  --orange-dark: #c75f1a;
+  --green:       #2f6b3c;   /* CFC forest green */
+  --green-dark:  #1f4d2b;
   --blue:        #2271b1;
   --blue-dark:   #135e96;
   --red:         #d63638;
 
   /* Neutrals — unified to WP admin palette */
-  --dark:        #1d2327;   /* was #111827 in index → unified */
-  --mid:         #50575e;
+  --dark:        #0c172c;   /* CFC dark navy */
+  --mid:         #3A4764;
   --muted:       #8c8f94;
   --border:      #dcdcde;
-  --surface:     #f6f7f7;
+  --surface:     #f7f7f7;
   --white:       #ffffff;
 
   /* Shape */
@@ -46,7 +47,7 @@
 html { scroll-behavior: smooth; }
 body {
   font-family: 'DM Sans', sans-serif;
-  background: #F3F4F6;
+  background: var(--surface);
   color: var(--dark);
   min-height: 100vh;
   font-size: 13px;
@@ -204,7 +205,7 @@ body {
 }
 .page-layout.admin-mode .notes-col {
   padding: 24px 16px 24px 0;
-  background: #F3F4F6;
+  background: var(--surface);
 }
 .page-layout.admin-mode .notes-panel {
   position: sticky;
@@ -361,6 +362,38 @@ body {
   padding-right: 32px;
 }
 .field-helper { font-size: 11px; color: var(--muted); margin-top: 4px; }
+
+/* ── Club category card grid (replaces the legacy "pick a category" select) ── */
+.club-cat-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
+  gap: 8px;
+}
+.club-cat-card {
+  border: 1px solid var(--border);
+  background: var(--white);
+  border-radius: var(--radius);
+  padding: 12px 8px;
+  text-align: center;
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--dark);
+  cursor: pointer;
+  transition: border-color .12s, background .12s, color .12s, box-shadow .12s;
+  user-select: none;
+  line-height: 1.25;
+}
+.club-cat-card:hover {
+  border-color: var(--orange);
+  background: #fff5ee;
+}
+.club-cat-card.selected {
+  border-color: var(--orange);
+  background: #fff5ee;
+  color: var(--orange-dark);
+  font-weight: 700;
+  box-shadow: 0 0 0 1px var(--orange) inset;
+}
 .add-another-row {
   display: flex;
   align-items: center;
@@ -1168,6 +1201,7 @@ body {
   font-size: 18px;
 }
 .loading-offer-title { font-size: 11px; font-weight: 700; color: var(--dark); line-height: 1.2; margin-bottom: 2px; }
+.loading-offer-price { font-size: 12px; font-weight: 700; color: var(--green); margin-bottom: 4px; }
 .loading-offer-tag {
   display: inline-block;
   background: var(--orange);
@@ -2947,35 +2981,37 @@ input[type="range"]::-webkit-slider-thumb {
             <div style="font-size:11px;color:var(--green);font-weight:700;margin-bottom:14px">✓ 3 photos added</div>
 
             <!-- Primary structured fields -->
-            <div class="field-row">
+            <div class="field-row single">
               <div>
                 <label class="field-label-v2">Select a club</label>
-                <select class="field-select-v2">
-                  <option value="">— pick a category —</option>
-                  <option>Driver</option>
-                  <option>Fairway wood</option>
-                  <option>Hybrid</option>
-                  <option>Individual iron</option>
-                  <option>Irons (set)</option>
-                  <option>Wedge</option>
-                  <option>Putter</option>
-                  <option>Package set</option>
-                  <option>Golf bags</option>
-                  <option>GPS / rangefinder</option>
-                  <option>Launch monitor</option>
-                  <option>Driver shaft</option>
-                  <option>Fairway shaft</option>
-                  <option>Hybrid shaft</option>
-                  <option>Iron shafts</option>
-                  <option>Headcover</option>
-                  <option>Clothing</option>
-                  <option>Shoes</option>
-                  <option>Golf balls</option>
-                  <option>Golf glove</option>
-                  <option>Accessories</option>
-                  <option>Wrench</option>
-                </select>
+                <div class="club-cat-grid">
+                  <div class="club-cat-card" onclick="v2PickClubCat(this)">Driver</div>
+                  <div class="club-cat-card" onclick="v2PickClubCat(this)">Fairway wood</div>
+                  <div class="club-cat-card" onclick="v2PickClubCat(this)">Hybrid</div>
+                  <div class="club-cat-card" onclick="v2PickClubCat(this)">Individual iron</div>
+                  <div class="club-cat-card" onclick="v2PickClubCat(this)">Irons (set)</div>
+                  <div class="club-cat-card" onclick="v2PickClubCat(this)">Wedge</div>
+                  <div class="club-cat-card" onclick="v2PickClubCat(this)">Putter</div>
+                  <div class="club-cat-card" onclick="v2PickClubCat(this)">Package set</div>
+                  <div class="club-cat-card" onclick="v2PickClubCat(this)">Golf bags</div>
+                  <div class="club-cat-card" onclick="v2PickClubCat(this)">GPS / rangefinder</div>
+                  <div class="club-cat-card" onclick="v2PickClubCat(this)">Launch monitor</div>
+                  <div class="club-cat-card" onclick="v2PickClubCat(this)">Driver shaft</div>
+                  <div class="club-cat-card" onclick="v2PickClubCat(this)">Fairway shaft</div>
+                  <div class="club-cat-card" onclick="v2PickClubCat(this)">Hybrid shaft</div>
+                  <div class="club-cat-card" onclick="v2PickClubCat(this)">Iron shafts</div>
+                  <div class="club-cat-card" onclick="v2PickClubCat(this)">Headcover</div>
+                  <div class="club-cat-card" onclick="v2PickClubCat(this)">Clothing</div>
+                  <div class="club-cat-card" onclick="v2PickClubCat(this)">Shoes</div>
+                  <div class="club-cat-card" onclick="v2PickClubCat(this)">Golf balls</div>
+                  <div class="club-cat-card" onclick="v2PickClubCat(this)">Golf glove</div>
+                  <div class="club-cat-card" onclick="v2PickClubCat(this)">Accessories</div>
+                  <div class="club-cat-card" onclick="v2PickClubCat(this)">Wrench</div>
+                </div>
               </div>
+            </div>
+
+            <div class="field-row">
               <div>
                 <label class="field-label-v2">Select a brand</label>
                 <select class="field-select-v2">
@@ -2997,9 +3033,6 @@ input[type="range"]::-webkit-slider-thumb {
                   <option>Other / Not sure</option>
                 </select>
               </div>
-            </div>
-
-            <div class="field-row single">
               <div>
                 <label class="field-label-v2">Model &amp; year <span style="font-weight:400;text-transform:none;letter-spacing:0;color:var(--muted)">(optional)</span></label>
                 <input class="field-input-v2" type="text" placeholder="e.g. Paradym 2023">
@@ -3235,27 +3268,30 @@ input[type="range"]::-webkit-slider-thumb {
               <div class="load-step"><div class="ldot"></div>Applying 40% buy-back margin to the bundle total</div>
             </div>
 
-            <!-- Product offers shown during the 10–20s wait -->
+            <!-- 3 newest items in the shop, shown during the 10–20s wait -->
             <div class="loading-offers">
-              <div class="loading-offers-title">While we work — Featured deals</div>
+              <div class="loading-offers-title">While we work — 3 newest in shop</div>
               <div class="loading-offers-grid">
                 <div class="loading-offer-card">
                   <div class="loading-offer-img">🏌️</div>
-                  <div class="loading-offer-title">New TaylorMade Qi10</div>
-                  <div class="loading-offer-tag">15% OFF</div>
+                  <div class="loading-offer-title">TaylorMade Qi10 Driver</div>
+                  <div class="loading-offer-price">£289</div>
+                  <div class="loading-offer-tag">NEW</div>
                 </div>
                 <div class="loading-offer-card">
                   <div class="loading-offer-img">⛳</div>
-                  <div class="loading-offer-title">Lesson starter pack</div>
-                  <div class="loading-offer-tag">£49 only</div>
+                  <div class="loading-offer-title">Titleist T200 Irons (5-PW)</div>
+                  <div class="loading-offer-price">£645</div>
+                  <div class="loading-offer-tag">NEW</div>
                 </div>
                 <div class="loading-offer-card">
-                  <div class="loading-offer-img">🎒</div>
-                  <div class="loading-offer-title">Premium stand bag</div>
-                  <div class="loading-offer-tag">£20 OFF</div>
+                  <div class="loading-offer-img">🥅</div>
+                  <div class="loading-offer-title">Scotty Cameron Phantom 5</div>
+                  <div class="loading-offer-price">£195</div>
+                  <div class="loading-offer-tag">NEW</div>
                 </div>
               </div>
-              <div style="font-size:11px;color:var(--muted);text-align:center;margin-top:10px">Tap to browse · these deals are available to spend your store credit on</div>
+              <div style="font-size:11px;color:var(--muted);text-align:center;margin-top:10px">Just listed · spend your store credit (+10%) on any item in the shop</div>
             </div>
           </div>
         </div>
@@ -3287,8 +3323,12 @@ input[type="range"]::-webkit-slider-thumb {
               Offer expires in <span class="expiry-bold">23h 59m 59s</span>
             </div>
             <button class="cta-btn" onclick="showScreen(5)">ACCEPT OFFER</button>
+            <button class="cta-btn outline save-later-btn" onclick="alert('Mockup: offer saved for 24h.\nWe\'ll email you a reminder before it expires.')">
+              <svg width="13" height="13" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" style="vertical-align:-2px;margin-right:5px"><path d="M3 2v12l5-3 5 3V2z"/></svg>
+              SAVE FOR LATER
+            </button>
             <div class="decline-link">No thanks, I'll pass</div>
-            <div class="no-commit">Accepting this offer is not a final commitment until collection is arranged.</div>
+            <div class="no-commit">Accepting this offer is not a final commitment until collection is arranged. Saving holds the price for 24h.</div>
           </div>
         </div>
 
@@ -4095,24 +4135,26 @@ input[type="range"]::-webkit-slider-thumb {
             <div style="font-size:11px;color:var(--green);font-weight:700;margin-bottom:14px">✓ 3 photos added</div>
 
             <!-- Primary structured fields -->
-            <div class="field-row">
+            <div class="field-row single">
               <div>
                 <label class="field-label-v2">Select a club</label>
-                <select class="field-select-v2">
-                  <option value="">— pick a category —</option>
-                  <option>Driver</option>
-                  <option>Fairway wood</option>
-                  <option>Hybrid</option>
-                  <option>Individual iron</option>
-                  <option>Irons (set)</option>
-                  <option>Wedge</option>
-                  <option>Putter</option>
-                  <option>Package set</option>
-                  <option>Golf bags</option>
-                  <option>GPS / rangefinder</option>
-                  <option>Launch monitor</option>
-                </select>
+                <div class="club-cat-grid">
+                  <div class="club-cat-card" onclick="v2PickClubCat(this)">Driver</div>
+                  <div class="club-cat-card" onclick="v2PickClubCat(this)">Fairway wood</div>
+                  <div class="club-cat-card" onclick="v2PickClubCat(this)">Hybrid</div>
+                  <div class="club-cat-card" onclick="v2PickClubCat(this)">Individual iron</div>
+                  <div class="club-cat-card" onclick="v2PickClubCat(this)">Irons (set)</div>
+                  <div class="club-cat-card" onclick="v2PickClubCat(this)">Wedge</div>
+                  <div class="club-cat-card" onclick="v2PickClubCat(this)">Putter</div>
+                  <div class="club-cat-card" onclick="v2PickClubCat(this)">Package set</div>
+                  <div class="club-cat-card" onclick="v2PickClubCat(this)">Golf bags</div>
+                  <div class="club-cat-card" onclick="v2PickClubCat(this)">GPS / rangefinder</div>
+                  <div class="club-cat-card" onclick="v2PickClubCat(this)">Launch monitor</div>
+                </div>
               </div>
+            </div>
+
+            <div class="field-row">
               <div>
                 <label class="field-label-v2">Select a brand</label>
                 <select class="field-select-v2">
@@ -4134,9 +4176,6 @@ input[type="range"]::-webkit-slider-thumb {
                   <option>Other / Not sure</option>
                 </select>
               </div>
-            </div>
-
-            <div class="field-row single">
               <div>
                 <label class="field-label-v2">Model &amp; year <span style="font-weight:400;text-transform:none;letter-spacing:0;color:var(--muted)">(optional)</span></label>
                 <input class="field-input-v2" type="text" placeholder="e.g. Paradym 2023">
@@ -5874,6 +5913,14 @@ function v2RecomputeTotals(scope) {
     var unit = countEls[k].getAttribute('data-v2-unit') || 'item';
     countEls[k].textContent = count + ' ' + unit + (count === 1 ? '' : 's');
   }
+}
+
+/* ── V2 Club category card picker ────────────────────────────────────────── */
+function v2PickClubCat(card) {
+  var grid = card.parentElement;
+  var cards = grid.querySelectorAll('.club-cat-card');
+  for (var i = 0; i < cards.length; i++) cards[i].classList.remove('selected');
+  card.classList.add('selected');
 }
 
 /* ── V2 Additional-info collapsible panel ────────────────────────────────── */
